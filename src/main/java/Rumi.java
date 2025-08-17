@@ -6,25 +6,26 @@ import java.util.Scanner;
 
 public class Rumi {
     private static final Task[] tasks = new Task[100];
-    private static int textNo = 0;
+    private static int taskNo = 0;
 
     public static final String CHATBOT_NAME = "Rumi";
-    public static final String FALLBACK_LOGO = "\n" +
-        "\n" +
-        "                                ____           \n" +
-        "                              ,'  , `.  ,--,   \n" +
-        "  __  ,-.         ,--,     ,-+-,.' _ |,--.'|   \n" +
-        ",' ,'/ /|       ,'_ /|  ,-+-. ;   , |||  |,    \n" +
-        "'  | |' |  .--. |  | : ,--.'|'   |  ||`--'_    \n" +
-        "|  |   ,','_ /| :  . ||   |  ,', |  |,,' ,'|   \n" +
-        "'  :  /  |  ' | |  . .|   | /  | |--' '  | |   \n" +
-        "|  | '   |  | ' |  | ||   : |  | ,    |  | :   \n" +
-        ";  : |   :  | : ;  ; ||   : |  |/     '  : |__ \n" +
-        "|  , ;   '  :  `--'   \\   | |`-'      |  | '.'|\n" +
-        " ---'    :  ,      .-./   ;/          ;  :    ;\n" +
-        "          `--`----'   '---'           |  ,   / \n" +
-        "                                       ---`-'  \n" +
-        "\n";
+    public static final String FALLBACK_LOGO = """
+
+                                            ____          \s
+                                          ,'  , `.  ,--,  \s
+              __  ,-.         ,--,     ,-+-,.' _ |,--.'|  \s
+            ,' ,'/ /|       ,'_ /|  ,-+-. ;   , |||  |,   \s
+            '  | |' |  .--. |  | : ,--.'|'   |  ||`--'_   \s
+            |  |   ,','_ /| :  . ||   |  ,', |  |,,' ,'|  \s
+            '  :  /  |  ' | |  . .|   | /  | |--' '  | |  \s
+            |  | '   |  | ' |  | ||   : |  | ,    |  | :  \s
+            ;  : |   :  | : ;  ; ||   : |  |/     '  : |__\s
+            |  , ;   '  :  `--'   \\   | |`-'      |  | '.'|
+             ---'    :  ,      .-./   ;/          ;  :    ;
+                      `--`----'   '---'           |  ,   /\s
+                                                   ---`-' \s
+            
+            """;
 
     public static String LOGO = null;
 
@@ -53,14 +54,14 @@ public class Rumi {
     }
 
     private static String getTextList() {
-        if (textNo == 0) {
+        if (taskNo == 0) {
             return "Oops! You have not added anything yet.";
         }
 
         StringBuilder list = new StringBuilder();
-        for (int i = 0; i < textNo; i++) {
+        for (int i = 0; i < taskNo; i++) {
             list.append(String.format("%d. ", i + 1)).append(tasks[i]);
-            if (i < textNo - 1) {
+            if (i < taskNo - 1) {
                 list.append('\n');
             }
         }
@@ -77,9 +78,18 @@ public class Rumi {
         while (!command.equals("bye")) {
             if (command.equals("list")) {
                 printResponse(getTextList());
+            } else if (command.matches("mark \\d+")) {
+                int taskNo = Integer.parseInt(command.split(" ")[1]);
+                if (taskNo > Rumi.taskNo) {
+                    printResponse("Oops! Rumi does not of know of such task :(");
+                }
+
+                Task task = tasks[Rumi.taskNo - 1];
+                task.markAsDone();
+                printResponse(String.format("Got it! Rumi has marked this task as done: \n\t%s", task));
             } else {
-                tasks[textNo] = new Task(command);
-                textNo++;
+                tasks[taskNo] = new Task(command);
+                taskNo++;
                 printResponse("added: " + command);
             }
 
