@@ -117,6 +117,37 @@ public class Rumi {
                         "Okay! I've added this task: \n\t%s\n" +
                         "Now you have %d tasks in the list.", todo, taskNo));
                 }
+            } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+.+")) {
+                Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+(.+)");
+                Matcher matcher = pattern.matcher(command);
+
+                if (matcher.matches()) {
+                    String title = matcher.group(1);
+                    String deadline = matcher.group(2);
+
+                    Deadline task = new Deadline(title, deadline);
+                    tasks[taskNo] = task;
+                    taskNo++;
+
+                    printResponse(String.format(
+                            "Okay! I've added this task: \n\t%s\n" +
+                            "Now you have %d tasks in the list.", task, taskNo));
+                }
+            } else if (command.matches("todo .+")) {
+                Pattern pattern = Pattern.compile("todo (.+)");
+                Matcher matcher = pattern.matcher(command);
+
+                if (matcher.matches()) {
+                    String title = matcher.group(1);
+
+                    ToDo todo = new ToDo(title);
+                    tasks[taskNo] = todo;
+                    taskNo++;
+
+                    printResponse(String.format(
+                            "Okay! I've added this task: \n\t%s\n" +
+                                    "Now you have %d tasks in the list.", todo, taskNo));
+                }
             } else {
                 printResponse("Rumi does not understand, Master :(");
             }
