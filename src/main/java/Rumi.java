@@ -31,22 +31,6 @@ public class Rumi {
 
     public static String LOGO = null;
 
-    private static void printIndent(String s) {
-        printIndent(s, 1);
-    }
-
-    private static void printIndent(String s, int tabCount) {
-        String tabs = "\t".repeat(Math.max(0, tabCount));
-        StringBuilder indentedString = new StringBuilder();
-        String[] lines = s.split("\n");
-
-        for (String line : lines) {
-            indentedString.append(tabs).append(line).append("\n");
-        }
-
-        System.out.println(indentedString);
-    }
-
     private static void showIntroduction() {
         System.out.println(LOGO);
         System.out.println(DIVIDER);
@@ -93,11 +77,11 @@ public class Rumi {
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
             if (command.equals("list")) {
-                printIndent(DIVIDER + "\n" + getTextList() + "\n" + DIVIDER);
+                Utils.printIndent(DIVIDER + "\n" + getTextList() + "\n" + DIVIDER);
             } else {
                 texts[textNo] = command;
                 textNo++;
-                printIndent(DIVIDER + "\n" + "added: " + command + "\n" + DIVIDER);
+                Utils.printIndent(DIVIDER + "\n" + "added: " + command + "\n" + DIVIDER);
             }
 
             command = scanner.nextLine();
