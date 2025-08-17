@@ -123,30 +123,32 @@ public class Rumi {
 
                 if (matcher.matches()) {
                     String title = matcher.group(1);
-                    String deadline = matcher.group(2);
+                    String dueDate = matcher.group(2);
 
-                    Deadline task = new Deadline(title, deadline);
-                    tasks[taskNo] = task;
+                    Deadline deadline = new Deadline(title, dueDate);
+                    tasks[taskNo] = deadline;
                     taskNo++;
 
                     printResponse(String.format(
                             "Okay! I've added this task: \n\t%s\n" +
-                            "Now you have %d tasks in the list.", task, taskNo));
+                            "Now you have %d tasks in the list.", deadline, taskNo));
                 }
-            } else if (command.matches("todo .+")) {
-                Pattern pattern = Pattern.compile("todo (.+)");
+            } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
+                Pattern pattern = Pattern.compile("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)");
                 Matcher matcher = pattern.matcher(command);
 
                 if (matcher.matches()) {
                     String title = matcher.group(1);
+                    String from = matcher.group(2);
+                    String to = matcher.group(3);
 
-                    ToDo todo = new ToDo(title);
-                    tasks[taskNo] = todo;
+                    Event event = new Event(title, from, to);
+                    tasks[taskNo] = event;
                     taskNo++;
 
                     printResponse(String.format(
                             "Okay! I've added this task: \n\t%s\n" +
-                                    "Now you have %d tasks in the list.", todo, taskNo));
+                            "Now you have %d tasks in the list.", event, taskNo));
                 }
             } else {
                 printResponse("Rumi does not understand, Master :(");
