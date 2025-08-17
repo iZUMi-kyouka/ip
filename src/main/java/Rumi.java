@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Rumi {
-    private static final String[] texts = new String[100];
+    private static final Task[] tasks = new Task[100];
     private static int textNo = 0;
 
     public static final String CHATBOT_NAME = "Rumi";
@@ -59,7 +59,7 @@ public class Rumi {
 
         StringBuilder list = new StringBuilder();
         for (int i = 0; i < textNo; i++) {
-            list.append(String.format("%d. ", i + 1)).append(texts[i]);
+            list.append(String.format("%d. ", i + 1)).append(tasks[i]);
             if (i < textNo - 1) {
                 list.append('\n');
             }
@@ -78,7 +78,7 @@ public class Rumi {
             if (command.equals("list")) {
                 printResponse(getTextList());
             } else {
-                texts[textNo] = command;
+                tasks[textNo] = new Task(command);
                 textNo++;
                 printResponse("added: " + command);
             }
