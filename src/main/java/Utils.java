@@ -11,8 +11,11 @@ public class Utils {
         StringBuilder indentedString = new StringBuilder();
         String[] lines = s.split("\n");
 
-        for (String line : lines) {
-            indentedString.append(tabs).append(line).append("\n");
+        for (int i = 0; i < lines.length; i++) {
+            indentedString.append(tabs).append(lines[i]);
+            if (i != lines.length - 1) {
+                indentedString.append('\n');
+            }
         }
 
         System.out.println(indentedString);
