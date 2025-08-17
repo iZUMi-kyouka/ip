@@ -37,14 +37,16 @@ public class Rumi {
 
     private static void showIntroMessage() {
         String message = String.format(
-            "Welcome back, master. %s at your service (๑˃ᴗ˂)ﻭ!\n" +
-            "What would you like me to do, Master?", CHATBOT_NAME);
+            "Welcome home, Master. %s at your service (๑˃ᴗ˂)ﻭ!\n" +
+            "How may I assist you?", CHATBOT_NAME);
         System.out.println(LOGO);
         printResponse(message);
     }
 
     private static void showGoodbyeMessage() {
-        printResponse("I'm happy to have served you today, Master. I shall be waiting for your homecoming.");
+        printResponse(
+        "Thank you for allowing me to serve you today, Master. " +
+            "I shall await your return with great anticipation~ ");
     }
 
     private static void initialiseLogo() {
@@ -57,7 +59,7 @@ public class Rumi {
 
     private static String getTaskListString() {
         if (taskNo == 0) {
-            return "Oops! You have not added anything yet.";
+            return "Oh no! You haven't given me any tasks yet, Master... Please do soon, I'm eager to serve you~!\"";
         }
 
         StringBuilder list = new StringBuilder();
@@ -79,29 +81,36 @@ public class Rumi {
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
             if (command.equals("list")) {
-                printResponse(String.format("You have %d tasks, Master.\n%s", taskNo, getTaskListString()));
+                printResponse(String.format(
+                    "You have entrusted me with %d tasks, Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
+                    taskNo, getTaskListString()));
             } else if (command.matches("mark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > Rumi.taskNo || taskNo <= 0) {
-                    printResponse("Oops! Rumi does not of know of such task :(");
+                    printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
                     command = scanner.nextLine();
                     continue;
                 }
 
                 Task task = tasks[taskNo - 1];
                 task.markAsDone();
-                printResponse(String.format("Got it! Rumi has marked this task as done: \n\t%s", task));
+                printResponse(String.format(
+                    "Wonderful! I've marked this task as complete, Master~\n\t✔ %s\nYou're doing amazing!",
+                    task));
+
             } else if (command.matches("unmark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > Rumi.taskNo || taskNo <= 0) {
-                    printResponse("Oops! Rumi does not of know of such task :(");
+                    printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
                     command = scanner.nextLine();
                     continue;
                 }
 
                 Task task = tasks[taskNo - 1];
                 task.unmarkAsDone();
-                printResponse(String.format("Roger that! Rumi has marked this task as not done yet: \n\t%s", task));
+                printResponse(String.format(
+                    "Understood, Master. I've marked this task as not done yet~\n\t✘ %s\nLet me know when it’s done again!",
+                    task));
             } else if (command.matches("todo\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("todo\\s+(.+)");
                 Matcher matcher = pattern.matcher(command);
@@ -114,8 +123,9 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                        "Okay! I've added this task: \n\t%s\n" +
-                        "Now you have %d tasks in the list.", todo, taskNo));
+                        "Right away, Master! I've added this to your to-do list:\n\t%s\nYou now have %d tasks awaiting your attention~",
+                        todo, taskNo));
+
                 }
             } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+/by\\s+(.+)");
@@ -130,8 +140,8 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                            "Okay! I've added this task: \n\t%s\n" +
-                            "Now you have %d tasks in the list.", deadline, taskNo));
+                        "Right away, Master! I've added this to your to-do list:\n\t%s\nYou now have %d tasks awaiting your attention~",
+                        deadline, taskNo));
                 }
             } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)");
@@ -147,11 +157,13 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                            "Okay! I've added this task: \n\t%s\n" +
-                            "Now you have %d tasks in the list.", event, taskNo));
+                        "Noted! I've scheduled this delightful event for you, Master~\n\t%s\n" +
+                        "Everything is perfectly arranged~\nYou now have %d tasks in the list.",
+                        event, taskNo));
+
                 }
             } else {
-                printResponse("Rumi does not understand, Master :(");
+                printResponse("Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\nCould you please try again?");
             }
 
             command = scanner.nextLine();
