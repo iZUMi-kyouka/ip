@@ -117,8 +117,8 @@ public class Rumi {
                         "Okay! I've added this task: \n\t%s\n" +
                         "Now you have %d tasks in the list.", todo, taskNo));
                 }
-            } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+.+")) {
-                Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+(.+)");
+            } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+(.+)")) {
+                Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+/by\\s+(.+)");
                 Matcher matcher = pattern.matcher(command);
 
                 if (matcher.matches()) {
