@@ -78,15 +78,28 @@ public class Rumi {
         while (!command.equals("bye")) {
             if (command.equals("list")) {
                 printResponse(getTextList());
-            } else if (command.matches("mark \\d+")) {
+            } else if (command.matches("mark -?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > Rumi.taskNo) {
+                if (taskNo > Rumi.taskNo || taskNo <= 0) {
                     printResponse("Oops! Rumi does not of know of such task :(");
+                    command = scanner.nextLine();
+                    continue;
                 }
 
-                Task task = tasks[Rumi.taskNo - 1];
+                Task task = tasks[taskNo - 1];
                 task.markAsDone();
                 printResponse(String.format("Got it! Rumi has marked this task as done: \n\t%s", task));
+            } else if (command.matches("unmark -?\\d+")) {
+                int taskNo = Integer.parseInt(command.split(" ")[1]);
+                if (taskNo > Rumi.taskNo || taskNo <= 0) {
+                    printResponse("Oops! Rumi does not of know of such task :(");
+                    command = scanner.nextLine();
+                    continue;
+                }
+
+                Task task = tasks[taskNo - 1];
+                task.unmarkAsDone();
+                printResponse(String.format("Roger that! Rumi has marked this task as not done yet: \n\t%s", task));
             } else {
                 tasks[taskNo] = new Task(command);
                 taskNo++;
