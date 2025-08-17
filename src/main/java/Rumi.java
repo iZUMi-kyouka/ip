@@ -3,11 +3,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 public class Rumi {
-    private static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
-
     private static final String[] texts = new String[100];
     private static int textNo = 0;
 
@@ -31,18 +28,20 @@ public class Rumi {
 
     public static String LOGO = null;
 
-    private static void showIntroduction() {
+    private static void printResponse(String s) {
+        Utils.printIndent(Utils.boxText(s));
+    }
+
+    private static void showIntroMessage() {
+        String message = String.format(
+            "Welcome back, master. %s at your service (๑˃ᴗ˂)ﻭ!\n" +
+            "What would you like me to do, Master?", CHATBOT_NAME);
         System.out.println(LOGO);
-        System.out.println(DIVIDER);
-        System.out.printf("Welcome back, master. %s at your service (๑˃ᴗ˂)ﻭ!\n", CHATBOT_NAME);
-        System.out.println("What would you like me to do, Master?");
-        System.out.println(DIVIDER);
+        printResponse(message);
     }
 
     private static void showGoodbyeMessage() {
-        System.out.println(DIVIDER);
-        System.out.println("I'm happy to have served you today, Master. I shall be waiting for your homecoming.");
-        System.out.println(DIVIDER);
+        printResponse("I'm happy to have served you today, Master. I shall be waiting for your homecoming.");
     }
 
     private static void initialiseLogo() {
@@ -71,17 +70,17 @@ public class Rumi {
 
     public static void main(String[] args) {
         initialiseLogo();
-        showIntroduction();
+        showIntroMessage();
 
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
             if (command.equals("list")) {
-                Utils.printIndent(DIVIDER + "\n" + getTextList() + "\n" + DIVIDER);
+                printResponse(getTextList());
             } else {
                 texts[textNo] = command;
                 textNo++;
-                Utils.printIndent(DIVIDER + "\n" + "added: " + command + "\n" + DIVIDER);
+                printResponse("added: " + command);
             }
 
             command = scanner.nextLine();

@@ -1,4 +1,7 @@
 public class Utils {
+    public static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+
+
     public static void printIndent(String s) {
         printIndent(s, 1);
     }
@@ -13,5 +16,9 @@ public class Utils {
         }
 
         System.out.println(indentedString);
+    }
+
+    public static String boxText(String s) {
+        return DIVIDER + "\n" + s + "\n" + DIVIDER;
     }
 }
