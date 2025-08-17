@@ -3,6 +3,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Rumi {
     private static final Task[] tasks = new Task[100];
@@ -100,10 +102,23 @@ public class Rumi {
                 Task task = tasks[taskNo - 1];
                 task.unmarkAsDone();
                 printResponse(String.format("Roger that! Rumi has marked this task as not done yet: \n\t%s", task));
+            } else if (command.matches("todo .+")) {
+                Pattern pattern = Pattern.compile("todo (.+)");
+                Matcher matcher = pattern.matcher(command);
+
+                if (matcher.matches()) {
+                    String title = matcher.group(1);
+
+                    ToDo todo = new ToDo(title);
+                    tasks[taskNo] = todo;
+                    taskNo++;
+
+                    printResponse(String.format(
+                        "Okay! I've added this task: \n\t%s\n" +
+                        "Now you have %d tasks in the list.", todo, taskNo));
+                }
             } else {
-                tasks[taskNo] = new Task(command);
-                taskNo++;
-                printResponse("added: " + command);
+                printResponse("Rumi does not understand, Master :(");
             }
 
             command = scanner.nextLine();
