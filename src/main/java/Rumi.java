@@ -30,7 +30,7 @@ public class Rumi {
         System.out.println(LOGO);
         System.out.println(DIVIDER);
         System.out.printf("Welcome back, master. %s at your service (๑˃ᴗ˂)ﻭ!\n", CHATBOT_NAME);
-        System.out.println("What should I do?");
+        System.out.println("What would you like me to do, Master?");
         System.out.println(DIVIDER);
         System.out.println("Goodbye master. Have a great day ahead!");
         System.out.println(DIVIDER);
