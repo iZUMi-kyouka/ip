@@ -6,7 +6,11 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class Rumi {
-    private static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+    private static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+
+    private static final String[] texts = new String[100];
+    private static int textNo = 0;
+
     public static final String CHATBOT_NAME = "Rumi";
     public static final String FALLBACK_LOGO = "\n" +
         "\n" +
@@ -53,7 +57,7 @@ public class Rumi {
 
     private static void showGoodbyeMessage() {
         System.out.println(DIVIDER);
-        System.out.println("Thank you for today, Master. I shall be waiting for your homecoming.");
+        System.out.println("I'm happy to have served you today, Master. I shall be waiting for your homecoming.");
         System.out.println(DIVIDER);
     }
 
@@ -65,6 +69,22 @@ public class Rumi {
         }
     }
 
+    private static String getTextList() {
+        if (textNo == 0) {
+            return "Oops! You have not added anything yet.";
+        }
+
+        StringBuilder list = new StringBuilder();
+        for (int i = 0; i < textNo; i++) {
+            list.append(String.format("%d. ", i + 1)).append(texts[i]);
+            if (i < textNo - 1) {
+                list.append('\n');
+            }
+        }
+
+        return list.toString();
+    }
+
     public static void main(String[] args) {
         initialiseLogo();
         showIntroduction();
@@ -72,7 +92,14 @@ public class Rumi {
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
-            printIndent(DIVIDER + "\n" + command + "\n" + DIVIDER);
+            if (command.equals("list")) {
+                printIndent(DIVIDER + "\n" + getTextList() + "\n" + DIVIDER);
+            } else {
+                texts[textNo] = command;
+                textNo++;
+                printIndent(DIVIDER + "\n" + "added: " + command + "\n" + DIVIDER);
+            }
+
             command = scanner.nextLine();
         }
 
