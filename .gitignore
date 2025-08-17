@@ -13,5 +13,8 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# TUI Test program output
 /tui-test/ACTUAL.TXT
-tui-test/EXPECTED-UNIX.TXT
+
+# Utility script
+test.sh
