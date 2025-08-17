@@ -55,7 +55,7 @@ public class Rumi {
         }
     }
 
-    private static String getTextList() {
+    private static String getTaskListString() {
         if (taskNo == 0) {
             return "Oops! You have not added anything yet.";
         }
@@ -79,7 +79,7 @@ public class Rumi {
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
             if (command.equals("list")) {
-                printResponse(getTextList());
+                printResponse(String.format("You have %d tasks, Master.\n%s", taskNo, getTaskListString()));
             } else if (command.matches("mark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > Rumi.taskNo || taskNo <= 0) {
