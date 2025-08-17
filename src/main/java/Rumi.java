@@ -58,7 +58,7 @@ public class Rumi {
     private static void showGoodbyeMessage() {
         printResponse(
         "Thank you for allowing me to serve you today, Master. " +
-            "I shall await your return with great anticipation~ ");
+            "I shall await your return with great anticipation~");
     }
 
     private static String getTaskListString() {
