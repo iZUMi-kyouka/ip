@@ -20,10 +20,10 @@ then
 fi
 
 # run the program, feed commands from input.txt file and redirect the output to the ACTUAL.TXT
-java -classpath ../bin Rumi < ./text-ui-test/input.txt > ./text-ui-test/ACTUAL.TXT
+java -classpath ../bin Rumi < ./tui-test/input.txt > ./tui-test/ACTUAL.TXT
 
 # compare the output to the expected output
-diff ./text-ui-test/ACTUAL.TXT ./text-ui-test/EXPECTED.TXT
+diff ./tui-test/ACTUAL.TXT ./tui-test/EXPECTED.TXT
 if [ $? -eq 0 ]
 then
     echo "Test result: PASSED"
