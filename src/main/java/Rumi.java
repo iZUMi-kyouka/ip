@@ -2,10 +2,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 import java.util.logging.Logger;
 
 public class Rumi {
-    private static final String DIVIDER = "________________________________________________";
+    private static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
     public static final String CHATBOT_NAME = "Rumi";
     public static final String FALLBACK_LOGO = "\n" +
         "\n" +
@@ -32,7 +33,11 @@ public class Rumi {
         System.out.printf("Welcome back, master. %s at your service (๑˃ᴗ˂)ﻭ!\n", CHATBOT_NAME);
         System.out.println("What would you like me to do, Master?");
         System.out.println(DIVIDER);
-        System.out.println("Goodbye master. Have a great day ahead!");
+    }
+
+    private static void showGoodbyeMessage() {
+        System.out.println(DIVIDER);
+        System.out.println("Thank you for today, Master. I shall be waiting for your homecoming.");
         System.out.println(DIVIDER);
     }
 
@@ -47,5 +52,16 @@ public class Rumi {
     public static void main(String[] args) {
         initialiseLogo();
         showIntroduction();
+
+        Scanner scanner = new Scanner(System.in);
+        String command = scanner.nextLine();
+        while (!command.equals("bye")) {
+            System.out.println(DIVIDER);
+            System.out.println(command);
+            System.out.println(DIVIDER);
+            command = scanner.nextLine();
+        }
+
+        showGoodbyeMessage();
     }
 }
