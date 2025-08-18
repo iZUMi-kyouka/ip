@@ -14,7 +14,7 @@ src/main/resources/docs/
 bin/
 
 # TUI Test program output
-/tui-test/ACTUAL.TXT
+/tui-test/ACTUAL.txt
 
 # Utility script
 test.sh
