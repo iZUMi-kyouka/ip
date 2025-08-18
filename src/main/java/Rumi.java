@@ -85,7 +85,7 @@ public class Rumi {
         while (!command.equals("bye")) {
             if (command.equals("list")) {
                 printResponse(String.format(
-                    "You have entrusted me with %d tasks, Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
+                    "You have entrusted me with %d task(s), Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
                     taskNo, getTaskListString()));
             } else if (command.matches("mark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
@@ -98,7 +98,7 @@ public class Rumi {
                 Task task = tasks[taskNo - 1];
                 task.markAsDone();
                 printResponse(String.format(
-                    "Wonderful! I've marked this task as complete, Master~\n\t✔ %s\nYou're doing amazing!",
+                    "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
                     task));
 
             } else if (command.matches("unmark\\s+-?\\d+")) {
@@ -112,7 +112,7 @@ public class Rumi {
                 Task task = tasks[taskNo - 1];
                 task.unmarkAsDone();
                 printResponse(String.format(
-                    "Understood, Master. I've marked this task as not done yet~\n\t✘ %s\nLet me know when it’s done again!",
+                    "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
                     task));
             } else if (command.matches("todo\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("todo\\s+(.+)");
@@ -126,7 +126,7 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                        "Right away, Master! I've added this to your to-do list:\n\t%s\nYou now have %d tasks awaiting your attention~",
+                        "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
                         todo, taskNo));
 
                 }
@@ -143,7 +143,7 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                        "Right away, Master! I've added this to your to-do list:\n\t%s\nYou now have %d tasks awaiting your attention~",
+                        "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
                         deadline, taskNo));
                 }
             } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
@@ -160,8 +160,8 @@ public class Rumi {
                     taskNo++;
 
                     printResponse(String.format(
-                        "Noted! I've scheduled this delightful event for you, Master~\n\t%s\n" +
-                        "Everything is perfectly arranged~\nYou now have %d tasks in the list.",
+                        "Noted! I've scheduled this delightful event for you, Master~\n  %s\n" +
+                        "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
                         event, taskNo));
 
                 }
