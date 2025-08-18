@@ -114,6 +114,19 @@ public class Rumi {
                 printResponse(String.format(
                     "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
                     task));
+            } else if (command.matches("delete\\s+-?\\d+")) {
+                int taskNo = Integer.parseInt(command.split(" ")[1]);
+                if (taskNo > Rumi.taskNo || taskNo <= 0) {
+                    printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
+                    command = scanner.nextLine();
+                    continue;
+                }
+
+                Task task = tasks[taskNo - 1];
+                task.unmarkAsDone();
+                printResponse(String.format(
+                        "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
+                        task));
             } else if (command.matches("todo\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("todo\\s+(.+)");
                 Matcher matcher = pattern.matcher(command);
