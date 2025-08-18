@@ -1,1 +1,16 @@
+todo buy grocery
+list
+deadline upload video /by 30/8 7pm
+list
+event yoasobi concert singapore /from 10/12 6pm /to 10/12 9pm
+list
+mark 2
+mark 1
+list
+unmark 1
+mark 3
+list
+unmark 3
+unmark 2
+list
 bye
