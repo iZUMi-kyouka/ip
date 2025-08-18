@@ -2,13 +2,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Rumi {
-    private static final Task[] tasks = new Task[100];
-    private static int taskNo = 0;
+    private static final ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static final String CHATBOT_NAME = "Rumi";
     public static final String LOGO =
@@ -62,14 +62,14 @@ public class Rumi {
     }
 
     private static String getTaskListString() {
-        if (taskNo == 0) {
+        if (tasks.isEmpty()) {
             return "Oh no! You haven't given me any tasks yet, Master... Please do soon, I'm eager to serve you~!\"";
         }
 
         StringBuilder list = new StringBuilder();
-        for (int i = 0; i < taskNo; i++) {
-            list.append(String.format("%d. ", i + 1)).append(tasks[i]);
-            if (i < taskNo - 1) {
+        for (int i = 0; i < tasks.size(); i++) {
+            list.append(String.format("%d. ", i + 1)).append(tasks.get(i));
+            if (i < tasks.size() - 1) {
                 list.append('\n');
             }
         }
@@ -84,18 +84,22 @@ public class Rumi {
         String command = scanner.nextLine();
         while (!command.equals("bye")) {
             if (command.equals("list")) {
-                printResponse(String.format(
-                    "You have entrusted me with %d task(s), Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
-                    taskNo, getTaskListString()));
+                String taskListString = getTaskListString();
+                if (tasks.isEmpty()) printResponse(taskListString);
+                else {
+                    printResponse(String.format(
+                        "You have entrusted me with %d task(s), Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
+                        tasks.size(), getTaskListString()));
+                }
             } else if (command.matches("mark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > Rumi.taskNo || taskNo <= 0) {
+                if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
                     command = scanner.nextLine();
                     continue;
                 }
 
-                Task task = tasks[taskNo - 1];
+                Task task = tasks.get(taskNo - 1);
                 task.markAsDone();
                 printResponse(String.format(
                     "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
@@ -103,30 +107,29 @@ public class Rumi {
 
             } else if (command.matches("unmark\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > Rumi.taskNo || taskNo <= 0) {
+                if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
                     command = scanner.nextLine();
                     continue;
                 }
 
-                Task task = tasks[taskNo - 1];
+                Task task = tasks.get(taskNo - 1);
                 task.unmarkAsDone();
                 printResponse(String.format(
                     "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
                     task));
             } else if (command.matches("delete\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > Rumi.taskNo || taskNo <= 0) {
+                if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
                     command = scanner.nextLine();
                     continue;
                 }
 
-                Task task = tasks[taskNo - 1];
-                task.unmarkAsDone();
+                Task task = tasks.remove(taskNo - 1);
                 printResponse(String.format(
-                        "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
-                        task));
+                        "Roger, Master! I've deleted this from your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
+                        task, tasks.size()));
             } else if (command.matches("todo\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("todo\\s+(.+)");
                 Matcher matcher = pattern.matcher(command);
@@ -135,12 +138,11 @@ public class Rumi {
                     String title = matcher.group(1);
 
                     ToDo todo = new ToDo(title);
-                    tasks[taskNo] = todo;
-                    taskNo++;
+                    tasks.add(todo);
 
                     printResponse(String.format(
                         "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
-                        todo, taskNo));
+                        todo, tasks.size()));
 
                 }
             } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+(.+)")) {
@@ -152,12 +154,11 @@ public class Rumi {
                     String dueDate = matcher.group(2);
 
                     Deadline deadline = new Deadline(title, dueDate);
-                    tasks[taskNo] = deadline;
-                    taskNo++;
+                    tasks.add(deadline);
 
                     printResponse(String.format(
                         "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
-                        deadline, taskNo));
+                        deadline, tasks.size()));
                 }
             } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)");
@@ -169,13 +170,12 @@ public class Rumi {
                     String to = matcher.group(3);
 
                     Event event = new Event(title, from, to);
-                    tasks[taskNo] = event;
-                    taskNo++;
+                    tasks.add(event);
 
                     printResponse(String.format(
                         "Noted! I've scheduled this delightful event for you, Master~\n  %s\n" +
                         "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
-                        event, taskNo));
+                        event, tasks.size()));
 
                 }
             } else {
