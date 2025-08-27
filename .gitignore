@@ -13,6 +13,9 @@ src/main/resources/docs/
 *.iml
 bin/
 
+# Save data
+.rumi_data
+
 # TUI Test program output
 /tui-test/ACTUAL.txt
 
