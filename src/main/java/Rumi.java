@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -8,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Rumi {
-    private static final ArrayList<Task> tasks = new ArrayList<Task>();
+    private static ArrayList<Task> tasks = new ArrayList<Task>();
 
     public static final String CHATBOT_NAME = "Rumi";
     public static final String LOGO =
@@ -47,6 +48,14 @@ public class Rumi {
         Utils.printIndent(Utils.boxText(s));
     }
 
+    private static void loadTasksFromDisk() {
+        tasks = Storage.loadTasks();
+    }
+
+    private static void saveTasksToDisk() {
+        Storage.saveTasks(Rumi.tasks);
+    }
+
     private static void showIntroMessage() {
         String message = String.format(
             "Welcome home, Master. %s at your service (๑˃ᴗ˂)ﻭ!\n" +
@@ -79,6 +88,7 @@ public class Rumi {
 
     public static void main(String[] args) {
         showIntroMessage();
+        loadTasksFromDisk();
 
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
@@ -182,6 +192,7 @@ public class Rumi {
                 printResponse("Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\nCould you please try again?");
             }
 
+            saveTasksToDisk();
             command = scanner.nextLine();
         }
 
