@@ -29,4 +29,9 @@ public class Event extends Task {
 
         throw new EventStringParseException();
     }
+
+    public String toSerialisedString() {
+        return String.format("E @#@ %s @#@ %s @#@ %s", super.getTitle(), this.from, this.to);
+    }
+
 }
