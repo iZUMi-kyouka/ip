@@ -1,12 +1,15 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Storage {
     private final String FILENAME = ".rumi_data";
 
-    public ArrayList<Task> loadTasks() {
+    public static ArrayList<Task> loadTasks() {
         ArrayList<Task> tasks = new ArrayList<>();
         try (Scanner sc = new Scanner(new File(".rumi_data"))) {
             while (sc.hasNextLine()) {
@@ -39,5 +42,13 @@ public class Storage {
         }
 
         return tasks;
+    }
+
+    public static void saveTasks(List<Task> tasks) {
+        try (PrintWriter saveFile = new PrintWriter(".rumi_data")) {
+            tasks.forEach(task -> saveFile.println(task.toSerialisedString()));
+        } catch (IOException e) {
+            System.out.printf("[ERROR] Failed to save task: %s\n", e);
+        }
     }
 }

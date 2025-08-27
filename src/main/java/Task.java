@@ -27,6 +27,10 @@ public class Task {
         return String.format("[%s] %s", this.isDone ? 'X' : ' ', this.title);
     }
 
+    public String toSerialisedString() {
+        return String.format("! @#@ %s @#@ %s", this.title, this.isDone ? 'D' : 'P');
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
