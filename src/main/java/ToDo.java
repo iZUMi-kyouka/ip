@@ -14,11 +14,12 @@ public class ToDo extends Task {
     }
 
     public static ToDo fromString(String s) throws ToDoStringParseException {
-        Pattern pattern = Pattern.compile("T\\s+@#@\\s+(.+?)");
+        Pattern pattern = Pattern.compile("T\\s+@#@\\s+([DP])\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
-            String title = matcher.group(1);
+            boolean isDone = matcher.group(1).equals("D");
+            String title = matcher.group(2);
             return new ToDo(title);
         }
 
@@ -26,6 +27,6 @@ public class ToDo extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("T @#@ %s", super.getTitle());
+        return String.format("T @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P');
     }
 }

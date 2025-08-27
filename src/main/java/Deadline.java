@@ -15,12 +15,13 @@ public class Deadline extends Task {
     }
 
     public static Deadline fromString(String s) throws DeadlineStringParseException {
-        Pattern pattern = Pattern.compile("D\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)");
+        Pattern pattern = Pattern.compile("D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
-            String title = matcher.group(1);
-            String deadline = matcher.group(2);
+            boolean isDone = matcher.group(1).equals("D");
+            String title = matcher.group(2);
+            String deadline = matcher.group(3);
             return new Deadline(title, deadline);
         }
 
@@ -28,6 +29,6 @@ public class Deadline extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("D @#@ %s @#@ %s", super.getTitle(), this.deadline);
+        return String.format("D @#@ %s @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P', this.deadline);
     }
 }

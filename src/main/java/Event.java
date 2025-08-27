@@ -17,13 +17,14 @@ public class Event extends Task {
     }
 
     public static Event fromString(String s) throws EventStringParseException {
-        Pattern pattern = Pattern.compile("E\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)");
+        Pattern pattern = Pattern.compile("E\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
-            String title = matcher.group(1);
-            String from = matcher.group(2);
-            String to = matcher.group(3);
+            boolean isDone = matcher.group(1).equals("D");
+            String title = matcher.group(2);
+            String from = matcher.group(3);
+            String to = matcher.group(4);
             return new Event(title, from, to);
         }
 
@@ -31,7 +32,7 @@ public class Event extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("E @#@ %s @#@ %s @#@ %s", super.getTitle(), this.from, this.to);
+        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P', this.from, this.to);
     }
 
 }

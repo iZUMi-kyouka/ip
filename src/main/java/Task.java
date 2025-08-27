@@ -22,6 +22,10 @@ public class Task {
         return this.title;
     }
 
+    public boolean getStatus() {
+        return this.isDone;
+    }
+
     @Override
     public String toString() {
         return String.format("[%s] %s", this.isDone ? 'X' : ' ', this.title);
