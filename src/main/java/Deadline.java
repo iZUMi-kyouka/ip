@@ -20,10 +20,14 @@ public class Deadline extends Task {
 
         if (matcher.matches()) {
             String title = matcher.group(1);
-            String dueDate = matcher.group(2);
-            return new Deadline(title, dueDate);
+            String deadline = matcher.group(2);
+            return new Deadline(title, deadline);
         }
 
         throw new DeadlineStringParseException();
+    }
+
+    public String toSerialisedString() {
+        return String.format("D @#@ %s @#@ %s", super.getTitle(), this.deadline);
     }
 }
