@@ -29,6 +29,6 @@ public class Deadline extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("D @#@ %s @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P', this.deadline);
+        return String.format("D @#@ %s @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle(), this.deadline);
     }
 }

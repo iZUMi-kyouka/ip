@@ -32,7 +32,7 @@ public class Event extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P', this.from, this.to);
+        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle(), this.from, this.to);
     }
 
 }

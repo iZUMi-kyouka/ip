@@ -27,6 +27,6 @@ public class ToDo extends Task {
     }
 
     public String toSerialisedString() {
-        return String.format("T @#@ %s @#@ %s", super.getTitle(), super.getStatus() ? 'D' : 'P');
+        return String.format("T @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle());
     }
 }
