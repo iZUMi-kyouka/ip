@@ -24,4 +24,8 @@ public class ToDo extends Task {
 
         throw new ToDoStringParseException();
     }
+
+    public String toSerialisedString() {
+        return String.format("T @#@ %s", super.getTitle());
+    }
 }
