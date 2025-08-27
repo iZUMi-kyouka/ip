@@ -13,13 +13,15 @@ public class ToDo extends Task {
         return String.format("[T]%s", super.toString());
     }
 
-    public static ToDo fromString(String s) {
-        Pattern pattern = Pattern.compile("T\\s+@|@\\s+(.+?)\\s+");
+    public static ToDo fromString(String s) throws ToDoStringParseException {
+        Pattern pattern = Pattern.compile("T\\s+@#@\\s+(.+?)");
         Matcher matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
             String title = matcher.group(1);
             return new ToDo(title);
         }
+
+        throw new ToDoStringParseException();
     }
 }
