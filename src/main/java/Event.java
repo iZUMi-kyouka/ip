@@ -11,6 +11,15 @@ public class Event extends Task {
         this.to = to;
     }
 
+    Event(String title, String from, String to, boolean isDone) {
+        super(title);
+        this.from = from;
+        this.to = to;
+        if (isDone) {
+            this.markAsDone();
+        }
+    }
+
     @Override
     public String toString() {
         return String.format("[E]%s (from: %s --> to: %s)", super.toString(), this.from, this.to);
@@ -25,14 +34,14 @@ public class Event extends Task {
             String title = matcher.group(2);
             String from = matcher.group(3);
             String to = matcher.group(4);
-            return new Event(title, from, to);
+            return new Event(title, from, to, isDone);
         }
 
         throw new EventStringParseException();
     }
 
     public String toSerialisedString() {
-        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle(), this.from, this.to);
+        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle(), this.from, this.to);
     }
 
 }

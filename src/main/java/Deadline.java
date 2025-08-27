@@ -9,6 +9,15 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
+    Deadline(String title, String deadline, boolean isDone) {
+        super(title);
+        this.deadline = deadline;
+        if (isDone) {
+            this.markAsDone();
+        }
+    }
+
+
     @Override
     public String toString() {
         return String.format("[D]%s (by: %s)", super.toString(), this.deadline);
@@ -22,13 +31,13 @@ public class Deadline extends Task {
             boolean isDone = matcher.group(1).equals("D");
             String title = matcher.group(2);
             String deadline = matcher.group(3);
-            return new Deadline(title, deadline);
+            return new Deadline(title, deadline, isDone);
         }
 
         throw new DeadlineStringParseException();
     }
 
     public String toSerialisedString() {
-        return String.format("D @#@ %s @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle(), this.deadline);
+        return String.format("D @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle(), this.deadline);
     }
 }

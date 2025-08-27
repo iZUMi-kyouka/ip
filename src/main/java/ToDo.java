@@ -8,6 +8,13 @@ public class ToDo extends Task {
         super(title);
     }
 
+    ToDo(String title, boolean isDone) {
+        super(title);
+        if (isDone) {
+            this.markAsDone();
+        };
+    }
+
     @Override
     public String toString() {
         return String.format("[T]%s", super.toString());
@@ -20,13 +27,13 @@ public class ToDo extends Task {
         if (matcher.matches()) {
             boolean isDone = matcher.group(1).equals("D");
             String title = matcher.group(2);
-            return new ToDo(title);
+            return new ToDo(title, isDone);
         }
 
         throw new ToDoStringParseException();
     }
 
     public String toSerialisedString() {
-        return String.format("T @#@ %s @#@ %s", super.getStatus() ? 'D' : 'P', super.getTitle());
+        return String.format("T @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle());
     }
 }
