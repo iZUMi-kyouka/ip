@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,20 +14,23 @@ public class RumiDate {
 
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
-        String validDateTimePattern = "^(0?[1-9]|[12][0-9]|3[01])" +   // day
-                "([-.,/ ])" +                     // date separator (group 2)
-                "(0?[1-9]|1[0-2])" +              // month
-                "\\2" +                           // same date separator
-                "(\\d{2}|\\d{4})" +               // year
-                "\\s+" +                           // space between date and time
-                "([01]?[0-9]|2[0-3])" +           // hour
-                "(?:" +
-                "([:.\\-])([0-5][0-9])" +         // optional minute with separator
-                "(?:" +
-                "\\7([0-5][0-9])" +               // optional second with same separator
-                ")?" +
-                ")?" +
-                "\\s*([AaPp][Mm])?$";             // optional AM/PM
+        String validDateTimePattern =
+                "^(0?[1-9]|[12][0-9]|3[01])" +   // day
+                        "([-.,/ ])" +                     // date separator (group 2)
+                        "(0?[1-9]|1[0-2])" +              // month
+                        "\\2" +                           // same date separator
+                        "(\\d{2}|\\d{4})" +               // year
+                        "(?:\\s+" +                        // optional space before time (entire time optional)
+                        "([01]?[0-9]|2[0-3])" +        // hour (if present)
+                        "(?:" +
+                        "([:.\\-])([0-5][0-9])" +  // optional minute with separator
+                        "(?:" +
+                        "\\7([0-5][0-9])" +    // optional second
+                        ")?" +
+                        ")?" +
+                        "\\s*([AaPp][Mm])?" +          // optional AM/PM
+                        ")?$";                              // end of optional time
+
 
         Pattern pattern = Pattern.compile(validDateTimePattern);
         Matcher matcher = pattern.matcher(s);
@@ -61,5 +65,10 @@ public class RumiDate {
 
         LocalDateTime dt = LocalDateTime.of(year, month, day, hour, minute, second);
         return dt;
+    }
+
+    @Override
+    public String toString() {
+        return parsedDate != null ? parsedDate.toString() : stringDate;
     }
 }

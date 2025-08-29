@@ -2,19 +2,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Event extends Task {
-    private String from;
-    private String to;
+    private RumiDate from;
+    private RumiDate to;
 
     Event(String title, String from, String to) {
         super(title);
-        this.from = from;
-        this.to = to;
+        this.from = RumiDate.fromString(from);
+        this.to = RumiDate.fromString(to);
     }
 
     Event(String title, String from, String to, boolean isDone) {
         super(title);
-        this.from = from;
-        this.to = to;
+        this.from = RumiDate.fromString(from);
+        this.to = RumiDate.fromString(to);
         if (isDone) {
             this.markAsDone();
         }

@@ -2,16 +2,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Deadline extends Task {
-    private String deadline;
+    private RumiDate deadline;
 
     Deadline(String title, String deadline) {
         super(title);
-        this.deadline = deadline;
+        this.deadline = RumiDate.fromString(deadline);
     }
 
     Deadline(String title, String deadline, boolean isDone) {
         super(title);
-        this.deadline = deadline;
+        this.deadline = RumiDate.fromString(deadline);
         if (isDone) {
             this.markAsDone();
         }
