@@ -1,14 +1,12 @@
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RumiDate {
-    private String stringDate;
+    private final String stringDate;
     private LocalDateTime parsedDate;
-    private DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("dd-MM-YYYY hh:mma");
+    private final DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("dd-MM-YYYY hh:mma");
 
     RumiDate(String s) {
         this.stringDate = s;

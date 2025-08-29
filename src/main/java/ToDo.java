@@ -12,7 +12,7 @@ public class ToDo extends Task {
         super(title);
         if (isDone) {
             this.markAsDone();
-        };
+        }
     }
 
     @Override
@@ -33,6 +33,7 @@ public class ToDo extends Task {
         throw new ToDoStringParseException();
     }
 
+    @Override
     public String toSerialisedString() {
         return String.format("T @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle());
     }
