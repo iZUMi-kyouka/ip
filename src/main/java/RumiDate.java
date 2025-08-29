@@ -1,3 +1,4 @@
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.regex.Pattern;
 public class RumiDate {
     private String stringDate;
     private LocalDateTime parsedDate;
+    private DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("dd-MM-YYYY hh:mma");
 
     RumiDate(String s) {
         this.stringDate = s;
@@ -69,6 +71,8 @@ public class RumiDate {
 
     @Override
     public String toString() {
-        return parsedDate != null ? parsedDate.toString() : stringDate;
+        return parsedDate != null
+                ? parsedDate.format(DATETIME_OUTPUT_FORMAT)
+                : stringDate;
     }
 }
