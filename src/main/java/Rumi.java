@@ -3,12 +3,13 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Main chatbot class
+ */
 public class Rumi {
 
-    private static TaskList tasks = new TaskList();
-
     public static final String CHATBOT_NAME = "Rumi";
-    public final static String LOGO
+    public static final String LOGO
             = "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠛⠛⠛⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⣉⠄⣢⣴⣟⣫⣤⣾⢿⣿⣷⡶⢦⣬⣉⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣡⡴⠋⢑⣬⣴⣿⣿⡻⣿⣿⣶⣝⠻⣿⣷⣾⣿⢿⣦⡉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -40,19 +41,19 @@ public class Rumi {
             + "⣿⣶⣦⣤⣤⣤⣤⣤⣄⣀⣀⣀⣈⣉⣉⡉⠉⠉⠉⠉⠛⠛⠛⠛⠛⠚⠓⠒⠒⠶⠖⠲⠦⠰⠶⠰⠂⠉⠉⠉⠛⠛⠓⠛⠛⠁⠀⣉⣁⣀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣼\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣶⣶⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
-    private static void printResponse(String s) {
-        Utils.printIndent(Utils.boxText(s));
-    }
+    private final TaskList tasks;
+    private final Ui ui;
 
-    private static void loadTasksFromDisk() {
+    Rumi(Scanner scanner) {
+        this.ui = new Ui(scanner);
         tasks = Storage.loadTasks();
     }
 
-    private static void saveTasksToDisk() {
-        Storage.saveTasks(Rumi.tasks);
+    private void printResponse(String s) {
+        Utils.printIndent(Utils.boxText(s));
     }
 
-    private static void showIntroMessage() {
+    private void showIntroMessage() {
         String message = String.format(
                 "Welcome home, Master. %s at your service (๑˃ᴗ˂)ﻭ!\n"
                 + "How may I assist you?", CHATBOT_NAME);
@@ -60,13 +61,13 @@ public class Rumi {
         printResponse(message);
     }
 
-    private static void showGoodbyeMessage() {
+    private void showGoodbyeMessage() {
         printResponse(
                 "Thank you for allowing me to serve you today, Master. "
                 + "I shall await your return with great anticipation~");
     }
 
-    private static String getTaskListString() {
+    private String getTaskListString() {
         if (tasks.isEmpty()) {
             return "Oh no! You haven't given me any tasks yet, Master... Please do soon, I'm eager to serve you~!\"";
         }
@@ -82,13 +83,13 @@ public class Rumi {
         return list.toString();
     }
 
-    public static void main(String[] args) {
-        showIntroMessage();
-        loadTasksFromDisk();
-
-        Scanner scanner = new Scanner(System.in);
-        String command = scanner.nextLine();
+    /**
+     * Runs the main chatbot loop.
+     */
+    public void run() {
+        String command = "";
         while (!command.equals("bye")) {
+            command = this.ui.readCommand();
             if (command.equals("list")) {
                 String taskListString = getTaskListString();
                 if (tasks.isEmpty()) {
@@ -103,7 +104,6 @@ public class Rumi {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    command = scanner.nextLine();
                     continue;
                 }
 
@@ -117,7 +117,6 @@ public class Rumi {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    command = scanner.nextLine();
                     continue;
                 }
 
@@ -131,7 +130,6 @@ public class Rumi {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
                 if (taskNo > tasks.size() || taskNo <= 0) {
                     printResponse("Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    command = scanner.nextLine();
                     continue;
                 }
 
@@ -163,6 +161,8 @@ public class Rumi {
                 if (matcher.matches()) {
                     String title = matcher.group(1);
                     String dueDate = matcher.group(2);
+                    System.out.println(title);
+                    System.out.println(dueDate);
 
                     Deadline deadline = new Deadline(title, dueDate);
                     tasks.add(deadline);
@@ -195,11 +195,18 @@ public class Rumi {
                         + "Could you please try again?");
             }
 
-            saveTasksToDisk();
-            command = scanner.nextLine();
+            Storage.saveTasks(tasks);
         }
+    }
 
-        scanner.close();
-        showGoodbyeMessage();
+    public static void main(String[] args) {
+        Rumi rumi;
+        try (Scanner sc = new Scanner(System.in)) {
+            rumi = new Rumi(sc);
+
+            rumi.showIntroMessage();
+            rumi.run();
+            rumi.showGoodbyeMessage();
+        }
     }
 }
