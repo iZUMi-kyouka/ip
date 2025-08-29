@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -5,9 +6,17 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Handles persistence of tasks
+ */
 public class Storage {
+
     private static final String SAVE_FILE_NAME = ".rumi_data";
 
+    /**
+     * Attempts to load the tasks from the .rumi_data file. If this fails, an
+     * empty TaskList is returned.
+     */
     public static TaskList loadTasks() {
         TaskList tasks = new TaskList();
         try (Scanner sc = new Scanner(new File(".rumi_data"))) {
@@ -19,9 +28,12 @@ public class Storage {
 
                 try {
                     switch (task.charAt(0)) {
-                        case 'E' -> tasks.add(Event.fromString(task));
-                        case 'D' -> tasks.add(Deadline.fromString(task));
-                        case 'T' -> tasks.add(ToDo.fromString(task));
+                        case 'E' ->
+                            tasks.add(Event.fromString(task));
+                        case 'D' ->
+                            tasks.add(Deadline.fromString(task));
+                        case 'T' ->
+                            tasks.add(ToDo.fromString(task));
                         default -> {
                         }
                     }
@@ -36,6 +48,10 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Attempts to save the tasks into the .rumi_data text file. If this fails,
+     * an error is shown.
+     */
     public static void saveTasks(List<Task> tasks) {
         try (PrintWriter saveFile = new PrintWriter(SAVE_FILE_NAME)) {
             tasks.forEach(task -> saveFile.println(task.toSerialisedString()));

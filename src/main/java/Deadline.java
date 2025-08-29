@@ -1,8 +1,9 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Represents a deadline */
 public class Deadline extends Task {
-    private RumiDate deadline;
+    private final RumiDate deadline;
 
     Deadline(String title, String deadline) {
         super(title);
@@ -23,6 +24,7 @@ public class Deadline extends Task {
         return String.format("[D]%s (by: %s)", super.toString(), this.deadline);
     }
 
+    /** Creates a deadline from a serialised string. */
     public static Deadline fromString(String s) throws DeadlineStringParseException {
         Pattern pattern = Pattern.compile("D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
@@ -37,6 +39,7 @@ public class Deadline extends Task {
         throw new DeadlineStringParseException();
     }
 
+    @Override
     public String toSerialisedString() {
         return String.format("D @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle(), this.deadline);
     }

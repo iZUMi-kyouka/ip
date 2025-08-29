@@ -1,9 +1,8 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Represents a general to-do item. */
 public class ToDo extends Task {
-    private final String SEPARATOR = " @|@ ";
-
     ToDo(String title) {
         super(title);
     }
@@ -20,6 +19,7 @@ public class ToDo extends Task {
         return String.format("[T]%s", super.toString());
     }
 
+    /** Creates a to-do from a serialised string. */
     public static ToDo fromString(String s) throws ToDoStringParseException {
         Pattern pattern = Pattern.compile("T\\s+@#@\\s+([DP])\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
