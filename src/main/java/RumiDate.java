@@ -49,7 +49,7 @@ public class RumiDate {
         int month = Integer.parseInt(matcher.group(3));
         int year = Integer.parseInt(matcher.group(4));
 
-        int hour = Integer.parseInt(matcher.group(5));
+        int hour = matcher.group(5) != null ? Integer.parseInt(matcher.group(5)) : 23;
         String ampm = matcher.group(9);
 
         if (ampm != null) {
@@ -60,8 +60,8 @@ public class RumiDate {
             }
         }
 
-        int minute = matcher.group(7) != null ? Integer.parseInt(matcher.group(7)) : 0;
-        int second = matcher.group(8) != null ? Integer.parseInt(matcher.group(8)) : 0;
+        int minute = matcher.group(7) != null ? Integer.parseInt(matcher.group(7)) : 59;
+        int second = matcher.group(8) != null ? Integer.parseInt(matcher.group(8)) : 59;
 
         LocalDateTime dt = LocalDateTime.of(year, month, day, hour, minute, second);
         return dt;
