@@ -1,7 +1,11 @@
+
 import java.util.Scanner;
 
-/** Handles getting input from user and printing output to the terminal */
+/**
+ * Handles getting input from user and printing output to the terminal
+ */
 public class Ui {
+
     private final Scanner scanner;
 
     Ui(Scanner scanner) {
@@ -22,5 +26,9 @@ public class Ui {
 
     public void showError(String warning) {
         printfln("[WARNING] %s", warning);
+    }
+
+    public void printResponse(String s) {
+        Utils.printIndent(Utils.boxText(s));
     }
 }
