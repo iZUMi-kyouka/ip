@@ -8,7 +8,7 @@ public class Rumi {
     private static TaskList tasks = new TaskList();
 
     public static final String CHATBOT_NAME = "Rumi";
-    public static final String LOGO
+    public final static String LOGO
             = "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠛⠛⠛⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⣉⠄⣢⣴⣟⣫⣤⣾⢿⣿⣷⡶⢦⣬⣉⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣡⡴⠋⢑⣬⣴⣿⣿⡻⣿⣿⣶⣝⠻⣿⣷⣾⣿⢿⣦⡉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -95,7 +95,8 @@ public class Rumi {
                     printResponse(taskListString);
                 } else {
                     printResponse(String.format(
-                            "You have entrusted me with %d task(s), Master~\nHere's the list, all neat and tidy just for you ♥.\n%s",
+                            "You have entrusted me with %d task(s), Master~\n"
+                            + "Here's the list, all neat and tidy just for you ♥.\n%s",
                             tasks.size(), getTaskListString()));
                 }
             } else if (command.matches("mark\\s+-?\\d+")) {
@@ -123,7 +124,8 @@ public class Rumi {
                 Task task = tasks.get(taskNo - 1);
                 task.unmarkAsDone();
                 printResponse(String.format(
-                        "Understood, Master. I've marked this task as not done yet~\n    ✘ %s\nLet me know when it’s done again!",
+                        "Understood, Master. I've marked this task as not done yet~\n"
+                        + "    ✘ %s\nLet me know when it’s done!",
                         task));
             } else if (command.matches("delete\\s+-?\\d+")) {
                 int taskNo = Integer.parseInt(command.split(" ")[1]);
@@ -135,7 +137,8 @@ public class Rumi {
 
                 Task task = tasks.remove(taskNo);
                 printResponse(String.format(
-                        "Roger, Master! I've deleted this from your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
+                        "Roger, Master! I've deleted this from your to-do list:\n"
+                        + "    %s\nYou now have %d task(s) awaiting your attention~",
                         task, tasks.size()));
             } else if (command.matches("todo\\s+(.+)")) {
                 Pattern pattern = Pattern.compile("todo\\s+(.+)");
@@ -148,7 +151,8 @@ public class Rumi {
                     tasks.add(todo);
 
                     printResponse(String.format(
-                            "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
+                            "Right away, Master! I've added this to your to-do list:\n"
+                            + "    %s\nYou now have %d task(s) awaiting your attention~",
                             todo, tasks.size()));
 
                 }
@@ -164,7 +168,8 @@ public class Rumi {
                     tasks.add(deadline);
 
                     printResponse(String.format(
-                            "Right away, Master! I've added this to your to-do list:\n    %s\nYou now have %d task(s) awaiting your attention~",
+                            "Right away, Master! I've added this to your to-do list:\n"
+                            + "    %s\nYou now have %d task(s) awaiting your attention~",
                             deadline, tasks.size()));
                 }
             } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
@@ -186,7 +191,8 @@ public class Rumi {
 
                 }
             } else {
-                printResponse("Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\nCould you please try again?");
+                printResponse("Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n"
+                        + "Could you please try again?");
             }
 
             saveTasksToDisk();
