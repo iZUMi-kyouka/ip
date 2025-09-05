@@ -1,3 +1,4 @@
+package rumi;
 
 /** Handles parsing of user commands. */
 public abstract class Command {

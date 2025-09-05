@@ -1,3 +1,5 @@
+package rumi;
+import rumi.ui.Ui;
 
 /** Represents an `event` command. */
 public class EventCommand extends Command {

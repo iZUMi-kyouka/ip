@@ -1,18 +1,19 @@
+package rumi;
+import rumi.ui.Ui;
 
-/** Represents an `unmark` command. */
-public class UnmarkCommand extends Command {
+/** Represents a `delete` command. */
+public class DeleteCommand extends Command {
 
     private final TaskList tasks;
     private final Ui ui;
     private final int taskNo;
 
     /**
-     * Creates a UnmarkCommand with given a TaskList and a task number.
+     * Creates a DeleteCommand with given a TaskList and a task number.
      */
-    public UnmarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+    public DeleteCommand(TaskList tasks, Ui ui, String taskNoStr) {
         this.tasks = tasks;
         this.ui = ui;
-
         int taskNo = Integer.parseInt(taskNoStr);
         if (taskNo > tasks.size() || taskNo <= 0) {
             this.ui.printResponse(
@@ -24,16 +25,15 @@ public class UnmarkCommand extends Command {
 
     @Override
     public void run() {
-        Task task = tasks.get(taskNo - 1);
-        task.unmarkAsDone();
+        Task task = tasks.remove(taskNo);
         this.ui.printResponse(String.format(
-                "Understood, Master. I've marked this task as not done yet~\n"
-                + "    ✘ %s\nLet me know when it’s done!",
-                task));
+                "Roger, Master! I've deleted this from your to-do list:\n"
+                + "    %s\nYou now have %d task(s) awaiting your attention~",
+                task, tasks.size()));
     }
 
     @Override
     public CommandType getType() {
-        return CommandType.UNMARK;
+        return CommandType.DELETE;
     }
 }

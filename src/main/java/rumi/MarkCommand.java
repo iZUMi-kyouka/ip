@@ -1,17 +1,20 @@
+package rumi;
+import rumi.ui.Ui;
 
-/** Represents a `delete` command. */
-public class DeleteCommand extends Command {
+/** Represents a `mark` command. */
+public class MarkCommand extends Command {
 
     private final TaskList tasks;
     private final Ui ui;
     private final int taskNo;
 
     /**
-     * Creates a DeleteCommand with given a TaskList and a task number.
+     * Creates a MarkCommand with given a TaskList and a task number.
      */
-    public DeleteCommand(TaskList tasks, Ui ui, String taskNoStr) {
+    public MarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
         this.tasks = tasks;
         this.ui = ui;
+
         int taskNo = Integer.parseInt(taskNoStr);
         if (taskNo > tasks.size() || taskNo <= 0) {
             this.ui.printResponse(
@@ -23,15 +26,15 @@ public class DeleteCommand extends Command {
 
     @Override
     public void run() {
-        Task task = tasks.remove(taskNo);
+        Task task = tasks.get(taskNo - 1);
+        task.markAsDone();
         this.ui.printResponse(String.format(
-                "Roger, Master! I've deleted this from your to-do list:\n"
-                + "    %s\nYou now have %d task(s) awaiting your attention~",
-                task, tasks.size()));
+                "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
+                task));
     }
 
     @Override
     public CommandType getType() {
-        return CommandType.DELETE;
+        return CommandType.MARK;
     }
 }

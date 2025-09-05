@@ -1,5 +1,7 @@
+package rumi.ui;
 
 import java.util.Scanner;
+import rumi.utils.Utils;
 
 /**
  * Handles getting input from user and printing output to the terminal
@@ -8,7 +10,7 @@ public class Ui {
 
     private final Scanner scanner;
 
-    Ui(Scanner scanner) {
+    public Ui(Scanner scanner) {
         this.scanner = scanner;
     }
 

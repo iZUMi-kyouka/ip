@@ -1,6 +1,8 @@
+package rumi;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import rumi.ui.Ui;
 
 /**
  * Handles parsing of user command and returning the correct command type.

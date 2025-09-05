@@ -1,15 +1,17 @@
+package rumi;
+import rumi.ui.Ui;
 
-/** Represents a `mark` command. */
-public class MarkCommand extends Command {
+/** Represents an `unmark` command. */
+public class UnmarkCommand extends Command {
 
     private final TaskList tasks;
     private final Ui ui;
     private final int taskNo;
 
     /**
-     * Creates a MarkCommand with given a TaskList and a task number.
+     * Creates a UnmarkCommand with given a TaskList and a task number.
      */
-    public MarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+    public UnmarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
         this.tasks = tasks;
         this.ui = ui;
 
@@ -25,14 +27,15 @@ public class MarkCommand extends Command {
     @Override
     public void run() {
         Task task = tasks.get(taskNo - 1);
-        task.markAsDone();
+        task.unmarkAsDone();
         this.ui.printResponse(String.format(
-                "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
+                "Understood, Master. I've marked this task as not done yet~\n"
+                + "    ✘ %s\nLet me know when it’s done!",
                 task));
     }
 
     @Override
     public CommandType getType() {
-        return CommandType.MARK;
+        return CommandType.UNMARK;
     }
 }

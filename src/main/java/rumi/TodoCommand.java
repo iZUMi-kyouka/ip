@@ -1,3 +1,5 @@
+package rumi;
+import rumi.ui.Ui;
 
 /**
  * Represents a `todo` command.

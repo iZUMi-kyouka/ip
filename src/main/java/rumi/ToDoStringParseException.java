@@ -1,3 +1,4 @@
+package rumi;
 
 /** Exception representing failure to parse a ToDo from string. */
 public class ToDoStringParseException extends IllegalArgumentException {

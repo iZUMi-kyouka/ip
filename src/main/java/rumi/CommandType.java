@@ -1,3 +1,4 @@
+package rumi;
 /** Represents all possible type of user command */
 public enum CommandType {
     EXIT,

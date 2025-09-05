@@ -1,11 +1,19 @@
-public class Utils {
-    public static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+package rumi.utils;
 
+/**
+ * Utilities for printing responses
+ */
+public class Utils {
+
+    public static final String DIVIDER = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
 
     public static void printIndent(String s) {
         printIndent(s, 1);
     }
 
+    /**
+     * Prints the given string with the specified tab count
+     */
     public static void printIndent(String s, int tabCount) {
         String tabs = "\t".repeat(Math.max(0, tabCount));
         StringBuilder indentedString = new StringBuilder();

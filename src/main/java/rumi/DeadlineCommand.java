@@ -1,3 +1,5 @@
+package rumi;
+import rumi.ui.Ui;
 
 /** Represents a `deadline` command. */
 public class DeadlineCommand extends Command {

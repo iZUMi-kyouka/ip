@@ -1,5 +1,8 @@
+package rumi;
 
 import java.util.Scanner;
+
+import rumi.ui.Ui;
 
 /**
  * Main chatbot class
