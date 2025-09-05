@@ -1,19 +1,34 @@
+
 /** Represents a `deadline` command. */
 public class DeadlineCommand extends Command {
 
     private final TaskList tasks;
+    private final Ui ui;
     private final String title;
     private final String dueDate;
 
-    /** Creates a DeadlineCommand with given a TaskList and a task number. */
-    public DeadlineCommand(TaskList tasks, String title, String dueDate) {
+    /**
+     * Creates a DeadlineCommand with given a TaskList and a task number.
+     */
+    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate) {
         this.tasks = tasks;
+        this.ui = ui;
         this.title = title;
         this.dueDate = dueDate;
     }
 
     @Override
-    public void perform() {
-        this.tasks.add(new Deadline(this.title, this.dueDate));
+    public void run() {
+        Deadline deadline = new Deadline(title, dueDate);
+        this.tasks.add(deadline);
+        this.ui.printResponse(String.format(
+                "Right away, Master! I've added this to your to-do list:\n"
+                + "    %s\nYou now have %d task(s) awaiting your attention~",
+                deadline, tasks.size()));
+    }
+
+    @Override
+    public CommandType getType() {
+        return CommandType.DEADLINE;
     }
 }

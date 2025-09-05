@@ -2,12 +2,7 @@
 /** Handles parsing of user commands. */
 public abstract class Command {
 
-    public static final Runnable NOOP = () -> {
-    };
+    public abstract void run();
 
-    protected Runnable action = NOOP;
-
-    public void perform() {
-        this.action.run();
-    }
+    public abstract CommandType getType();
 }

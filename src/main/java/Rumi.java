@@ -1,7 +1,5 @@
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Main chatbot class
@@ -40,18 +38,22 @@ public class Rumi {
             + "⣿⠀⠤⠄⠀⢀⣀⣠⣨⣉⣉⣉⣉⣛⣛⡛⣛⢛⡛⠛⠛⠛⠛⠻⠿⠿⠿⠿⠿⠿⠿⠿⠜⡆⠈⠉⠀⠀⠙⠋⠠⠤⠐⠛⠀⠀⠀⠀⠀⠈⠳⠀⠀⠀⠀⠀⠀⠀⠛⠛⠛⠛⠛⠛⠻\n"
             + "⣿⣶⣦⣤⣤⣤⣤⣤⣄⣀⣀⣀⣈⣉⣉⡉⠉⠉⠉⠉⠛⠛⠛⠛⠛⠚⠓⠒⠒⠶⠖⠲⠦⠰⠶⠰⠂⠉⠉⠉⠛⠛⠓⠛⠛⠁⠀⣉⣁⣀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣼\n"
             + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣶⣶⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
+    public static final String UNKNOWN_TASK_RESPONSE = "Forgive me, Master, but I cannot find such a task... "
+            + "Are you certain it exists?";
 
     private final TaskList tasks;
     private final Ui ui;
+    private final Parser parser;
 
     Rumi(Scanner scanner) {
         this.ui = new Ui(scanner);
         tasks = Storage.loadTasks();
+        this.parser = new Parser(this.tasks, this.ui);
     }
 
     private void showIntroMessage() {
         String message = String.format(
-                "Welcome home, Master. %s at your service (๑˃ᴗ˂)ﻭ!\n"
+                "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n"
                 + "How may I assist you?", CHATBOT_NAME);
         System.out.println(LOGO);
         this.ui.printResponse(message);
@@ -68,112 +70,16 @@ public class Rumi {
      */
     public void run() {
         String command = "";
-        while (!command.equals("bye")) {
+        while (true) {
             command = this.ui.readCommand();
-            if (command.equals("list")) {
-                if (tasks.isEmpty()) {
-                    this.ui.printResponse("Oh no! You haven't given me any tasks yet, Master... "
-                            + "Please do soon, I'm eager to serve you~!");
-                } else {
-                    this.ui.printResponse(String.format(
-                            "You have entrusted me with %d task(s), Master~\n"
-                            + "Here's the list, all neat and tidy just for you ♥.\n%s",
-                            tasks.size(), tasks));
-                }
-            } else if (command.matches("mark\\s+-?\\d+")) {
-                int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > tasks.size() || taskNo <= 0) {
-                    this.ui.printResponse(
-                            "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    continue;
+            try {
+                Command parsedCommand = this.parser.parse(command);
+                if (parsedCommand.getType() == CommandType.EXIT) {
+                    break;
                 }
 
-                Task task = tasks.get(taskNo - 1);
-                task.markAsDone();
-                this.ui.printResponse(String.format(
-                        "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
-                        task));
-
-            } else if (command.matches("unmark\\s+-?\\d+")) {
-                int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > tasks.size() || taskNo <= 0) {
-                    this.ui.printResponse(
-                            "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    continue;
-                }
-
-                Task task = tasks.get(taskNo - 1);
-                task.unmarkAsDone();
-                this.ui.printResponse(String.format(
-                        "Understood, Master. I've marked this task as not done yet~\n"
-                        + "    ✘ %s\nLet me know when it’s done!",
-                        task));
-            } else if (command.matches("delete\\s+-?\\d+")) {
-                int taskNo = Integer.parseInt(command.split(" ")[1]);
-                if (taskNo > tasks.size() || taskNo <= 0) {
-                    this.ui.printResponse(
-                            "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
-                    continue;
-                }
-
-                Task task = tasks.remove(taskNo);
-                this.ui.printResponse(String.format(
-                        "Roger, Master! I've deleted this from your to-do list:\n"
-                        + "    %s\nYou now have %d task(s) awaiting your attention~",
-                        task, tasks.size()));
-            } else if (command.matches("todo\\s+(.+)")) {
-                Pattern pattern = Pattern.compile("todo\\s+(.+)");
-                Matcher matcher = pattern.matcher(command);
-
-                if (matcher.matches()) {
-                    String title = matcher.group(1);
-
-                    ToDo todo = new ToDo(title);
-                    tasks.add(todo);
-
-                    this.ui.printResponse(String.format(
-                            "Right away, Master! I've added this to your to-do list:\n"
-                            + "    %s\nYou now have %d task(s) awaiting your attention~",
-                            todo, tasks.size()));
-
-                }
-            } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+(.+)")) {
-                Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+/by\\s+(.+)");
-                Matcher matcher = pattern.matcher(command);
-
-                if (matcher.matches()) {
-                    String title = matcher.group(1);
-                    String dueDate = matcher.group(2);
-                    System.out.println(title);
-                    System.out.println(dueDate);
-
-                    Deadline deadline = new Deadline(title, dueDate);
-                    tasks.add(deadline);
-
-                    this.ui.printResponse(String.format(
-                            "Right away, Master! I've added this to your to-do list:\n"
-                            + "    %s\nYou now have %d task(s) awaiting your attention~",
-                            deadline, tasks.size()));
-                }
-            } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
-                Pattern pattern = Pattern.compile("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)");
-                Matcher matcher = pattern.matcher(command);
-
-                if (matcher.matches()) {
-                    String title = matcher.group(1);
-                    String from = matcher.group(2);
-                    String to = matcher.group(3);
-
-                    Event event = new Event(title, from, to);
-                    tasks.add(event);
-
-                    this.ui.printResponse(String.format(
-                            "Noted! I've scheduled this delightful event for you, Master~\n  %s\n"
-                            + "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
-                            event, tasks.size()));
-
-                }
-            } else {
+                parsedCommand.run();
+            } catch (UnknownUserCommandException e) {
                 this.ui.printResponse("Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n"
                         + "Could you please try again?");
             }
