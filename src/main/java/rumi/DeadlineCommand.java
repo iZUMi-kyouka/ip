@@ -1,7 +1,10 @@
 package rumi;
+
 import rumi.ui.Ui;
 
-/** Represents a `deadline` command. */
+/**
+ * Represents a `deadline` command.
+ */
 public class DeadlineCommand extends Command {
 
     private final TaskList tasks;
@@ -32,5 +35,15 @@ public class DeadlineCommand extends Command {
     @Override
     public CommandType getType() {
         return CommandType.DEADLINE;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof DeadlineCommand)) {
+            return false;
+        }
+
+        DeadlineCommand command = (DeadlineCommand) o;
+        return command.title.equals(this.title) && command.dueDate.equals(this.dueDate);
     }
 }

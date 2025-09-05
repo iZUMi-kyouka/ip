@@ -1,4 +1,5 @@
 package rumi;
+
 import rumi.ui.Ui;
 
 /**
@@ -33,5 +34,15 @@ public class TodoCommand extends Command {
     @Override
     public CommandType getType() {
         return CommandType.TODO;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TodoCommand)) {
+            return false;
+        }
+
+        TodoCommand command = (TodoCommand) o;
+        return command.title.equals(command.title);
     }
 }

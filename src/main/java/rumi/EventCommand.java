@@ -1,7 +1,10 @@
 package rumi;
+
 import rumi.ui.Ui;
 
-/** Represents an `event` command. */
+/**
+ * Represents an `event` command.
+ */
 public class EventCommand extends Command {
 
     private final TaskList tasks;
@@ -34,5 +37,15 @@ public class EventCommand extends Command {
     @Override
     public CommandType getType() {
         return CommandType.EVENT;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof EventCommand)) {
+            return false;
+        }
+
+        EventCommand command = (EventCommand) o;
+        return command.title.equals(this.title) && command.from.equals(this.from) && command.to.equals(this.to);
     }
 }
