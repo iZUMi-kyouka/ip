@@ -32,7 +32,7 @@ application {
 }
 
 shadowJar {
-    archiveBaseName = "rumi.jar"
+    archiveBaseName = "rumi"
     archiveClassifier = null
 }
 
