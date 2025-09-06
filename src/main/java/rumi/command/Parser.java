@@ -1,17 +1,8 @@
-package rumi;
+package rumi.command;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import rumi.command.Command;
-import rumi.command.DeadlineCommand;
-import rumi.command.DeleteCommand;
-import rumi.command.EventCommand;
-import rumi.command.ExitCommand;
-import rumi.command.FindCommand;
-import rumi.command.ListCommand;
-import rumi.command.MarkCommand;
-import rumi.command.ToDoCommand;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 
@@ -23,7 +14,10 @@ public class Parser {
     private final TaskList tasks;
     private final Ui ui;
 
-    Parser(TaskList tasks, Ui ui) {
+    /**
+     * Creates a new parser using the given task lists and ui reference
+     */
+    public Parser(TaskList tasks, Ui ui) {
         this.tasks = tasks;
         this.ui = ui;
     }

@@ -3,7 +3,7 @@ package rumi.task;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import rumi.RumiDate;
+import rumi.utils.RumiDate;
 
 /** Represents a task of subtype event. */
 public class Event extends Task {

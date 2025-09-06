@@ -9,6 +9,7 @@ public class FindCommand extends Command {
     private final Ui ui;
     private final String query;
 
+    /**  */
     public FindCommand(TaskList tasks, Ui ui, String query) {
         this.tasks = tasks;
         this.ui = ui;

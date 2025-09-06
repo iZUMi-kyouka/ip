@@ -1,11 +1,13 @@
 package rumi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.Test;
 
 import rumi.command.Command;
 import rumi.command.DeadlineCommand;
 import rumi.command.EventCommand;
+import rumi.command.Parser;
 import rumi.command.ToDoCommand;
 
 public class ParserTest {
