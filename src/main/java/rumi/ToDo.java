@@ -20,7 +20,7 @@ public class ToDo extends Task {
         return String.format("[T]%s", super.toString());
     }
 
-    /** Creates a to-do from a serialised string. */
+    /** Creates a to-do from a serialised string representing a to-do. */
     public static ToDo fromString(String s) throws ToDoStringParseException {
         Pattern pattern = Pattern.compile("T\\s+@#@\\s+([DP])\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);

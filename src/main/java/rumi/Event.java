@@ -1,7 +1,9 @@
 package rumi;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/** Represents a task of subtype event. */
 public class Event extends Task {
     private RumiDate from;
     private RumiDate to;
@@ -26,8 +28,10 @@ public class Event extends Task {
         return String.format("[E]%s (from: %s --> to: %s)", super.toString(), this.from, this.to);
     }
 
+    /** Creates an event from a serialised string representing event. */
     public static Event fromString(String s) throws EventStringParseException {
-        Pattern pattern = Pattern.compile("E\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
+        Pattern pattern = Pattern
+                .compile("E\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
         if (matcher.matches()) {
@@ -41,8 +45,10 @@ public class Event extends Task {
         throw new EventStringParseException();
     }
 
+    @Override
     public String toSerialisedString() {
-        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle(), this.from, this.to);
+        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P',
+                this.getTitle(), this.from, this.to);
     }
 
 }

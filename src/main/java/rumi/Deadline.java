@@ -2,7 +2,7 @@ package rumi;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Represents a deadline */
+/** Represents a task of subtype deadline */
 public class Deadline extends Task {
     private final RumiDate deadline;
 
@@ -25,7 +25,7 @@ public class Deadline extends Task {
         return String.format("[D]%s (by: %s)", super.toString(), this.deadline);
     }
 
-    /** Creates a deadline from a serialised string. */
+    /** Creates a deadline from a serialised string representing deadline. */
     public static Deadline fromString(String s) throws DeadlineStringParseException {
         Pattern pattern = Pattern.compile("D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);

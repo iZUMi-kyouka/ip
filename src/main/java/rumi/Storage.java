@@ -15,8 +15,8 @@ public class Storage {
     private static final String SAVE_FILE_NAME = ".rumi_data";
 
     /**
-     * Attempts to load the tasks from the .rumi_data file. If this fails, an
-     * empty TaskList is returned.
+     * Attempts to load the tasks from the .rumi_data file. If this fails, an empty TaskList is
+     * returned.
      */
     public static TaskList loadTasks() {
         TaskList tasks = new TaskList();
@@ -29,14 +29,11 @@ public class Storage {
 
                 try {
                     switch (task.charAt(0)) {
-                        case 'E' ->
-                            tasks.add(Event.fromString(task));
-                        case 'D' ->
-                            tasks.add(Deadline.fromString(task));
-                        case 'T' ->
-                            tasks.add(ToDo.fromString(task));
-                        default -> {
-                        }
+                    case 'E' -> tasks.add(Event.fromString(task));
+                    case 'D' -> tasks.add(Deadline.fromString(task));
+                    case 'T' -> tasks.add(ToDo.fromString(task));
+                    default -> {
+                    }
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.printf("[WARN] %s\n", e);
@@ -50,8 +47,7 @@ public class Storage {
     }
 
     /**
-     * Attempts to save the tasks into the .rumi_data text file. If this fails,
-     * an error is shown.
+     * Attempts to save the tasks into the .rumi_data text file. If this fails, an error is shown.
      */
     public static void saveTasks(List<Task> tasks) {
         try (PrintWriter saveFile = new PrintWriter(SAVE_FILE_NAME)) {

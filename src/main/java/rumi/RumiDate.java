@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
  */
 public class RumiDate {
 
+    private static final DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("dd-MM-YYYY hh:mma");
     private final String stringDate;
     private LocalDateTime parsedDate;
-    private final DateTimeFormatter DATETIME_OUTPUT_FORMAT = DateTimeFormatter.ofPattern("dd-MM-YYYY hh:mma");
 
     RumiDate(String s) {
         this.stringDate = s;
@@ -26,12 +26,9 @@ public class RumiDate {
      */
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
-        String validDateTimePattern
-                = "^(0?[1-9]|[12][0-9]|3[01])"
-                + // day
-                "([-.,/ ])"
-                + // date separator (group 2)
-                "(0?[1-9]|1[0-2])"
+        String validDateTimePattern = "^(0?[1-9]|[12][0-9]|3[01])"
+                + "([-.,/ ])"
+                + "(0?[1-9]|1[0-2])"
                 + // month
                 "\\2"
                 + // same date separator

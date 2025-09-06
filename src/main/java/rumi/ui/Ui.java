@@ -1,6 +1,7 @@
 package rumi.ui;
 
 import java.util.Scanner;
+
 import rumi.utils.Utils;
 
 /**

@@ -1,10 +1,12 @@
 package rumi;
 import java.util.Objects;
 
+/** Represents a task in the task list. */
 public class Task {
     private String title;
     private boolean isDone;
 
+    /** Constructs a task with the given title */
     public Task(String title) {
         assert title != null;
         this.title = title;
@@ -32,14 +34,19 @@ public class Task {
         return String.format("[%s] %s", this.isDone ? 'X' : ' ', this.title);
     }
 
+    /** Serialises this task as a string. */
     public String toSerialisedString() {
         return String.format("! @#@ %s @#@ %s", this.title, this.isDone ? 'D' : 'P');
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Task task)) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Task task)) {
+            return false;
+        }
 
         return this.isDone == task.isDone && this.title.equals(task.title);
     }

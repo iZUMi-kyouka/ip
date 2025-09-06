@@ -28,8 +28,8 @@ public class ParserTest {
         String commandString = "event ZUTOMAYO concert /from 17042026 6:00pm /to 17042026 9:00pm";
         Parser p = new Parser(null, null);
         Command parsedCommand = p.parse(commandString);
-        Command expectedCommand = new EventCommand(
-                null, null, "ZUTOMAYO concert", "17042026 6:00pm", "17042026 9:00pm");
+        Command expectedCommand = new EventCommand(null, null, "ZUTOMAYO concert",
+                "17042026 6:00pm", "17042026 9:00pm");
         assertEquals(parsedCommand, expectedCommand);
     }
 }
