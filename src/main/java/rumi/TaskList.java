@@ -6,6 +6,10 @@ import java.util.List;
 /** Handles adding, removing, and representing the task list as a string. */
 public class TaskList extends ArrayList<Task> {
 
+    public TaskList() {
+        super();
+    }
+
     public TaskList(List<Task> list) {
         super(list);
     }

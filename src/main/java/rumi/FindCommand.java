@@ -19,13 +19,13 @@ public class FindCommand extends Command {
         TaskList queryResult = this.tasks.find(this.query);
         if (queryResult.isEmpty()) {
             this.ui.printResponsef(
-                    "Oh no! I couldn't find any task with the word \"%s\", Master... "
+                    "Oh no! I couldn't find any task with the word \"%s\", Master...\n"
                     + "Are you certain that it exists?",
                     this.query);
         } else {
             this.ui.printResponsef(
                     "Here are %s tasks that you are looking for, Master~\n%s",
-                    tasks.size(), tasks);
+                    tasks.size(), queryResult);
         }
     }
 
