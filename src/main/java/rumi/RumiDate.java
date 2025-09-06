@@ -27,17 +27,17 @@ public class RumiDate {
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
         String validDateTimePattern = "^(0?[1-9]|[12][0-9]|3[01])"
-                + "([-.,/ ])"
+                + "([-.,/ ])" // date separator
                 + "(0?[1-9]|1[0-2])"
                 + // month
                 "\\2"
-                + // same date separator
+                + // date separator
                 "(\\d{2}|\\d{4})"
                 + // year
                 "(?:\\s+"
-                + // optional space before time (entire time optional)
+                + // optional space before optional time
                 "([01]?[0-9]|2[0-3])"
-                + // hour (if present)
+                + // optional hour
                 "(?:"
                 + "([:.\\-])([0-5][0-9])"
                 + // optional minute with separator
@@ -78,8 +78,8 @@ public class RumiDate {
             }
         }
 
-        int minute = matcher.group(7) != null ? Integer.parseInt(matcher.group(7)) : 59;
-        int second = matcher.group(8) != null ? Integer.parseInt(matcher.group(8)) : 59;
+        int minute = matcher.group(7) != null ? Integer.parseInt(matcher.group(7)) : 00;
+        int second = matcher.group(8) != null ? Integer.parseInt(matcher.group(8)) : 00;
 
         LocalDateTime dt = LocalDateTime.of(year, month, day, hour, minute, second);
         return dt;
