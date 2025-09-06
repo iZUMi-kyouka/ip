@@ -1,9 +1,18 @@
 package rumi;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** Handles adding, removing, and representing the task list as a string. */
 public class TaskList extends ArrayList<Task> {
+
+    public TaskList() {
+        super();
+    }
+
+    public TaskList(List<Task> list) {
+        super(list);
+    }
 
     @Override
     public Task remove(int taskNo) {
@@ -21,5 +30,11 @@ public class TaskList extends ArrayList<Task> {
         }
 
         return list.toString();
+    }
+
+    /** Returns a TaskList containing the tasks with title that matches the query */
+    public TaskList find(String query) {
+        List<Task> results = this.stream().filter(task -> task.getTitle().contains(query)).toList();
+        return new TaskList(results);
     }
 }

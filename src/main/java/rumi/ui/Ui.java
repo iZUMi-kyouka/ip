@@ -34,4 +34,8 @@ public class Ui {
     public void printResponse(String s) {
         Utils.printIndent(Utils.boxText(s));
     }
+
+    public void printResponsef(String fmt, Object... o) {
+        printResponse(String.format(fmt, o));
+    }
 }

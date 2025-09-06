@@ -57,6 +57,13 @@ public class Parser {
                 String to = matcher.group(3);
                 return new EventCommand(this.tasks, this.ui, title, from, to);
             }
+        } else if (command.matches("find\\s+(.+)")) {
+            Pattern pattern = Pattern.compile("find\\s+(.+)");
+            Matcher matcher = pattern.matcher(command);
+            if (matcher.matches()) {
+                String query = matcher.group(1);
+                return new FindCommand(this.tasks, this.ui, query);
+            }
         }
 
         throw new UnknownUserCommandException();
