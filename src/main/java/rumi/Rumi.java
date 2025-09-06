@@ -1,6 +1,7 @@
 package rumi;
 
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
 
 import rumi.command.Command;
 import rumi.command.CommandType;
@@ -53,6 +54,15 @@ public class Rumi {
     private final TaskList tasks;
     private final Ui ui;
     private final Parser parser;
+
+    /**
+     * Constructs a Rumi instance using the given command and response queue to connect with the GUI
+     */
+    public Rumi(BlockingQueue<String> commands, BlockingQueue<String> responses) {
+        this.ui = new Ui(commands, responses);
+        tasks = Storage.loadTasks();
+        this.parser = new Parser(this.tasks, this.ui);
+    }
 
     Rumi(Scanner scanner) {
         this.ui = new Ui(scanner);

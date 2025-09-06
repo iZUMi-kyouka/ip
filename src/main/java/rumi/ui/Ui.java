@@ -1,6 +1,7 @@
 package rumi.ui;
 
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
 
 import rumi.utils.Utils;
 
@@ -10,9 +11,19 @@ import rumi.utils.Utils;
 public class Ui {
 
     private final Scanner scanner;
+    private final BlockingQueue<String> reader;
+    private final BlockingQueue<String> writer;
+
+    public Ui(BlockingQueue<String> reader, BlockingQueue<String> writer) {
+        this.reader = reader;
+        this.writer = writer;
+        this.scanner = null;
+    }
 
     public Ui(Scanner scanner) {
         this.scanner = scanner;
+        this.reader = null;
+        this.writer = null;
     }
 
     public static void printfln(String fmt, Object... o) {
@@ -20,6 +31,17 @@ public class Ui {
     }
 
     public String readCommand() {
+        String command = ""; // to fix later
+        if (this.reader != null) {
+            try {
+                command = this.reader.take();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return command;
+        }
+
         return this.scanner.nextLine();
     }
 
@@ -31,8 +53,12 @@ public class Ui {
         printfln("[WARNING] %s", warning);
     }
 
-    public void printResponse(String s) {
+    public String printResponse(String s) {
         Utils.printIndent(Utils.boxText(s));
+        if (this.writer != null) {
+            this.writer.offer(s);
+        }
+        return s;
     }
 
     public void printResponsef(String fmt, Object... o) {
