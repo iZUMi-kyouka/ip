@@ -1,13 +1,18 @@
-package rumi;
+package rumi.task;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import rumi.RumiDate;
 
 /** Represents a task of subtype event. */
 public class Event extends Task {
     private RumiDate from;
     private RumiDate to;
 
+    /**
+     * Constructs a task of subtype event with the given title, from, and to date
+     */
     public Event(String title, String from, String to) {
         super(title);
         this.from = RumiDate.fromString(from);

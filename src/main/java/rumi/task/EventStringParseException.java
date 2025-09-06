@@ -1,4 +1,4 @@
-package rumi;
+package rumi.task;
 /** Exceptions representing failure to parse an Event from String */
 public class EventStringParseException extends IllegalArgumentException {
     EventStringParseException() {

@@ -1,11 +1,17 @@
-package rumi;
+package rumi.task;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import rumi.RumiDate;
 
 /** Represents a task of subtype deadline */
 public class Deadline extends Task {
     private final RumiDate deadline;
 
+    /**
+     * Constructs a task of subtype deadline with the given title and deadline
+     */
     public Deadline(String title, String deadline) {
         super(title);
         this.deadline = RumiDate.fromString(deadline);
@@ -42,6 +48,7 @@ public class Deadline extends Task {
 
     @Override
     public String toSerialisedString() {
-        return String.format("D @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle(), this.deadline);
+        return String.format("D @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P',
+                this.getTitle(), this.deadline);
     }
 }

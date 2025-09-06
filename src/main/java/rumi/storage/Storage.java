@@ -7,11 +7,11 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
 
-import rumi.Deadline;
-import rumi.Event;
-import rumi.Task;
-import rumi.TaskList;
-import rumi.ToDo;
+import rumi.task.Deadline;
+import rumi.task.Event;
+import rumi.task.Task;
+import rumi.task.TaskList;
+import rumi.task.ToDo;
 
 /**
  * Handles persistence of tasks

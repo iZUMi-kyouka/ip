@@ -1,7 +1,7 @@
 package rumi.command;
 
-import rumi.TaskList;
-import rumi.ToDo;
+import rumi.task.TaskList;
+import rumi.task.ToDo;
 import rumi.ui.Ui;
 
 /**

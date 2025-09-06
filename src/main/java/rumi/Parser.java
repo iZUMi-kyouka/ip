@@ -12,6 +12,7 @@ import rumi.command.FindCommand;
 import rumi.command.ListCommand;
 import rumi.command.MarkCommand;
 import rumi.command.ToDoCommand;
+import rumi.task.TaskList;
 import rumi.ui.Ui;
 
 /**

@@ -1,6 +1,6 @@
 package rumi.command;
 
-import rumi.TaskList;
+import rumi.task.TaskList;
 import rumi.ui.Ui;
 
 /** Represents a find command. */
@@ -9,7 +9,7 @@ public class FindCommand extends Command {
     private final Ui ui;
     private final String query;
 
-    FindCommand(TaskList tasks, Ui ui, String query) {
+    public FindCommand(TaskList tasks, Ui ui, String query) {
         this.tasks = tasks;
         this.ui = ui;
         this.query = query;

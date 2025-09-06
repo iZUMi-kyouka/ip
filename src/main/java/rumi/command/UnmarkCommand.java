@@ -1,6 +1,6 @@
 package rumi.command;
-import rumi.Task;
-import rumi.TaskList;
+import rumi.task.Task;
+import rumi.task.TaskList;
 import rumi.ui.Ui;
 
 /** Represents an `unmark` command. */

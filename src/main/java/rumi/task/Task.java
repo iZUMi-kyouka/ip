@@ -1,4 +1,4 @@
-package rumi;
+package rumi.task;
 import java.util.Objects;
 
 /** Represents a task in the task list. */
