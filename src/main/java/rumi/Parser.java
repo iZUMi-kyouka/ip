@@ -3,6 +3,15 @@ package rumi;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rumi.command.Command;
+import rumi.command.DeadlineCommand;
+import rumi.command.DeleteCommand;
+import rumi.command.EventCommand;
+import rumi.command.ExitCommand;
+import rumi.command.FindCommand;
+import rumi.command.ListCommand;
+import rumi.command.MarkCommand;
+import rumi.command.ToDoCommand;
 import rumi.ui.Ui;
 
 /**
@@ -37,7 +46,7 @@ public class Parser {
             Matcher matcher = pattern.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
-                return new TodoCommand(this.tasks, this.ui, title);
+                return new ToDoCommand(this.tasks, this.ui, title);
             }
         } else if (command.matches("deadline\\s+(.+?)\\s+/by\\s+(.+)")) {
             Pattern pattern = Pattern.compile("deadline\\s+(.+?)\\s+/by\\s+(.+)");

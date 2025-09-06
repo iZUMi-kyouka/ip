@@ -1,4 +1,5 @@
-package rumi;
+package rumi.command;
+import rumi.TaskList;
 import rumi.ui.Ui;
 
 /** Represents a `list` command. */

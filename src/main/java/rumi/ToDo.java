@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 /** Represents a general to-do item. */
 public class ToDo extends Task {
-    ToDo(String title) {
+    public ToDo(String title) {
         super(title);
     }
 

@@ -1,4 +1,4 @@
-package rumi;
+package rumi.storage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
+
+import rumi.Deadline;
+import rumi.Event;
+import rumi.Task;
+import rumi.TaskList;
+import rumi.ToDo;
 
 /**
  * Handles persistence of tasks

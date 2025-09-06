@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class Deadline extends Task {
     private final RumiDate deadline;
 
-    Deadline(String title, String deadline) {
+    public Deadline(String title, String deadline) {
         super(title);
         this.deadline = RumiDate.fromString(deadline);
     }

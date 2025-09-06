@@ -8,7 +8,7 @@ public class Event extends Task {
     private RumiDate from;
     private RumiDate to;
 
-    Event(String title, String from, String to) {
+    public Event(String title, String from, String to) {
         super(title);
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);

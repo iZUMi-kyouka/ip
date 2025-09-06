@@ -2,6 +2,9 @@ package rumi;
 
 import java.util.Scanner;
 
+import rumi.command.Command;
+import rumi.command.CommandType;
+import rumi.storage.Storage;
 import rumi.ui.Ui;
 
 /**

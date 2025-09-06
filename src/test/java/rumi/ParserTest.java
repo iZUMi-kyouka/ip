@@ -3,6 +3,11 @@ package rumi;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import rumi.command.Command;
+import rumi.command.DeadlineCommand;
+import rumi.command.EventCommand;
+import rumi.command.ToDoCommand;
+
 public class ParserTest {
 
     @Test
@@ -10,7 +15,7 @@ public class ParserTest {
         String commandString = "todo laundry";
         Parser p = new Parser(null, null);
         Command parsedCommand = p.parse(commandString);
-        Command expectedCommand = new TodoCommand(null, null, "laundry");
+        Command expectedCommand = new ToDoCommand(null, null, "laundry");
         assertEquals(parsedCommand, expectedCommand);
     }
 
@@ -19,7 +24,8 @@ public class ParserTest {
         String commandString = "deadline CS2103T peer review /by 10092025 10:30:00pm";
         Parser p = new Parser(null, null);
         Command parsedCommand = p.parse(commandString);
-        Command expectedCommand = new DeadlineCommand(null, null, "CS2103T peer review", "10092025 10:30:00pm");
+        Command expectedCommand =
+                new DeadlineCommand(null, null, "CS2103T peer review", "10092025 10:30:00pm");
         assertEquals(parsedCommand, expectedCommand);
     }
 

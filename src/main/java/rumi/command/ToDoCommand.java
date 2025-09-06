@@ -1,11 +1,13 @@
-package rumi;
+package rumi.command;
 
+import rumi.TaskList;
+import rumi.ToDo;
 import rumi.ui.Ui;
 
 /**
  * Represents a `todo` command.
  */
-public class TodoCommand extends Command {
+public class ToDoCommand extends Command {
 
     private final TaskList tasks;
     private final Ui ui;
@@ -14,7 +16,7 @@ public class TodoCommand extends Command {
     /**
      * Creates a DeleteCommand with given a TaskList and a task number.
      */
-    public TodoCommand(TaskList tasks, Ui ui, String title) {
+    public ToDoCommand(TaskList tasks, Ui ui, String title) {
         this.tasks = tasks;
         this.ui = ui;
         this.title = title;
@@ -27,7 +29,7 @@ public class TodoCommand extends Command {
 
         this.ui.printResponse(String.format(
                 "Right away, Master! I've added this to your to-do list:\n"
-                + "    %s\nYou now have %d task(s) awaiting your attention~",
+                        + "    %s\nYou now have %d task(s) awaiting your attention~",
                 todo, tasks.size()));
     }
 
@@ -38,11 +40,11 @@ public class TodoCommand extends Command {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof TodoCommand)) {
+        if (!(o instanceof ToDoCommand)) {
             return false;
         }
 
-        TodoCommand command = (TodoCommand) o;
+        ToDoCommand command = (ToDoCommand) o;
         return command.title.equals(command.title);
     }
 }

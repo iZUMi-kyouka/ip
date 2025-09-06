@@ -1,5 +1,7 @@
-package rumi;
+package rumi.command;
 
+import rumi.Deadline;
+import rumi.TaskList;
 import rumi.ui.Ui;
 
 /**
