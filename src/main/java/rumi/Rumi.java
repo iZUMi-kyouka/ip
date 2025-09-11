@@ -87,8 +87,12 @@ public class Rumi {
      * Runs the main chatbot loop.
      */
     public void run() {
-        String command = "";
+        assert this.ui != null;
+        assert this.parser != null;
+
+        String command;
         while (true) {
+
             command = this.ui.readCommand();
             try {
                 Command parsedCommand = this.parser.parse(command);

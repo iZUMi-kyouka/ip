@@ -26,6 +26,8 @@ public class Parser {
      * Parses a command and passes any arguments to the command handler.
      */
     public Command parse(String command) throws UnknownUserCommandException {
+        assert tasks != null && ui != null;
+
         if (command.equals("bye")) {
             return new ExitCommand();
         } else if (command.equals("list")) {
