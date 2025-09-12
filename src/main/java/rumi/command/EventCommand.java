@@ -4,6 +4,7 @@ import rumi.task.Event;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
+import rumi.utils.Utils;
 
 /**
  * Represents an `event` command.
@@ -32,11 +33,19 @@ public class EventCommand extends Command {
     @Override
     public void run() {
         Event event = new Event(title, from, to);
-        tasks.add(event);
-        this.ui.printResponsef(
+        switch (this.tasks.addTask(event)) {
+        case ADDED -> this.ui.printResponsef(
                 "Noted! I've scheduled this delightful event for you, Master~\n  %s\n"
                         + "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
                 event, tasks.size());
+        case DUPLICATE -> this.ui.printResponsef(
+                "The task that you've just added seems to be duplicates of the following tasks:\n"
+                        + "%s\nYou now have %d task(s) awaiting your attention~",
+                Utils.indentLines(this.tasks.findPossibleDuplicates(title, event).toString(), 1),
+                tasks.size());
+        default -> {
+        }
+        }
     }
 
     @Override
