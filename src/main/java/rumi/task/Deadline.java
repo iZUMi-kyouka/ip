@@ -38,14 +38,14 @@ public class Deadline extends Task {
         Pattern pattern = Pattern.compile("D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
-        if (matcher.matches()) {
-            boolean isDone = matcher.group(1).equals("D");
-            String title = matcher.group(2);
-            String deadline = matcher.group(3);
-            return new Deadline(title, deadline, isDone);
+        if (!matcher.matches()) {
+            throw new DeadlineStringParseException();
         }
 
-        throw new DeadlineStringParseException();
+        boolean isDone = matcher.group(1).equals("D");
+        String title = matcher.group(2);
+        String deadline = matcher.group(3);
+        return new Deadline(title, deadline, isDone);
     }
 
     @Override

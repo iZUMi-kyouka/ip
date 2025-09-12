@@ -1,8 +1,10 @@
 package rumi.command;
 
+import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents a `mark` command. */
 public class MarkCommand extends Command {
@@ -15,6 +17,8 @@ public class MarkCommand extends Command {
      * Creates a MarkCommand with given a TaskList and a task number.
      */
     public MarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+        Assert.notNull(tasks, ui, taskNoStr);
+
         this.tasks = tasks;
         this.ui = ui;
         taskNo = Integer.parseInt(taskNoStr);
@@ -23,15 +27,14 @@ public class MarkCommand extends Command {
     @Override
     public void run() {
         if (taskNo > tasks.size() || taskNo <= 0) {
-            this.ui.printResponse(
-                    "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
+            this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
             return;
         }
-        Task task = tasks.get(taskNo - 1);
+        Task task = tasks.get(taskNo);
         task.markAsDone();
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
-                task));
+                task);
     }
 
     @Override

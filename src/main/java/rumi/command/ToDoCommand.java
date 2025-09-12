@@ -3,6 +3,7 @@ package rumi.command;
 import rumi.task.TaskList;
 import rumi.task.ToDo;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /**
  * Represents a `todo` command.
@@ -17,6 +18,8 @@ public class ToDoCommand extends Command {
      * Creates a DeleteCommand with given a TaskList and a task number.
      */
     public ToDoCommand(TaskList tasks, Ui ui, String title) {
+        Assert.notNull(tasks, ui, title);
+
         this.tasks = tasks;
         this.ui = ui;
         this.title = title;
@@ -27,10 +30,10 @@ public class ToDoCommand extends Command {
         ToDo todo = new ToDo(title);
         this.tasks.add(todo);
 
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Right away, Master! I've added this to your to-do list:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
-                todo, tasks.size()));
+                todo, tasks.size());
     }
 
     @Override

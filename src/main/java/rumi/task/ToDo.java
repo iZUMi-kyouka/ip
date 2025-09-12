@@ -1,4 +1,5 @@
 package rumi.task;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -6,10 +7,14 @@ import java.util.regex.Pattern;
 public class ToDo extends Task {
     public ToDo(String title) {
         super(title);
+        assert !title.isEmpty();
+
     }
 
     ToDo(String title, boolean isDone) {
         super(title);
+
+        assert !title.isEmpty();
         if (isDone) {
             this.markAsDone();
         }
@@ -25,13 +30,13 @@ public class ToDo extends Task {
         Pattern pattern = Pattern.compile("T\\s+@#@\\s+([DP])\\s+@#@\\s+(.+)");
         Matcher matcher = pattern.matcher(s);
 
-        if (matcher.matches()) {
-            boolean isDone = matcher.group(1).equals("D");
-            String title = matcher.group(2);
-            return new ToDo(title, isDone);
+        if (!matcher.matches()) {
+            throw new ToDoStringParseException();
         }
 
-        throw new ToDoStringParseException();
+        boolean isDone = matcher.group(1).equals("D");
+        String title = matcher.group(2);
+        return new ToDo(title, isDone);
     }
 
     @Override

@@ -15,6 +15,12 @@ public class TaskList extends ArrayList<Task> {
     }
 
     @Override
+    public Task get(int taskNo) {
+        assert taskNo >= 1;
+        return super.get(taskNo - 1);
+    }
+
+    @Override
     public Task remove(int taskNo) {
         assert taskNo >= 1;
         return super.remove(taskNo - 1);

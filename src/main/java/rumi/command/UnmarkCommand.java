@@ -1,8 +1,10 @@
 package rumi.command;
 
+import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents an `unmark` command. */
 public class UnmarkCommand extends Command {
@@ -15,23 +17,24 @@ public class UnmarkCommand extends Command {
      * Creates a UnmarkCommand with given a TaskList and a task number.
      */
     public UnmarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+        Assert.notNull(tasks, ui, taskNoStr);
+
+        this.taskNo = Integer.parseInt(taskNoStr);
         this.tasks = tasks;
         this.ui = ui;
-        taskNo = Integer.parseInt(taskNoStr);
     }
 
     @Override
     public void run() {
         if (taskNo > tasks.size() || taskNo <= 0) {
-            this.ui.printResponse(
-                    "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
+            this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
             return;
         }
-        Task task = tasks.get(taskNo - 1);
+
+        Task task = tasks.get(taskNo);
         task.unmarkAsDone();
-        this.ui.printResponse(
-                String.format("Understood, Master. I've marked this task as not done yet~\n"
-                        + "    ✘ %s\nLet me know when it’s done!", task));
+        this.ui.printResponsef("Understood, Master. I've marked this task as not done yet~\n"
+                + "    ✘ %s\nLet me know when it’s done!", task);
     }
 
     @Override

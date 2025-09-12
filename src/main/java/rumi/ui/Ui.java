@@ -103,7 +103,7 @@ public class Ui {
      * @param o format arguments
      */
     public void printResponsef(String fmt, Object... o) {
-        printResponse(String.format(fmt, o));
+        this.printResponse(String.format(fmt, o));
     }
 
 }
