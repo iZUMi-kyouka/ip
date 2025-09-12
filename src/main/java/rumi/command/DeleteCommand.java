@@ -29,10 +29,10 @@ public class DeleteCommand extends Command {
         }
 
         Task task = tasks.remove(taskNo);
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Roger, Master! I've deleted this from your to-do list:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
-                task, tasks.size()));
+                task, tasks.size());
     }
 
     @Override

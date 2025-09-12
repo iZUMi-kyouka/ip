@@ -28,10 +28,9 @@ public class DeadlineCommand extends Command {
     public void run() {
         Deadline deadline = new Deadline(title, dueDate);
         this.tasks.add(deadline);
-        this.ui.printResponse(String.format(
-                "Right away, Master! I've added this to your to-do list:\n"
+        this.ui.printResponsef("Right away, Master! I've added this to your to-do list:\n"
                 + "    %s\nYou now have %d task(s) awaiting your attention~",
-                deadline, tasks.size()));
+                deadline, tasks.size());
     }
 
     @Override
