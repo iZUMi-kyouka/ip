@@ -1,5 +1,6 @@
 package rumi.command;
 
+import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -23,8 +24,7 @@ public class DeleteCommand extends Command {
     @Override
     public void run() {
         if (taskNo > tasks.size() || taskNo <= 0) {
-            this.ui.printResponse(
-                    "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
+            this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
             return;
         }
 
