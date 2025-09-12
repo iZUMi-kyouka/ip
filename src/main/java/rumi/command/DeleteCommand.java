@@ -27,6 +27,7 @@ public class DeleteCommand extends Command {
                     "Forgive me, Master, but I cannot find such a task... Are you certain it exists?");
             return;
         }
+
         Task task = tasks.remove(taskNo);
         this.ui.printResponse(String.format(
                 "Roger, Master! I've deleted this from your to-do list:\n"

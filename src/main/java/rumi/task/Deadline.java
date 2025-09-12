@@ -14,6 +14,8 @@ public class Deadline extends Task {
      */
     public Deadline(String title, String deadline) {
         super(title);
+
+        assert !deadline.isEmpty();
         this.deadline = RumiDate.fromString(deadline);
     }
 

@@ -15,14 +15,19 @@ public class Event extends Task {
      */
     public Event(String title, String from, String to) {
         super(title);
+
+        assert !from.isEmpty() && !to.isEmpty();
+
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
     }
 
     Event(String title, String from, String to, boolean isDone) {
         super(title);
+
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
+
         if (isDone) {
             this.markAsDone();
         }
