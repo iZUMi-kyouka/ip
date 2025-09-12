@@ -4,6 +4,7 @@ import rumi.task.Deadline;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
+import rumi.utils.Utils;
 
 /**
  * Represents a `deadline` command.
@@ -39,7 +40,8 @@ public class DeadlineCommand extends Command {
         case DUPLICATE -> this.ui.printResponsef(
                 "The task that you've just added seems to be duplicates of the following tasks:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
-                this.tasks.findExact(title), tasks.size());
+                Utils.indentLines(this.tasks.findPossibleDuplicates(title, deadline).toString(), 1),
+                tasks.size());
         default -> {
         }
         }

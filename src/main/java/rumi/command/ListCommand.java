@@ -3,6 +3,7 @@ package rumi.command;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
+import rumi.utils.Utils;
 
 /** Represents a `list` command. */
 public class ListCommand extends Command {
@@ -29,7 +30,7 @@ public class ListCommand extends Command {
             this.ui.printResponsef(
                     "You have entrusted me with %d task(s), Master~\n"
                             + "Here's the list, all neat and tidy just for you ♥.\n%s",
-                    tasks.size(), tasks);
+                    tasks.size(), Utils.indentLines(tasks.toString(), 1));
         }
     }
 

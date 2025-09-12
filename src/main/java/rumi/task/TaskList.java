@@ -48,9 +48,9 @@ public class TaskList extends ArrayList<Task> {
     @Override
     public String toString() {
         StringBuilder list = new StringBuilder();
-        for (int i = 0; i < this.size(); i++) {
-            list.append(String.format("%d. ", i + 1)).append(this.get(i));
-            if (i < this.size() - 1) {
+        for (int i = 1; i <= this.size(); i++) {
+            list.append(String.format("%d. ", i)).append(this.get(i));
+            if (i < this.size()) {
                 list.append('\n');
             }
         }
@@ -72,6 +72,11 @@ public class TaskList extends ArrayList<Task> {
      */
     public TaskList findExact(String query) {
         List<Task> results = this.stream().filter(task -> task.getTitle().equals(query)).toList();
+        return new TaskList(results);
+    }
+
+    public TaskList findPossibleDuplicates(String query, Task task) {
+        List<Task> results = this.stream().filter(t -> t.getTitle().equals(query) && t != task).toList();
         return new TaskList(results);
     }
 
