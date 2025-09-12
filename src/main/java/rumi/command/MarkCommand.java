@@ -29,9 +29,9 @@ public class MarkCommand extends Command {
         }
         Task task = tasks.get(taskNo);
         task.markAsDone();
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
-                task));
+                task);
     }
 
     @Override

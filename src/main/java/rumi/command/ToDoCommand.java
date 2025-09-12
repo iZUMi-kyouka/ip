@@ -27,10 +27,10 @@ public class ToDoCommand extends Command {
         ToDo todo = new ToDo(title);
         this.tasks.add(todo);
 
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Right away, Master! I've added this to your to-do list:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
-                todo, tasks.size()));
+                todo, tasks.size());
     }
 
     @Override

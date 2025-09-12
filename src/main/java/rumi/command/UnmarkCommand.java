@@ -30,9 +30,8 @@ public class UnmarkCommand extends Command {
 
         Task task = tasks.get(taskNo);
         task.unmarkAsDone();
-        this.ui.printResponse(
-                String.format("Understood, Master. I've marked this task as not done yet~\n"
-                        + "    ✘ %s\nLet me know when it’s done!", task));
+        this.ui.printResponsef("Understood, Master. I've marked this task as not done yet~\n"
+                + "    ✘ %s\nLet me know when it’s done!", task);
     }
 
     @Override

@@ -1,4 +1,5 @@
 package rumi.command;
+
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 
@@ -22,10 +23,10 @@ public class ListCommand extends Command {
             this.ui.printResponse("Oh no! You haven't given me any tasks yet, Master... "
                     + "Please do soon, I'm eager to serve you~!");
         } else {
-            this.ui.printResponse(String.format(
+            this.ui.printResponsef(
                     "You have entrusted me with %d task(s), Master~\n"
-                    + "Here's the list, all neat and tidy just for you ♥.\n%s",
-                    tasks.size(), tasks));
+                            + "Here's the list, all neat and tidy just for you ♥.\n%s",
+                    tasks.size(), tasks);
         }
     }
 

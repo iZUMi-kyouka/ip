@@ -30,10 +30,10 @@ public class EventCommand extends Command {
     public void run() {
         Event event = new Event(title, from, to);
         tasks.add(event);
-        this.ui.printResponse(String.format(
+        this.ui.printResponsef(
                 "Noted! I've scheduled this delightful event for you, Master~\n  %s\n"
-                + "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
-                event, tasks.size()));
+                        + "Everything is perfectly arranged~\nYou now have %d task(s)  in the list.",
+                event, tasks.size());
     }
 
     @Override
@@ -48,6 +48,7 @@ public class EventCommand extends Command {
         }
 
         EventCommand command = (EventCommand) o;
-        return command.title.equals(this.title) && command.from.equals(this.from) && command.to.equals(this.to);
+        return command.title.equals(this.title) && command.from.equals(this.from)
+                && command.to.equals(this.to);
     }
 }
