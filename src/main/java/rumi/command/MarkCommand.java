@@ -4,6 +4,7 @@ import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents a `mark` command. */
 public class MarkCommand extends Command {
@@ -16,6 +17,8 @@ public class MarkCommand extends Command {
      * Creates a MarkCommand with given a TaskList and a task number.
      */
     public MarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+        Assert.notNull(tasks, ui, taskNoStr);
+
         this.tasks = tasks;
         this.ui = ui;
         taskNo = Integer.parseInt(taskNoStr);

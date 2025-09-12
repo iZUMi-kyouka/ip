@@ -4,6 +4,7 @@ import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents an `unmark` command. */
 public class UnmarkCommand extends Command {
@@ -16,10 +17,11 @@ public class UnmarkCommand extends Command {
      * Creates a UnmarkCommand with given a TaskList and a task number.
      */
     public UnmarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
+        Assert.notNull(tasks, ui, taskNoStr);
+
+        this.taskNo = Integer.parseInt(taskNoStr);
         this.tasks = tasks;
         this.ui = ui;
-        taskNo = Integer.parseInt(taskNoStr);
-        assert taskNo >= 1;
     }
 
     @Override

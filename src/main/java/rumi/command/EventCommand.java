@@ -3,6 +3,7 @@ package rumi.command;
 import rumi.task.Event;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /**
  * Represents an `event` command.
@@ -19,6 +20,8 @@ public class EventCommand extends Command {
      * Creates a EventCommand with given a TaskList and a task number.
      */
     public EventCommand(TaskList tasks, Ui ui, String title, String from, String to) {
+        Assert.notNull(tasks, ui, title, from, to);
+
         this.tasks = tasks;
         this.ui = ui;
         this.title = title;

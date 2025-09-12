@@ -2,6 +2,7 @@ package rumi.command;
 
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents a find command. */
 public class FindCommand extends Command {
@@ -9,8 +10,10 @@ public class FindCommand extends Command {
     private final Ui ui;
     private final String query;
 
-    /**  */
+    /** Constructs a 'find' command from the given tasks, ui, and query */
     public FindCommand(TaskList tasks, Ui ui, String query) {
+        Assert.notNull(tasks, ui, query);
+
         this.tasks = tasks;
         this.ui = ui;
         this.query = query;
@@ -22,11 +25,10 @@ public class FindCommand extends Command {
         if (queryResult.isEmpty()) {
             this.ui.printResponsef(
                     "Oh no! I couldn't find any task with the word \"%s\", Master...\n"
-                    + "Are you certain that it exists?",
+                            + "Are you certain that it exists?",
                     this.query);
         } else {
-            this.ui.printResponsef(
-                    "Here are %s tasks that you are looking for, Master~\n%s",
+            this.ui.printResponsef("Here are %s tasks that you are looking for, Master~\n%s",
                     tasks.size(), queryResult);
         }
     }

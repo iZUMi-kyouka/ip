@@ -4,6 +4,7 @@ import rumi.Rumi;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents a `delete` command. */
 public class DeleteCommand extends Command {
@@ -16,9 +17,11 @@ public class DeleteCommand extends Command {
      * Creates a DeleteCommand with given a TaskList and a task number.
      */
     public DeleteCommand(TaskList tasks, Ui ui, String taskNoStr) {
+        Assert.notNull(tasks, ui, taskNoStr);
+
         this.tasks = tasks;
         this.ui = ui;
-        taskNo = Integer.parseInt(taskNoStr);
+        this.taskNo = Integer.parseInt(taskNoStr);
     }
 
     @Override

@@ -2,6 +2,7 @@ package rumi.command;
 
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Assert;
 
 /** Represents a `list` command. */
 public class ListCommand extends Command {
@@ -13,6 +14,8 @@ public class ListCommand extends Command {
      * Creates a new 'list' command
      */
     public ListCommand(TaskList tasks, Ui ui) {
+        Assert.notNull(tasks, ui);
+
         this.tasks = tasks;
         this.ui = ui;
     }
