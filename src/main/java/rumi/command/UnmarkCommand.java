@@ -27,7 +27,8 @@ public class UnmarkCommand extends Command {
             this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
             return;
         }
-        Task task = tasks.get(taskNo - 1);
+
+        Task task = tasks.get(taskNo);
         task.unmarkAsDone();
         this.ui.printResponse(
                 String.format("Understood, Master. I've marked this task as not done yet~\n"

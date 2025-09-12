@@ -27,7 +27,7 @@ public class MarkCommand extends Command {
             this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
             return;
         }
-        Task task = tasks.get(taskNo - 1);
+        Task task = tasks.get(taskNo);
         task.markAsDone();
         this.ui.printResponse(String.format(
                 "Wonderful! I've marked this task as complete, Master~\n    ✔ %s\nYou're doing amazing!",
