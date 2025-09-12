@@ -26,7 +26,7 @@ public class Storage {
      */
     public static TaskList loadTasks() {
         TaskList tasks = new TaskList();
-        try (Scanner sc = new Scanner(new File(".rumi_data"))) {
+        try (Scanner sc = new Scanner(new File(Storage.SAVE_FILE_NAME))) {
             while (sc.hasNextLine()) {
                 String task = sc.nextLine();
                 if (task.isEmpty()) {

@@ -18,6 +18,7 @@ public class Parser {
      * Creates a new parser using the given task lists and ui reference
      */
     public Parser(TaskList tasks, Ui ui) {
+        assert tasks != null && ui != null;
         this.tasks = tasks;
         this.ui = ui;
     }
@@ -26,8 +27,6 @@ public class Parser {
      * Parses a command and passes any arguments to the command handler.
      */
     public Command parse(String command) throws UnknownUserCommandException {
-        assert tasks != null && ui != null;
-
         if (command.equals("bye")) {
             return new ExitCommand();
         } else if (command.equals("list")) {
@@ -56,7 +55,6 @@ public class Parser {
         } else if (command.matches("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)")) {
             Pattern pattern = Pattern.compile("event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)");
             Matcher matcher = pattern.matcher(command);
-
             if (matcher.matches()) {
                 String title = matcher.group(1);
                 String from = matcher.group(2);

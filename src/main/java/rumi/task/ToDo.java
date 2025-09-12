@@ -7,10 +7,14 @@ import java.util.regex.Pattern;
 public class ToDo extends Task {
     public ToDo(String title) {
         super(title);
+        assert !title.isEmpty();
+
     }
 
     ToDo(String title, boolean isDone) {
         super(title);
+
+        assert !title.isEmpty();
         if (isDone) {
             this.markAsDone();
         }

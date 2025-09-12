@@ -19,6 +19,7 @@ public class UnmarkCommand extends Command {
         this.tasks = tasks;
         this.ui = ui;
         taskNo = Integer.parseInt(taskNoStr);
+        assert taskNo >= 1;
     }
 
     @Override
