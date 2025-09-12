@@ -30,11 +30,19 @@ public class DeadlineCommand extends Command {
     @Override
     public void run() {
         Deadline deadline = new Deadline(title, dueDate);
-        this.tasks.add(deadline);
-        this.ui.printResponsef(
+
+        switch (this.tasks.addTask(deadline)) {
+        case ADDED -> this.ui.printResponsef(
                 "Right away, Master! I've added this to your to-do list:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
                 deadline, tasks.size());
+        case DUPLICATE -> this.ui.printResponsef(
+                "The task that you've just added seems to be duplicates of the following tasks:\n"
+                        + "    %s\nYou now have %d task(s) awaiting your attention~",
+                this.tasks.findExact(title), tasks.size());
+        default -> {
+        }
+        }
     }
 
     @Override

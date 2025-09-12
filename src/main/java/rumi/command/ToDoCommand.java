@@ -28,12 +28,18 @@ public class ToDoCommand extends Command {
     @Override
     public void run() {
         ToDo todo = new ToDo(title);
-        this.tasks.add(todo);
-
-        this.ui.printResponsef(
+        switch (this.tasks.addTask(todo)) {
+        case ADDED -> this.ui.printResponsef(
                 "Right away, Master! I've added this to your to-do list:\n"
                         + "    %s\nYou now have %d task(s) awaiting your attention~",
                 todo, tasks.size());
+        case DUPLICATE -> this.ui.printResponsef(
+                "The task that you've just added seems to be duplicates of the following tasks:\n"
+                        + "    %s\nYou now have %d task(s) awaiting your attention~",
+                this.tasks.findExact(title), tasks.size());
+        default -> {
+        }
+        }
     }
 
     @Override
