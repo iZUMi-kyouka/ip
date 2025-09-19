@@ -16,9 +16,9 @@
         <Insets left="8.0" right="8.0"/>
       </HBox.margin>
     </Label>
-    <ImageView fx:id="displayPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView fx:id="displayPicture" fitHeight="75.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
       <clip>
-        <Circle centerX="25.0" centerY="25.0" radius="25.0"/>
+        <Circle centerX="37.5" centerY="37.5" radius="37.5"/>
       </clip>
     </ImageView>
   </children>

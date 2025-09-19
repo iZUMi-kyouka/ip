@@ -1,32 +1,36 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
 .root {
     main-color: rgb(255, 0, 123); /* Main hot pink */
     -fx-background-color: main-color;
     -fx-background-image: url("../images/chat_background.jpg"); /* Set image */
     -fx-background-size: cover;
+    -fx-font-family: 'Roboto';
 }
 
 .text-field {
     -fx-background-color: rgba(255, 192, 218, 0.9); /* lighter pink tint */
-    -fx-font: 20px "Arial";
+    -fx-font: 16px "Roboto";
     -fx-text-fill: #660033; /* darker pink/purple for readability */
     -fx-background-radius: 0em;
 }
 
 .button {
     -fx-background-color: rgb(255, 51, 153); /* hot pink shade */
-    -fx-font: italic bold 16px "Arial";
+    -fx-font: italic bold 16px "Roboto";
     -fx-text-fill: #fff; /* white text for contrast */
     -fx-background-radius: 0em;
 }
 
 .button:hover {
     -fx-background-color: rgb(255, 102, 178); /* lighter pink hover */
-    -fx-font-size: 18px;
 }
 
 .button:pressed {
     -fx-background-color: rgb(204, 0, 102); /* darker pink pressed */
-    -fx-font-size: 20px;
 }
 
 .scroll-pane,

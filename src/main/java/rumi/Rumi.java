@@ -90,9 +90,10 @@ public class Rumi {
         assert this.ui != null;
         assert this.parser != null;
 
+        this.showIntroMessage();
+
         String command;
         while (true) {
-
             command = this.ui.readCommand();
             try {
                 Command parsedCommand = this.parser.parse(command);
@@ -115,8 +116,6 @@ public class Rumi {
         Rumi rumi;
         Scanner sc = new Scanner(System.in);
         rumi = new Rumi(sc);
-
-        rumi.showIntroMessage();
         rumi.run();
         rumi.showGoodbyeMessage();
     }
