@@ -1,12 +1,14 @@
 # Rumi User Guide
 
-[](./docs/Ui.png)
+![Rumi UI Screenshot](./docs/Ui.png)
+
 Rumi is a your cute personal assistant that will keep track of your daily to-dos!
 
 ## Adding todos
 Todos are the most basic type of task. It is simply the task name and its status.
 
 Example: `todo clean bedroom`
+
 Adds a todo 'clean bedroom' whose status is pending.
 
 ```
@@ -21,6 +23,7 @@ Adds a todo 'clean bedroom' whose status is pending.
 Deadlines are a type of task that must be done by a certain time. Deadlines must contain both the task name and the deadline by which it must be done.
 
 Example: `deadline submit CS2103T iP /by 19/9/2025 4pm`
+
 Adds a deadline 'submit CS2103T iP' which is set to be due on 19 September 2025, 4pm.
 
 ```
@@ -35,6 +38,7 @@ Adds a deadline 'submit CS2103T iP' which is set to be due on 19 September 2025,
 Events are todos that also include the time from when the task takes place, and the time the said task ends. These properties are called 'from' and 'to'.
 
 Example: `event Minami concert /from 19/9/2025 8pm /to 19/9/2025 11pm` 
+
 Adds an event from 8pm to 11pm on 19 September 2025.
 
 ```
@@ -49,6 +53,7 @@ Adds an event from 8pm to 11pm on 19 September 2025.
 Shows the current task list containing all todos, deadlines, and events.
 
 Example: `list`
+
 Marks the task with the index 1 as not done.
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -78,6 +83,7 @@ list
 ```
 
 Example: `delete 3`
+
 Removes the task with the index number 3.
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -103,6 +109,7 @@ list
 ```
 
 Example: `mark 1`
+
 Marks the task with the index 1 as done.
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -127,6 +134,7 @@ list
 ```
 
 Example: `unmark 1`
+
 Marks the task with the index 1 as not done.
 ```
 unmark 1
@@ -141,6 +149,7 @@ unmark 1
 Exit the application by saying a bye to Rumi!
 
 Example: `bye`
+
 Exits the Rumi chatbot.
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
