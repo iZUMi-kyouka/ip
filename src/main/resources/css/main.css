@@ -9,12 +9,14 @@
     -fx-background-color: rgba(255, 192, 218, 0.9); /* lighter pink tint */
     -fx-font: 20px "Arial";
     -fx-text-fill: #660033; /* darker pink/purple for readability */
+    -fx-background-radius: 0em;
 }
 
 .button {
     -fx-background-color: rgb(255, 51, 153); /* hot pink shade */
     -fx-font: italic bold 16px "Arial";
     -fx-text-fill: #fff; /* white text for contrast */
+    -fx-background-radius: 0em;
 }
 
 .button:hover {
