@@ -1,9 +1,15 @@
+@font-face {
+    font-family: 'Iosevka';
+    src: url('../fonts/Iosevka-Medium.ttc');
+}
+
 .label {
     /* Gradient in hot pink spectrum: bright pink to soft pink */
     -fx-background-color: #ff66a3;
     -fx-background-radius: 1em 0em 1em 1em;
     -fx-border-radius: 1em 1em 0 1em;
     -fx-font-size: 14px;
+    -fx-font-family: 'Iosevka';
 }
 
 .reply-label {

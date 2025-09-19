@@ -38,8 +38,8 @@ public class MainWindow extends AnchorPane {
     /** Initialises the main window with the Rumi instance, command and response queue */
     @FXML
     public void initialize() {
-        commandQueue = new LinkedBlockingQueue<String>();
-        responseQueue = new LinkedBlockingQueue<String>();
+        commandQueue = new LinkedBlockingQueue<>();
+        responseQueue = new LinkedBlockingQueue<>();
         rumi = new Rumi(commandQueue, responseQueue);
 
         // Run rumi asynchronously
@@ -51,8 +51,9 @@ public class MainWindow extends AnchorPane {
                 String rumiResponse = "An error has occured :( Please restart Rumi.";
                 try {
                     rumiResponse = responseQueue.take();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    rumiResponse =
+                            "Rumi failed to receive your message for an unknown reason. Please resend your message!";
                 }
                 final String response = rumiResponse;
                 javafx.application.Platform.runLater(() -> {
@@ -72,6 +73,11 @@ public class MainWindow extends AnchorPane {
     @FXML
     private void handleUserInput() {
         String input = userInput.getText();
+
+        if (input.isEmpty()) {
+            return;
+        }
+
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userProfilePicture));
         userInput.clear();
         commandQueue.offer(input);
