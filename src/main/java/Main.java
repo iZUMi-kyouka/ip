@@ -19,12 +19,13 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
 
+            stage.setTitle(Rumi.CHATBOT_NAME);
+            stage.setScene(scene);
+
+            stage.setResizable(true);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
 
-            stage.setTitle(Rumi.CHATBOT_NAME);
-
-            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

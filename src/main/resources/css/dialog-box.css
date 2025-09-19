@@ -1,0 +1,34 @@
+.label {
+    /* Gradient in hot pink spectrum: bright pink to soft pink */
+    -fx-background-color: linear-gradient(to bottom right, #ff007b, #ff66a3);
+    /* Border colors as varying hot pink shades for harmony */
+    -fx-border-color: #d5005a #e60073 #ff66a3 #b3004c;
+    -fx-border-width: 2px;
+    -fx-background-radius: 1em 1em 0 1em;
+    -fx-border-radius: 1em 1em 0 1em;
+}
+
+.reply-label {
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+    
+    /* Add a subtle hot pink background tint for cohesion */
+    -fx-background-color: rgba(255, 0, 123, 0.15);
+    /* Border with a deeper hot pink shade */
+    -fx-border-color: #cc0053;
+}
+
+.reply-label {
+    -fx-background-radius: 1em 1em 1em 0;
+    -fx-border-radius: 1em 1em 1em 0;
+}
+
+#displayPicture {
+    /* Softer hot pink shadow */
+    -fx-effect: dropshadow(gaussian, rgba(255, 0, 123, 0.3), 10, 0.5, 5, 5);
+
+    /* Keep original size and rotation */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-rotate: 0;
+}

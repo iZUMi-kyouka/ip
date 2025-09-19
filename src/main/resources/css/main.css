@@ -1,0 +1,50 @@
+.root {
+    main-color: rgb(255, 0, 123); /* Main hot pink */
+    -fx-background-color: main-color;
+    -fx-background-image: url("../images/chat_background.jpg"); /* Set image */
+    -fx-background-size: cover;
+}
+
+.text-field {
+    -fx-background-color: rgba(255, 192, 218, 0.9); /* lighter pink tint */
+    -fx-font: 20px "Arial";
+    -fx-text-fill: #660033; /* darker pink/purple for readability */
+}
+
+.button {
+    -fx-background-color: rgb(255, 51, 153); /* hot pink shade */
+    -fx-font: italic bold 16px "Arial";
+    -fx-text-fill: #fff; /* white text for contrast */
+}
+
+.button:hover {
+    -fx-background-color: rgb(255, 102, 178); /* lighter pink hover */
+    -fx-font-size: 18px;
+}
+
+.button:pressed {
+    -fx-background-color: rgb(204, 0, 102); /* darker pink pressed */
+    -fx-font-size: 20px;
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;
+    -fx-background-color: rgb(255, 0, 123); /* main hot pink */
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: rgb(255, 153, 185); /* soft pink thumb */
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
