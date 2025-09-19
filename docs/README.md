@@ -1,9 +1,6 @@
 # Rumi User Guide
 
-// Product screenshot goes here
 [](./Ui.png)
-
-// Product intro goes here
 Rumi is a your cute personal assistant that will keep track of your daily to-dos!
 
 ## Adding todos
