@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import rumi.command.Command;
 import rumi.command.DeadlineCommand;
 import rumi.command.EventCommand;
-import rumi.command.Parser;
 import rumi.command.ToDoCommand;
+import rumi.parser.Parser;
 
 public class ParserTest {
 

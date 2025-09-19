@@ -5,8 +5,8 @@ import java.util.concurrent.BlockingQueue;
 
 import rumi.command.Command;
 import rumi.command.CommandType;
-import rumi.command.Parser;
 import rumi.command.UnknownUserCommandException;
+import rumi.parser.Parser;
 import rumi.storage.Storage;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -103,8 +103,16 @@ public class Rumi {
 
                 parsedCommand.run();
             } catch (UnknownUserCommandException e) {
+                String suggestion = this.parser.suggestErrorMessage(command);
+                if (!suggestion.isEmpty()) {
+                    this.ui.printResponse(
+                            "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n\n"
+                                    + suggestion);
+                    continue;
+                }
+
                 this.ui.printResponse(
-                        "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n"
+                        "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n\n"
                                 + "Could you please try again?");
             }
 

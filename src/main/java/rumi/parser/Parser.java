@@ -1,8 +1,19 @@
-package rumi.command;
+package rumi.parser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rumi.command.Command;
+import rumi.command.DeadlineCommand;
+import rumi.command.DeleteCommand;
+import rumi.command.EventCommand;
+import rumi.command.ExitCommand;
+import rumi.command.FindCommand;
+import rumi.command.ListCommand;
+import rumi.command.MarkCommand;
+import rumi.command.ToDoCommand;
+import rumi.command.UnknownUserCommandException;
+import rumi.command.UnmarkCommand;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
@@ -98,5 +109,97 @@ public class Parser {
         }
 
         throw new UnknownUserCommandException();
+    }
+
+    // Helper method to compute Levenshtein distance between two strings
+    private int computeLevenshteinDistance(String s1, String s2) {
+        int len1 = s1.length();
+        int len2 = s2.length();
+
+        int[][] dp = new int[len1 + 1][len2 + 1];
+
+        for (int i = 0; i <= len1; i++) {
+            dp[i][0] = i;
+        }
+        for (int j = 0; j <= len2; j++) {
+            dp[0][j] = j;
+        }
+
+        for (int i = 1; i <= len1; i++) {
+            for (int j = 1; j <= len2; j++) {
+                int cost = (s1.charAt(i - 1) == s2.charAt(j - 1)) ? 0 : 1;
+                dp[i][j] = Math.min(Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1),
+                        dp[i - 1][j - 1] + cost);
+            }
+        }
+        return dp[len1][len2];
+    }
+
+    private String getClosestCommand(String inputCommand) {
+        String[] knownCommands =
+                {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
+        String[] tokens = inputCommand.split(" ");
+        if (tokens.length == 0) {
+            return "";
+        }
+        String firstToken = tokens[0];
+
+        String closest = "";
+        int minDistance = Integer.MAX_VALUE;
+
+        for (String cmd : knownCommands) {
+            int distance = computeLevenshteinDistance(firstToken, cmd);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = cmd;
+            }
+        }
+
+        // You can add a threshold to avoid unrelated suggestions
+        if (minDistance <= 4) { // max 2 edits difference
+            return closest;
+        }
+
+        return "";
+    }
+
+    /**
+     * Suggests the most related command that the user might intend on entering including a guide on
+     * how to use the command based on the given command
+     */
+    public String suggestErrorMessage(String command) {
+        String closestCommand = getClosestCommand(command);
+        if (closestCommand.isEmpty()) {
+            return ""; // no close match found
+        }
+
+        String msg = new String();
+
+        switch (closestCommand) {
+        case "bye" -> msg =
+                "Did you mean 'bye'? To exit Rumi, simply type 'bye' without any additional characters.";
+        case "list" -> msg =
+                "Did you mean 'list'? To list all tasks, simply type 'list' without any additional characters.";
+        case "mark" -> msg = "Did you mean 'mark <TASK_NUMBER>'?\n"
+                + "To mark task number N as done, simply type 'mark N' without any additional characters.";
+        case "unmark" -> msg = "Did you mean 'unmark <TASK_NUMBER>'?\n"
+                + "To unmark task number N as done (returning it to pending state), "
+                + "simply type 'mark N' without any additional characters.";
+        case "delete" -> msg = "Did you mean 'delete <TASK_NUMBER>'?\n"
+                + "To delete task number N, simply type 'delete N' without any additional characters.";
+        case "todo" -> msg = "Did you mean 'todo <TASK_NAME>'?\n"
+                + "To add a new todo with name NAME, simply type 'todo NAME' without any additional characters.";
+        case "deadline" -> msg = "Did you mean 'deadline <TASK_NAME> /by <TASK_DUE_DATE>'?\n"
+                + "To add a new deadline due by DUE_BY with name NAME, "
+                + "simply type 'deadline NAME /by DUE_BY' without any additional characters.";
+        case "event" -> msg =
+                "Did you mean 'event <TASK_NAME> /from <START_TIME> /to <END_TIME>'?\n"
+                        + "To add a new event from FROM to TO with name NAME, "
+                        + "simply type 'event NAME /from FROM /to TO' without any additional characters.";
+        default -> {
+        }
+        }
+
+        return msg;
     }
 }
