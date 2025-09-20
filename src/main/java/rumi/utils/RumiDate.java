@@ -27,10 +27,10 @@ public class RumiDate {
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
         String validDateTimePattern = "^(0?[1-9]|[12][0-9]|3[01])"
-                + "([-.,/ ])" // date separator
+                + "([-./ ])?" // date separator
                 + "(0?[1-9]|1[0-2])"
                 + // month
-                "\\2"
+                "(?(2)\\2)"
                 + // date separator
                 "(\\d{2}|\\d{4})"
                 + // year
@@ -39,10 +39,10 @@ public class RumiDate {
                 "([01]?[0-9]|2[0-3])"
                 + // optional hour
                 "(?:"
-                + "([:.\\-])([0-5][0-9])"
+                + "([:.\\])?([0-5][0-9])"
                 + // optional minute with separator
                 "(?:"
-                + "\\7([0-5][0-9])"
+                + "(?(7)\\7)([0-5][0-9])"
                 + // optional second
                 ")?"
                 + ")?"

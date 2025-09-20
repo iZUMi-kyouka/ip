@@ -54,7 +54,7 @@ public class Ui {
         if (this.reader != null) {
             try {
                 command = this.reader.take();
-            } catch (Exception e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 

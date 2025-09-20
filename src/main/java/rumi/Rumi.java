@@ -50,6 +50,9 @@ public class Rumi {
                     + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣶⣶⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
     public static final String UNKNOWN_TASK_RESPONSE =
             "Forgive me, Master, but I cannot find such a task... Are you certain it exists?";
+    private static final String UNKNOWN_COMMAND_RESPONSE =
+            "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)";
+
 
     private final TaskList tasks;
     private final Ui ui;
@@ -91,8 +94,8 @@ public class Rumi {
         assert this.parser != null;
 
         this.showIntroMessage();
-
         String command;
+
         while (true) {
             command = this.ui.readCommand();
             try {
@@ -105,15 +108,12 @@ public class Rumi {
             } catch (UnknownUserCommandException e) {
                 String suggestion = this.parser.suggestErrorMessage(command);
                 if (!suggestion.isEmpty()) {
-                    this.ui.printResponse(
-                            "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n\n"
-                                    + suggestion);
+                    this.ui.printResponsef("%s\n\n%s", UNKNOWN_COMMAND_RESPONSE, suggestion);
                     continue;
                 }
 
-                this.ui.printResponse(
-                        "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)\n\n"
-                                + "Could you please try again?");
+                this.ui.printResponsef("%s\n\nCould you please try again?",
+                        UNKNOWN_COMMAND_RESPONSE);
             }
 
             Storage.saveTasks(tasks);
@@ -123,6 +123,7 @@ public class Rumi {
     public static void main(String[] args) {
         Rumi rumi;
         Scanner sc = new Scanner(System.in);
+
         rumi = new Rumi(sc);
         rumi.run();
         rumi.showGoodbyeMessage();
