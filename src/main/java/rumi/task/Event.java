@@ -1,29 +1,31 @@
 package rumi.task;
 
+import java.time.DateTimeException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rumi.utils.Assert;
 import rumi.utils.RumiDate;
 
 /** Represents a task of subtype event. */
 public class Event extends Task {
-    private RumiDate from;
-    private RumiDate to;
+    private final RumiDate from;
+    private final RumiDate to;
 
     /**
      * Constructs a task of subtype event with the given title, from, and to date
      */
-    public Event(String title, String from, String to) {
+    public Event(String title, String from, String to) throws DateTimeException {
         super(title);
-
-        assert !from.isEmpty() && !to.isEmpty();
+        Assert.notNull(title, from, to);
 
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
     }
 
-    Event(String title, String from, String to, boolean isDone) {
+    Event(String title, String from, String to, boolean isDone) throws DateTimeException {
         super(title);
+        Assert.notNull(title, from, to);
 
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);

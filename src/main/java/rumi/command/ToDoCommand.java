@@ -4,44 +4,25 @@ import rumi.task.TaskList;
 import rumi.task.ToDo;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
-import rumi.utils.Utils;
 
 /**
  * Represents a `todo` command.
  */
-public class ToDoCommand extends Command {
-
-    private final TaskList tasks;
-    private final Ui ui;
-    private final String title;
+public class ToDoCommand extends TaskCommand {
 
     /**
      * Creates a DeleteCommand with given a TaskList and a task number.
      */
     public ToDoCommand(TaskList tasks, Ui ui, String title) {
+        super(tasks, ui, title);
         Assert.notNull(tasks, ui, title);
-
-        this.tasks = tasks;
-        this.ui = ui;
-        this.title = title;
     }
 
     @Override
     public void run() {
         ToDo todo = new ToDo(title);
-        switch (this.tasks.addTask(todo)) {
-        case ADDED -> this.ui.printResponsef(
-                "Right away, Master! I've added this to your to-do list:\n"
-                        + "    %s\nYou now have %d task(s) awaiting your attention~",
-                todo, tasks.size());
-        case DUPLICATE -> this.ui.printResponsef(
-                "The task that you've just added seems to be duplicates of the following tasks:\n"
-                        + "%s\nYou now have %d task(s) awaiting your attention~",
-                Utils.indentLines(this.tasks.findPossibleDuplicates(title, todo).toString(), 1),
-                tasks.size());
-        default -> {
-        }
-        }
+        TaskList.TaskListAddOutcome outcome = this.tasks.addTask(todo);
+        this.showOutcome(outcome, todo);
     }
 
     @Override
@@ -57,5 +38,10 @@ public class ToDoCommand extends Command {
 
         ToDoCommand command = (ToDoCommand) o;
         return command.title.equals(command.title);
+    }
+
+    @Override
+    protected String getSuccessMessage() {
+        return "Right away, Master! I've added this to your to-do list";
     }
 }

@@ -20,7 +20,7 @@ public class Deadline extends Task {
         this.deadline = RumiDate.fromString(deadline);
     }
 
-    Deadline(String title, String deadline, boolean isDone) {
+    Deadline(String title, String deadline, boolean isDone) throws DateTimeException {
         super(title);
         this.deadline = RumiDate.fromString(deadline);
         if (isDone) {
