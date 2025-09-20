@@ -35,7 +35,7 @@ public class MainWindow extends AnchorPane {
     private BlockingQueue<String> responseQueue;
     private Rumi rumi;
 
-    /** Initialises the main window with the Rumi instance, command and response queue */
+    /** Initialises the main window with the Rumi instance, and command and response queue */
     @FXML
     public void initialize() {
         commandQueue = new LinkedBlockingQueue<>();
@@ -58,7 +58,7 @@ public class MainWindow extends AnchorPane {
                 final String response = rumiResponse;
                 javafx.application.Platform.runLater(() -> {
                     dialogContainer.getChildren()
-                            .addAll(DialogBox.getRumiDialog(response, rumiProfilePicture));
+                            .addAll(DialogBox.makeRumiDialog(response, rumiProfilePicture));
                 });
             }
         });
@@ -78,7 +78,7 @@ public class MainWindow extends AnchorPane {
             return;
         }
 
-        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userProfilePicture));
+        dialogContainer.getChildren().addAll(DialogBox.makeUserDialog(input, userProfilePicture));
         userInput.clear();
         commandQueue.offer(input);
     }

@@ -13,8 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * Represents a dialog box consisting of an ImageView to represent the speaker's face and a label
- * containing text from the speaker.
+ * A dialog box component consisting of an ImageView to represent the speaker's profile picture and
+ * a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
     @FXML
@@ -47,11 +47,18 @@ public class DialogBox extends HBox {
         dialog.getStyleClass().add("reply-label");
     }
 
-    public static DialogBox getUserDialog(String text, Image img) {
+    /**
+     * Constructs a DialogBox component for the user with the given text and image as profile
+     * picture.
+     */
+    public static DialogBox makeUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getRumiDialog(String text, Image img) {
+    /**
+     * Constructs a DialogBox component for Rumi with the given text and image as profile picture.
+     */
+    public static DialogBox makeRumiDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
         return db;

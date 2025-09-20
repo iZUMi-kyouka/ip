@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import rumi.Rumi;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Rui using FXML
  */
 public class Main extends Application {
 
