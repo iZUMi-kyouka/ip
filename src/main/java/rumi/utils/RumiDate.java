@@ -25,10 +25,10 @@ public class RumiDate {
      */
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
-        String validDateTimePattern = "^(0?[1-9]|[12][0-9]|3[01])" // day
-                + "(?:([-./ ])(0?[1-9]|1[0-2])\\2(\\d{2}|\\d{4})" // with date separator
+        String validDateTimePattern = "^([12][0-9]|3[01]|0?[1-9])" // day - reordered
+                + "(?:([-./ ])(0?[1-9]|1[0-2])\\2(\\d{4}|\\d{2})" // with separator, 4-digit year first
                 + "|" // OR
-                + "(0?[1-9]|1[0-2])(\\d{2}|\\d{4}))" // no separator
+                + "(0?[1-9]|1[0-2])(\\d{4}|\\d{2}))" // no separator, 4-digit year first
                 + "(?:\\s+" // optional time section
                 + "([01]?[0-9]|2[0-3])" // hours
                 + "(?:" + "(?:([:.-])([0-5][0-9])(?:\\7([0-5][0-9]))?)" // with separator
