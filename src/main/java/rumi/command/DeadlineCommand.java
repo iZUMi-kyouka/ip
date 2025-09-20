@@ -1,5 +1,8 @@
 package rumi.command;
 
+import java.time.DateTimeException;
+
+import rumi.RumiException;
 import rumi.task.Deadline;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -28,22 +31,35 @@ public class DeadlineCommand extends Command {
         this.dueDate = dueDate;
     }
 
-    @Override
-    public void run() {
-        Deadline deadline = new Deadline(title, dueDate);
-
-        switch (this.tasks.addTask(deadline)) {
-        case ADDED -> this.ui.printResponsef(
-                "Right away, Master! I've added this to your to-do list:\n"
-                        + "    %s\nYou now have %d task(s) awaiting your attention~",
-                deadline, tasks.size());
-        case DUPLICATE -> this.ui.printResponsef(
-                "The task that you've just added seems to be duplicates of the following tasks:\n"
-                        + "    %s\nYou now have %d task(s) awaiting your attention~",
-                Utils.indentLines(this.tasks.findPossibleDuplicates(title, deadline).toString(), 1),
-                tasks.size());
-        default -> {
+    private void showOutcome(TaskList.TaskListAddOutcome outcome, Deadline deadline) {
+        String formatStr = "";
+        boolean isDuplicate = outcome.equals(TaskList.TaskListAddOutcome.DUPLICATE);
+        formatStr = "Right away, Master! I've added this to your to-do list:\n" + "    %s";
+        if (isDuplicate) {
+            formatStr +=
+                    "\n\nOops! The task that you've just added seems to be duplicates of the following task(s):\n"
+                            + "    %s";
         }
+
+        formatStr += "\n\nYou now have %d task(s) awaiting your attention~";
+        if (isDuplicate) {
+            String duplicateTaskList = Utils
+                    .indentLines(this.tasks.findPossibleDuplicates(title, deadline).toString(), 1);
+            this.ui.printResponsef(formatStr, deadline, duplicateTaskList, this.tasks.size());
+            return;
+        }
+
+        this.ui.printResponsef(formatStr, deadline, this.tasks.size());
+    }
+
+    @Override
+    public void run() throws RumiException {
+        try {
+            Deadline deadline = new Deadline(title, dueDate);
+            TaskList.TaskListAddOutcome outcome = this.tasks.addTask(deadline);
+            this.showOutcome(outcome, deadline);
+        } catch (DateTimeException e) {
+            throw RumiException.INVALID_DATE_EXCEPTION;
         }
     }
 

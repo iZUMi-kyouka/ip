@@ -114,6 +114,9 @@ public class Rumi {
 
                 this.ui.printResponsef("%s\n\nCould you please try again?",
                         UNKNOWN_COMMAND_RESPONSE);
+            } catch (RumiException e) {
+                this.ui.printResponsef(
+                        "Sorry master, I encountered the following issue (´•︵•`)\n\n%s", e.getMessage());
             }
 
             Storage.saveTasks(tasks);

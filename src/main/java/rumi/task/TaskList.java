@@ -75,8 +75,10 @@ public class TaskList extends ArrayList<Task> {
         return new TaskList(results);
     }
 
+    /** Finds task(s) that may be possible duplicates by checking if the task title is equal. */
     public TaskList findPossibleDuplicates(String query, Task task) {
-        List<Task> results = this.stream().filter(t -> t.getTitle().equals(query) && t != task).toList();
+        List<Task> results =
+                this.stream().filter(t -> t.getTitle().equals(query) && t != task).toList();
         return new TaskList(results);
     }
 

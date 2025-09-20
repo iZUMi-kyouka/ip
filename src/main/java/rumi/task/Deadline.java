@@ -1,5 +1,6 @@
 package rumi.task;
 
+import java.time.DateTimeException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,7 +13,7 @@ public class Deadline extends Task {
     /**
      * Constructs a task of subtype deadline with the given title and deadline
      */
-    public Deadline(String title, String deadline) {
+    public Deadline(String title, String deadline) throws DateTimeException {
         super(title);
 
         assert !deadline.isEmpty();

@@ -2,7 +2,12 @@ package rumi;
 
 /** A custom exception used for Rumi-specific exceptions. */
 public class RumiException extends Exception {
-    RumiException(String message) {
+    public static final RumiException INVALID_DATE_EXCEPTION = new RumiException(
+            "The date you entered is invalid.\nPlease enter date in the following format: "
+                    + "DD(s)MM(s)YY(YY) (HH(s)MM(s)(SS)),\n"
+                    + "where '(..)' is optional, and 's' is eiteher '/', '-', or ' '. ");
+
+    public RumiException(String message) {
         super(message);
     }
 }
