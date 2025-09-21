@@ -2,6 +2,7 @@
 
 ![Rumi UI Screenshot](./docs/Ui.png)
 
+
 Rumi is a your ~~typical~~ _**cute**_ :heart: personal assistant that will keep track of your daily to-dos! :calendar:. Most importantly, Rumi would happily live in <ins>under 100MB</ins> of space in any of your computer!
 
 **Features**
