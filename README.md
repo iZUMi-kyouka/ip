@@ -2,7 +2,15 @@
 
 ![Rumi UI Screenshot](./docs/Ui.png)
 
-Rumi is a your cute personal assistant that will keep track of your daily to-dos!
+Rumi is a your ~~typical~~ _**cute**_ :heart: personal assistant that will keep track of your daily to-dos! :calendar:. Most importantly, Rumi would happily live in <ins>under 100MB</ins> of space in any of your computer!
+
+**Features**
+- [x] Managing todos
+- [x] Managing deadlines
+- [x] Managing events
+- [ ] Google Calendar synchronisation (coming soon)
+
+> Time is what we want most but what we use worst. -- William Penn
 
 ## Adding todos
 Todos are the most basic type of task. It is simply the task name and its status.
@@ -156,3 +164,8 @@ Exits the Rumi chatbot.
     Thank you for allowing me to serve you today, Master. I shall await your return with great anticipation~
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
+
+## Credits
+**Image Sources**
+- [Rumi's profile picture](https://avatars.alphacoders.com/avatars/view/304708)
+- [User's profile picture (Mai Sakurajima)](https://in.pinterest.com/pin/835417799657072728/)
