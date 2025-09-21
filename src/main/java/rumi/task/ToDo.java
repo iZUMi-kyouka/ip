@@ -50,4 +50,8 @@ public class ToDo extends Task {
         return String.format("T @#@ %s @#@ %s @#@ TAGS:%s", this.getStatus() ? 'D' : 'P',
                 this.getTitle(), Tag.serialiseTagList(this.tags));
     }
+
+    public boolean equals(ToDo t) {
+        return super.equals(t);
+    }
 }

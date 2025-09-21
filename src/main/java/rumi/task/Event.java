@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import rumi.tag.Tag;
 import rumi.utils.Assert;
+import rumi.utils.Comparator;
 import rumi.utils.RumiDate;
 
 /** Represents a task of subtype event. */
@@ -87,6 +88,17 @@ public class Event extends Task {
         return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s @#@ TAGS:%s",
                 this.getStatus() ? 'D' : 'P', this.getTitle(), this.from, this.to,
                 Tag.serialiseTagList(this.tags));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Event) || o == null) {
+            return false;
+        }
+
+        Event evt = (Event) o;
+        return Comparator.allEqual(new Object[] {this, this.from, this.to, this.tags},
+                new Object[] {evt, evt.from, evt.to, evt.tags});
     }
 
 }

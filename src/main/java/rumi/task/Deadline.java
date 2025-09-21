@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import rumi.tag.Tag;
 import rumi.utils.Assert;
+import rumi.utils.Comparator;
 import rumi.utils.RumiDate;
 
 /** Represents a task of subtype deadline */
@@ -70,5 +71,16 @@ public class Deadline extends Task {
     public String toSerialisedString() {
         return String.format("D @#@ %s @#@ %s @#@ %s @#@ TAGS:%s", this.getStatus() ? 'D' : 'P',
                 this.getTitle(), this.deadline, Tag.serialiseTagList(this.tags));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Deadline) || o == null) {
+            return false;
+        }
+
+        Deadline d = (Deadline) o;
+        return Comparator.allEqual(new Object[] {this, this.deadline, this.tags},
+                new Object[] {d, d.deadline, d.tags});
     }
 }

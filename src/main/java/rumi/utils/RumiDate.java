@@ -147,4 +147,21 @@ public class RumiDate {
         return parsedDate != null ? parsedDate.format(DATETIME_OUTPUT_FORMAT_SERIALISED)
                 : stringDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof RumiDate) || o == null) {
+            return false;
+        }
+
+        RumiDate r = (RumiDate) o;
+
+        if (this.parsedDate != null) {
+            if (!this.parsedDate.equals(r.parsedDate)) {
+                return false;
+            }
+        }
+
+        return r.stringDate.equals(this.stringDate);
+    }
 }
