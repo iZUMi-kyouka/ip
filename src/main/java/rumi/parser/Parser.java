@@ -1,5 +1,6 @@
 package rumi.parser;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,7 @@ import rumi.command.MarkCommand;
 import rumi.command.ToDoCommand;
 import rumi.command.UnknownUserCommandException;
 import rumi.command.UnmarkCommand;
+import rumi.tag.Tag;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
@@ -28,9 +30,12 @@ public class Parser {
     private static final String UNMARK_CMD_REGEX = "unmark\\s+(-?\\d+)";
     private static final String FIND_CMD_REGEX = "find\\s+(.+)";
     private static final String DELETE_CMD_REGEX = "delete\\s+(-?\\d+)";
-    private static final String TODO_CMD_REGEX = "todo\\s+(.+)";
-    private static final String DEADLINE_CMD_REGEX = "deadline\\s+(.+?)\\s+/by\\s+(.+)";
-    private static final String EVENT_CMD_REGEX = "event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+)";
+    private static final String TODO_CMD_REGEX = "todo\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
+    private static final String DEADLINE_CMD_REGEX =
+            "deadline\\s+(.+?)\\s+/by\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
+    private static final String EVENT_CMD_REGEX =
+            "event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
+    private static final String TAGS_REGEX = "(?:todo|deadline|event)(?:.+?)/tags\\s+(.+)";
 
     private static final Pattern UNMARK_CMD_PATTERN = Pattern.compile(UNMARK_CMD_REGEX);
     private static final Pattern MARK_CMD_PATTERN = Pattern.compile(MARK_CMD_REGEX);
@@ -39,6 +44,7 @@ public class Parser {
     private static final Pattern TODO_CMD_PATTERN = Pattern.compile(TODO_CMD_REGEX);
     private static final Pattern DEADLINE_CMD_PATTERN = Pattern.compile(DEADLINE_CMD_REGEX);
     private static final Pattern EVENT_CMD_PATTERN = Pattern.compile(EVENT_CMD_REGEX);
+    private static final Pattern TAGS_PATTERN = Pattern.compile(TAGS_REGEX);
 
     private final TaskList tasks;
     private final Ui ui;
@@ -53,10 +59,28 @@ public class Parser {
         this.ui = ui;
     }
 
+    private ArrayList<Tag> parseTags(String command) {
+        Matcher matcher = TAGS_PATTERN.matcher(command);
+        ArrayList<Tag> tags = new ArrayList<>();
+
+        if (!matcher.matches() || matcher.group(1) == null) {
+            return tags;
+        }
+
+        for (String tag : matcher.group(1).split(",")) {
+            tags.add(new Tag(tag.trim()));
+        }
+
+        System.out.println(tags);
+        return tags;
+    }
+
     /**
      * Parses a command and passes any arguments to the command handler.
      */
     public Command parse(String command) throws UnknownUserCommandException {
+        ArrayList<Tag> tags = parseTags(command);
+
         if (command.equals(EXIT_CMD_REGEX)) {
             return new ExitCommand();
         } else if (command.equals(LIST_CMD_REGEX)) {
@@ -83,14 +107,14 @@ public class Parser {
             Matcher matcher = TODO_CMD_PATTERN.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
-                return new ToDoCommand(this.tasks, this.ui, title);
+                return new ToDoCommand(this.tasks, this.ui, title, tags);
             }
         } else if (command.matches(DEADLINE_CMD_REGEX)) {
             Matcher matcher = DEADLINE_CMD_PATTERN.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
                 String dueDate = matcher.group(2);
-                return new DeadlineCommand(this.tasks, this.ui, title, dueDate);
+                return new DeadlineCommand(this.tasks, this.ui, title, dueDate, tags);
             }
         } else if (command.matches(EVENT_CMD_REGEX)) {
             Matcher matcher = EVENT_CMD_PATTERN.matcher(command);
@@ -98,7 +122,7 @@ public class Parser {
                 String title = matcher.group(1);
                 String from = matcher.group(2);
                 String to = matcher.group(3);
-                return new EventCommand(this.tasks, this.ui, title, from, to);
+                return new EventCommand(this.tasks, this.ui, title, from, to, tags);
             }
         } else if (command.matches(FIND_CMD_REGEX)) {
             Matcher matcher = FIND_COMMAND_PATTERN.matcher(command);
@@ -111,7 +135,7 @@ public class Parser {
         throw new UnknownUserCommandException();
     }
 
-    // Helper method to compute Levenshtein distance between two strings
+    /** Helper method to compute Levenshtein distance between two strings */
     private int computeLevenshteinDistance(String s1, String s2) {
         int len1 = s1.length();
         int len2 = s2.length();
@@ -135,6 +159,7 @@ public class Parser {
         return dp[len1][len2];
     }
 
+    /** Returns the closest matching command given an invalid command. */
     private String getClosestCommand(String inputCommand) {
         String[] knownCommands =
                 {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};

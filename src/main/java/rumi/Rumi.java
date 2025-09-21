@@ -74,11 +74,10 @@ public class Rumi {
     }
 
     private void showIntroMessage() {
-        String message = String.format(
+        System.out.println(LOGO);
+        this.ui.printResponsef(
                 "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?",
                 CHATBOT_NAME);
-        System.out.println(LOGO);
-        this.ui.printResponse(message);
     }
 
     private void showGoodbyeMessage() {
@@ -116,19 +115,18 @@ public class Rumi {
                         UNKNOWN_COMMAND_RESPONSE);
             } catch (RumiException e) {
                 this.ui.printResponsef(
-                        "Sorry master, I encountered the following issue (´•︵•`)\n\n%s", e.getMessage());
+                        "Sorry master, I encountered the following issue (´•︵•`)\n\n%s",
+                        e.getMessage());
             }
 
             Storage.saveTasks(tasks);
         }
+
+        this.showGoodbyeMessage();
     }
 
     public static void main(String[] args) {
-        Rumi rumi;
         Scanner sc = new Scanner(System.in);
-
-        rumi = new Rumi(sc);
-        rumi.run();
-        rumi.showGoodbyeMessage();
+        new Rumi(sc).run();
     }
 }

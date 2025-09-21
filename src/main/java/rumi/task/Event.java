@@ -1,9 +1,11 @@
 package rumi.task;
 
 import java.time.DateTimeException;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import rumi.tag.Tag;
 import rumi.utils.Assert;
 import rumi.utils.RumiDate;
 
@@ -23,8 +25,17 @@ public class Event extends Task {
         this.to = RumiDate.fromString(to);
     }
 
-    Event(String title, String from, String to, boolean isDone) throws DateTimeException {
-        super(title);
+    Event(Task t, String from, String to) throws DateTimeException {
+        super(t);
+        Assert.notNull(t, from, to);
+
+        this.from = RumiDate.fromString(from);
+        this.to = RumiDate.fromString(to);
+    }
+
+    Event(String title, String from, String to, boolean isDone, ArrayList<Tag> tags)
+            throws DateTimeException {
+        super(title, tags.toArray(new Tag[0]));
         Assert.notNull(title, from, to);
 
         this.from = RumiDate.fromString(from);
@@ -35,32 +46,42 @@ public class Event extends Task {
         }
     }
 
+    Event(String title, String from, String to, boolean isDone) throws DateTimeException {
+        this(title, from, to, isDone, null);
+    }
+
+    public Event(String title, String from, String to, ArrayList<Tag> tags) throws DateTimeException {
+        this(title, from, to, false, tags);
+    }
+
+
     @Override
     public String toString() {
-        return String.format("[E]%s (from: %s --> to: %s)", super.toString(), this.from, this.to);
+        return String.format("[E]%s (from: %s --> to: %s) %s", super.toString(), this.from, this.to,
+                Tag.stringifyTagList(tags));
     }
 
     /** Creates an event from a serialised string representing event. */
     public static Event fromString(String s) throws EventStringParseException {
-        Pattern pattern = Pattern
-                .compile("E\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+)");
+        Task task = Task.fromString(s);
+        Pattern pattern = Pattern.compile(
+                "E\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+TAGS:(.*))?");
         Matcher matcher = pattern.matcher(s);
 
         if (!matcher.matches()) {
             throw new EventStringParseException();
         }
 
-        boolean isDone = matcher.group(1).equals("D");
-        String title = matcher.group(2);
         String from = matcher.group(3);
         String to = matcher.group(4);
-        return new Event(title, from, to, isDone);
+        return new Event(task, from, to);
     }
 
     @Override
     public String toSerialisedString() {
-        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P',
-                this.getTitle(), this.from, this.to);
+        return String.format("E @#@ %s @#@ %s @#@ %s @#@ %s @#@ TAGS:%s",
+                this.getStatus() ? 'D' : 'P', this.getTitle(), this.from, this.to,
+                Tag.serialiseTagList(this.tags));
     }
 
 }

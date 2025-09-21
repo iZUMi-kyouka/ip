@@ -1,8 +1,10 @@
 package rumi.command;
 
 import java.time.DateTimeException;
+import java.util.ArrayList;
 
 import rumi.RumiException;
+import rumi.tag.Tag;
 import rumi.task.Event;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -20,7 +22,15 @@ public class EventCommand extends TaskCommand {
      * Creates a EventCommand with given a TaskList and a task number.
      */
     public EventCommand(TaskList tasks, Ui ui, String title, String from, String to) {
-        super(tasks, ui, title);
+        this(tasks, ui, title, from, to, null);
+    }
+
+    /**
+     * Creates a EventCommand with given a TaskList and a task number.
+     */
+    public EventCommand(TaskList tasks, Ui ui, String title, String from, String to,
+            ArrayList<Tag> tags) {
+        super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title, from, to);
 
         this.from = from;
@@ -30,7 +40,7 @@ public class EventCommand extends TaskCommand {
     @Override
     public void run() throws RumiException {
         try {
-            Event event = new Event(title, from, to);
+            Event event = new Event(title, from, to, tags);
             TaskList.TaskListAddOutcome outcome = this.tasks.addTask(event);
             this.showOutcome(outcome, event);
         } catch (DateTimeException e) {

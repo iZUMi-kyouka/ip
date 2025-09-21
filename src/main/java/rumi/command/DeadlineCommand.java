@@ -1,8 +1,10 @@
 package rumi.command;
 
 import java.time.DateTimeException;
+import java.util.ArrayList;
 
 import rumi.RumiException;
+import rumi.tag.Tag;
 import rumi.task.Deadline;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -18,17 +20,24 @@ public class DeadlineCommand extends TaskCommand {
     /**
      * Creates a DeadlineCommand with given a TaskList and a task number.
      */
-    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate) {
-        super(tasks, ui, title);
+    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate, ArrayList<Tag> tags) {
+        super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title, dueDate);
 
         this.dueDate = dueDate;
     }
 
+    /**
+     * Creates a DeadlineCommand with given a TaskList and a task number.
+     */
+    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate) {
+        this(tasks, ui, title, dueDate, null);
+    }
+
     @Override
     public void run() throws RumiException {
         try {
-            Deadline deadline = new Deadline(title, dueDate);
+            Deadline deadline = new Deadline(title, dueDate, tags);
             TaskList.TaskListAddOutcome outcome = this.tasks.addTask(deadline);
             this.showOutcome(outcome, deadline);
         } catch (DateTimeException e) {

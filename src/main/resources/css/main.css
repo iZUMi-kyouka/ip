@@ -9,6 +9,8 @@
     -fx-background-image: url("../images/chat_background.jpg"); /* Set image */
     -fx-background-size: cover;
     -fx-font-family: 'Roboto';
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
 .text-field {

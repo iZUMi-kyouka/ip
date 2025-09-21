@@ -1,7 +1,8 @@
 package rumi.task;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+
+import rumi.tag.Tag;
 
 /** Represents a general to-do item. */
 public class ToDo extends Task {
@@ -11,8 +12,12 @@ public class ToDo extends Task {
 
     }
 
-    ToDo(String title, boolean isDone) {
-        super(title);
+    public ToDo(String title, ArrayList<Tag> tags) {
+        this(title, false, tags);
+    }
+
+    public ToDo(String title, boolean isDone, ArrayList<Tag> tags) {
+        super(title, tags.toArray(new Tag[0]));
 
         assert !title.isEmpty();
         if (isDone) {
@@ -20,27 +25,29 @@ public class ToDo extends Task {
         }
     }
 
+    ToDo(String title, boolean isDone) {
+        this(title, isDone, null);
+    }
+
+    ToDo(Task t) {
+        super(t);
+    }
+
     @Override
     public String toString() {
-        return String.format("[T]%s", super.toString());
+        System.out.println(this.tags);
+        return String.format("[T]%s %s", super.toString(), Tag.stringifyTagList(this.tags));
     }
 
     /** Creates a to-do from a serialised string representing a to-do. */
     public static ToDo fromString(String s) throws ToDoStringParseException {
-        Pattern pattern = Pattern.compile("T\\s+@#@\\s+([DP])\\s+@#@\\s+(.+)");
-        Matcher matcher = pattern.matcher(s);
-
-        if (!matcher.matches()) {
-            throw new ToDoStringParseException();
-        }
-
-        boolean isDone = matcher.group(1).equals("D");
-        String title = matcher.group(2);
-        return new ToDo(title, isDone);
+        Task t = Task.fromString(s);
+        return new ToDo(t);
     }
 
     @Override
     public String toSerialisedString() {
-        return String.format("T @#@ %s @#@ %s", this.getStatus() ? 'D' : 'P', this.getTitle());
+        return String.format("T @#@ %s @#@ %s @#@ TAGS:%s", this.getStatus() ? 'D' : 'P',
+                this.getTitle(), Tag.serialiseTagList(this.tags));
     }
 }

@@ -43,6 +43,8 @@ public class Storage {
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.printf("[WARN] %s\n", e);
+                } catch (NullPointerException e) {
+                    System.out.printf("[WARN] Potential Rumi data file corruption: %s\n", e);
                 }
             }
         } catch (FileNotFoundException e) {
