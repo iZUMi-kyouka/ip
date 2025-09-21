@@ -6,7 +6,9 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents a command to delete a task. */
+/**
+ * Represents a command to delete a task.
+ */
 public class DeleteCommand extends Command {
 
     private final TaskList tasks;
@@ -14,7 +16,7 @@ public class DeleteCommand extends Command {
     private final int taskNo;
 
     /**
-     * Creates a DeleteCommand with given a TaskList and a task number.
+     * Creates a DeleteCommand with given a TaskList, Uu, and a task number string.
      */
     public DeleteCommand(TaskList tasks, Ui ui, String taskNoStr) {
         Assert.notNull(tasks, ui, taskNoStr);

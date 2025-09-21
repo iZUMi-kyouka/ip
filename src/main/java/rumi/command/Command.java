@@ -2,12 +2,23 @@ package rumi.command;
 
 import rumi.RumiException;
 
-/** Handles parsing of user commands. */
+/**
+ * Handles parsing of user commands, and executing the logic of the particular command.
+ */
 public abstract class Command {
 
-    /** Runs this command. */
+    /**
+     * Executes this command.
+     *
+     * @throws RumiException If an error occurs during command execution.
+     */
     public void run() throws RumiException {};
 
-    /** Returns the type of this command. */
+
+    /**
+     * Returns the type classification of this command.
+     *
+     * @return The CommandType enum value representing this command's type.
+     */
     public abstract CommandType getType();
 }

@@ -5,14 +5,16 @@ import rumi.ui.Ui;
 import rumi.utils.Assert;
 import rumi.utils.Utils;
 
-/** Represents a command to list all takss. */
+/**
+ * Represents a command to list all takss.
+ */
 public class ListCommand extends Command {
 
     private final Ui ui;
     private final TaskList tasks;
 
     /**
-     * Creates a new 'list' command
+     * Creates a ListCommand from the given TaskList and Ui.
      */
     public ListCommand(TaskList tasks, Ui ui) {
         Assert.notNull(tasks, ui);

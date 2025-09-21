@@ -6,7 +6,9 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents a command to mark a task as done. */
+/**
+ * Represents a command to mark a task as done.
+ */
 public class MarkCommand extends Command {
 
     private final TaskList tasks;
@@ -14,7 +16,7 @@ public class MarkCommand extends Command {
     private final int taskNo;
 
     /**
-     * Creates a MarkCommand with given a TaskList and a task number.
+     * Creates a MarkCommand with the given TaskList, Ui, and a task number string.
      */
     public MarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
         Assert.notNull(tasks, ui, taskNoStr);

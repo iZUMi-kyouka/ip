@@ -18,17 +18,21 @@ public class DeadlineCommand extends TaskCommand {
     private final String dueDate;
 
     /**
-     * Creates a DeadlineCommand with given a TaskList and a task number.
+     * Creates a DeadlineCommand with given TaskList, UI, title, due date, and tags. The command
+     * will create a new deadline task when executed.
      */
-    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate, ArrayList<Tag> tags) {
+    public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate,
+            ArrayList<Tag> tags) {
         super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title, dueDate);
 
         this.dueDate = dueDate;
     }
 
+
     /**
-     * Creates a DeadlineCommand with given a TaskList and a task number.
+     * Creates a DeadlineCommand with given TaskList, UI, title, and due date. The command will
+     * create a new deadline task with no tags when executed.
      */
     public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate) {
         this(tasks, ui, title, dueDate, null);

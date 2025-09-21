@@ -19,14 +19,16 @@ public class EventCommand extends TaskCommand {
     private final String to;
 
     /**
-     * Creates a EventCommand with given a TaskList and a task number.
+     * Creates a EventCommand with the given TaskList, Ui, task title, and from and to datetime
+     * string.
      */
     public EventCommand(TaskList tasks, Ui ui, String title, String from, String to) {
         this(tasks, ui, title, from, to, null);
     }
 
     /**
-     * Creates a EventCommand with given a TaskList and a task number.
+     * Creates a EventCommand with the given TaskList, Ui, task title, from and to datetime string,
+     * and a tag list.
      */
     public EventCommand(TaskList tasks, Ui ui, String title, String from, String to,
             ArrayList<Tag> tags) {

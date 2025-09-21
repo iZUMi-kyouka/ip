@@ -4,13 +4,17 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents a command to find tasks from the task name. */
+/**
+ * Represents a command to find tasks from the task name.
+ */
 public class FindCommand extends Command {
     private final TaskList tasks;
     private final Ui ui;
     private final String query;
 
-    /** Constructs a 'find' command from the given tasks, ui, and query */
+    /**
+     * Constructs a FindCommand from the given TaskList, Ui, and query string.
+     */
     public FindCommand(TaskList tasks, Ui ui, String query) {
         Assert.notNull(tasks, ui, query);
 

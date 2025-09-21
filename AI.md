@@ -5,6 +5,8 @@ This file lists all utilisations of AI in this project.
 - Used to generate the various combinations of date and time format that a user could possibly type for flexible datetime input
 - Used for help with creating the correct regex for flexible datetime parsing
 - Used to come up with hot pink color palette that is used in the FXML CSS
+- Used to generate JavaDoc comments
 
 # Perplexity
 - Used to write the getLavenshteinDistance method in Parser class for enhanced error handling
+- Used to generate JavaDoc comments
