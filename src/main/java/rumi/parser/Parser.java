@@ -25,27 +25,52 @@ import rumi.utils.Assert;
  * Handles parsing of user command and returning the correct command type.
  */
 public class Parser {
-    private static final String EXIT_CMD_REGEX = "bye";
-    private static final String LIST_CMD_REGEX = "list";
-    private static final String MARK_CMD_REGEX = "mark\\s+(-?\\d+)";
-    private static final String UNMARK_CMD_REGEX = "unmark\\s+(-?\\d+)";
-    private static final String FIND_CMD_REGEX = "find\\s+(.+)";
-    private static final String DELETE_CMD_REGEX = "delete\\s+(-?\\d+)";
-    private static final String TODO_CMD_REGEX = "todo\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
-    private static final String DEADLINE_CMD_REGEX =
+    private static final String CMD_REGEX_EXIT = "bye";
+    private static final String CMD_REGEX_LIST = "list";
+    private static final String CMD_REGEX_MARK = "mark\\s+(-?\\d+)";
+    private static final String CMD_REGEX_UNMARK = "unmark\\s+(-?\\d+)";
+    private static final String CMD_REGEX_FIND = "find\\s+(.+)";
+    private static final String CMD_REGEX_DELETE = "delete\\s+(-?\\d+)";
+    private static final String CMD_REGEX_TODO = "todo\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
+    private static final String CMD_REGEX_DEADLINE =
             "deadline\\s+(.+?)\\s+/by\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
-    private static final String EVENT_CMD_REGEX =
+    private static final String CMD_REGEX_EVENT =
             "event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
-    private static final String TAGS_REGEX = "(?:todo|deadline|event)(?:.+?)/tags\\s+(.+)";
+    private static final String REGEX_TAGS = "(?:todo|deadline|event)(?:.+?)/tags\\s+(.+)";
 
-    private static final Pattern UNMARK_CMD_PATTERN = Pattern.compile(UNMARK_CMD_REGEX);
-    private static final Pattern MARK_CMD_PATTERN = Pattern.compile(MARK_CMD_REGEX);
-    private static final Pattern DELETE_CMD_PATTERN = Pattern.compile(DELETE_CMD_REGEX);
-    private static final Pattern FIND_COMMAND_PATTERN = Pattern.compile(FIND_CMD_REGEX);
-    private static final Pattern TODO_CMD_PATTERN = Pattern.compile(TODO_CMD_REGEX);
-    private static final Pattern DEADLINE_CMD_PATTERN = Pattern.compile(DEADLINE_CMD_REGEX);
-    private static final Pattern EVENT_CMD_PATTERN = Pattern.compile(EVENT_CMD_REGEX);
-    private static final Pattern TAGS_PATTERN = Pattern.compile(TAGS_REGEX);
+    private static final Pattern CMD_PATTERN_UNMARK = Pattern.compile(CMD_REGEX_UNMARK);
+    private static final Pattern CMD_PATTERN_MARK = Pattern.compile(CMD_REGEX_MARK);
+    private static final Pattern CMD_PATTERN_DELETE = Pattern.compile(CMD_REGEX_DELETE);
+    private static final Pattern CMD_PATTERN_FIND = Pattern.compile(CMD_REGEX_FIND);
+    private static final Pattern CMD_PATTERN_TODO = Pattern.compile(CMD_REGEX_TODO);
+    private static final Pattern CMD_PATTERN_DEADLINE = Pattern.compile(CMD_REGEX_DEADLINE);
+    private static final Pattern CMD_PATTERN_EVENT = Pattern.compile(CMD_REGEX_EVENT);
+    private static final Pattern PATTERN_TAGS = Pattern.compile(REGEX_TAGS);
+
+    private static final String ERROR_MSG_BYE =
+            "Did you mean 'bye'? To exit Rumi, simply type 'bye' without any additional characters.";
+    private static final String ERROR_MSG_LIST =
+            "Did you mean 'list'? To list all tasks, simply type 'list' without any additional characters.";
+    private static final String ERROR_MSG_MARK = "Did you mean 'mark <TASK_NUMBER>'?\n"
+            + "To mark task number N as done, simply type 'mark N' without any additional characters.";
+    private static final String ERROR_MSG_UNMARK = "Did you mean 'unmark <TASK_NUMBER>'?\n"
+            + "To unmark task number N as done (returning it to pending state), "
+            + "simply type 'unmark N' without any additional characters.";
+    private static final String ERROR_MSG_DELETE = "Did you mean 'delete <TASK_NUMBER>'?\n"
+            + "To delete task number N, simply type 'delete N' without any additional characters.";
+    private static final String ERROR_MSG_TODO = "Did you mean 'todo <TASK_NAME>'?\n"
+            + "To add a new todo with name NAME, simply type 'todo NAME' without any additional characters.";
+    private static final String ERROR_MSG_DEADLINE =
+            "Did you mean 'deadline <TASK_NAME> /by <TASK_DUE_DATE>'?\n"
+                    + "To add a new deadline due by DUE_BY with name NAME, "
+                    + "simply type 'deadline NAME /by DUE_BY' without any additional characters.";
+    private static final String ERROR_MSG_EVENT =
+            "Did you mean 'event <TASK_NAME> /from <START_TIME> /to <END_TIME>'?\n"
+                    + "To add a new event from FROM to TO with name NAME, "
+                    + "simply type 'event NAME /from FROM /to TO' without any additional characters.";
+
+    private static final String[] VALID_COMMANDS =
+            {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
 
     private final TaskList tasks;
     private final Ui ui;
@@ -63,7 +88,7 @@ public class Parser {
     private ArrayList<Tag> parseTags(String command) {
         assert command != null;
 
-        Matcher matcher = TAGS_PATTERN.matcher(command);
+        Matcher matcher = PATTERN_TAGS.matcher(command);
         ArrayList<Tag> tags = new ArrayList<>();
 
         if (!matcher.matches() || matcher.group(1) == null) {
@@ -86,51 +111,51 @@ public class Parser {
 
         ArrayList<Tag> tags = parseTags(command);
 
-        if (command.equals(EXIT_CMD_REGEX)) {
+        if (command.equals(CMD_REGEX_EXIT)) {
             return new ExitCommand();
-        } else if (command.equals(LIST_CMD_REGEX)) {
+        } else if (command.equals(CMD_REGEX_LIST)) {
             return new ListCommand(this.tasks, this.ui);
-        } else if (command.matches(MARK_CMD_REGEX)) {
-            Matcher matcher = MARK_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_MARK)) {
+            Matcher matcher = CMD_PATTERN_MARK.matcher(command);
             if (matcher.matches()) {
                 String taskNo = matcher.group(1);
                 return new MarkCommand(this.tasks, this.ui, taskNo);
             }
-        } else if (command.matches(UNMARK_CMD_REGEX)) {
-            Matcher matcher = UNMARK_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_UNMARK)) {
+            Matcher matcher = CMD_PATTERN_UNMARK.matcher(command);
             if (matcher.matches()) {
                 String taskNo = matcher.group(1);
                 return new UnmarkCommand(this.tasks, this.ui, taskNo);
             }
-        } else if (command.matches(DELETE_CMD_REGEX)) {
-            Matcher matcher = DELETE_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_DELETE)) {
+            Matcher matcher = CMD_PATTERN_DELETE.matcher(command);
             if (matcher.matches()) {
                 String taskNo = matcher.group(1);
                 return new DeleteCommand(this.tasks, this.ui, taskNo);
             }
-        } else if (command.matches(TODO_CMD_REGEX)) {
-            Matcher matcher = TODO_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_TODO)) {
+            Matcher matcher = CMD_PATTERN_TODO.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
                 return new ToDoCommand(this.tasks, this.ui, title, tags);
             }
-        } else if (command.matches(DEADLINE_CMD_REGEX)) {
-            Matcher matcher = DEADLINE_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_DEADLINE)) {
+            Matcher matcher = CMD_PATTERN_DEADLINE.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
                 String dueDate = matcher.group(2);
                 return new DeadlineCommand(this.tasks, this.ui, title, dueDate, tags);
             }
-        } else if (command.matches(EVENT_CMD_REGEX)) {
-            Matcher matcher = EVENT_CMD_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_EVENT)) {
+            Matcher matcher = CMD_PATTERN_EVENT.matcher(command);
             if (matcher.matches()) {
                 String title = matcher.group(1);
                 String from = matcher.group(2);
                 String to = matcher.group(3);
                 return new EventCommand(this.tasks, this.ui, title, from, to, tags);
             }
-        } else if (command.matches(FIND_CMD_REGEX)) {
-            Matcher matcher = FIND_COMMAND_PATTERN.matcher(command);
+        } else if (command.matches(CMD_REGEX_FIND)) {
+            Matcher matcher = CMD_PATTERN_FIND.matcher(command);
             if (matcher.matches()) {
                 String query = matcher.group(1);
                 return new FindCommand(this.tasks, this.ui, query);
@@ -170,7 +195,6 @@ public class Parser {
     private String getClosestCommand(String inputCommand) {
         assert inputCommand != null;
 
-        String[] knownCommands = {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
         String[] tokens = inputCommand.split(" ");
         if (tokens.length == 0) {
             return "";
@@ -180,7 +204,7 @@ public class Parser {
         String closest = "";
         int minDistance = Integer.MAX_VALUE;
 
-        for (String cmd : knownCommands) {
+        for (String cmd : VALID_COMMANDS) {
             int distance = computeLevenshteinDistance(firstToken, cmd);
             if (distance < minDistance) {
                 minDistance = distance;
@@ -206,33 +230,18 @@ public class Parser {
             return Optional.empty();
         }
 
-        String msg = new String();
+        String msg = switch (closestCommand) {
+        case "bye" -> ERROR_MSG_BYE;
+        case "list" -> ERROR_MSG_LIST;
+        case "mark" -> ERROR_MSG_MARK;
+        case "unmark" -> ERROR_MSG_UNMARK;
+        case "delete" -> ERROR_MSG_DELETE;
+        case "todo" -> ERROR_MSG_TODO;
+        case "deadline" -> ERROR_MSG_DEADLINE;
+        case "event" -> ERROR_MSG_EVENT;
+        default -> "";
+        };
 
-        switch (closestCommand) {
-        case "bye" -> msg =
-                "Did you mean 'bye'? To exit Rumi, simply type 'bye' without any additional characters.";
-        case "list" -> msg =
-                "Did you mean 'list'? To list all tasks, simply type 'list' without any additional characters.";
-        case "mark" -> msg = "Did you mean 'mark <TASK_NUMBER>'?\n"
-                + "To mark task number N as done, simply type 'mark N' without any additional characters.";
-        case "unmark" -> msg = "Did you mean 'unmark <TASK_NUMBER>'?\n"
-                + "To unmark task number N as done (returning it to pending state), "
-                + "simply type 'mark N' without any additional characters.";
-        case "delete" -> msg = "Did you mean 'delete <TASK_NUMBER>'?\n"
-                + "To delete task number N, simply type 'delete N' without any additional characters.";
-        case "todo" -> msg = "Did you mean 'todo <TASK_NAME>'?\n"
-                + "To add a new todo with name NAME, simply type 'todo NAME' without any additional characters.";
-        case "deadline" -> msg = "Did you mean 'deadline <TASK_NAME> /by <TASK_DUE_DATE>'?\n"
-                + "To add a new deadline due by DUE_BY with name NAME, "
-                + "simply type 'deadline NAME /by DUE_BY' without any additional characters.";
-        case "event" -> msg =
-                "Did you mean 'event <TASK_NAME> /from <START_TIME> /to <END_TIME>'?\n"
-                        + "To add a new event from FROM to TO with name NAME, "
-                        + "simply type 'event NAME /from FROM /to TO' without any additional characters.";
-        default -> {
-        }
-        }
-
-        return Optional.of(msg);
+        return msg.isEmpty() ? Optional.empty() : Optional.of(msg);
     }
 }
