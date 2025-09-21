@@ -16,7 +16,7 @@ public class Tag {
         return String.format("[ #%s ]", this.tagName);
     }
 
-    /** Returns the string representation of a list of tag */
+    /** Returns the serialised string representation of a tag list. */
     public static String serialiseTagList(List<Tag> list) {
         if (list.isEmpty()) {
             return "";
@@ -31,6 +31,7 @@ public class Tag {
         return sb.toString().substring(0, sb.length() - 1);
     }
 
+    /** Returns an ArrayList of Tag from a serialised string representation of a tag list. */
     public static ArrayList<Tag> tagListFromString(String s) {
         ArrayList<Tag> tags = new ArrayList<>();
         for (String tag : s.split(",")) {
@@ -40,7 +41,7 @@ public class Tag {
         return tags;
     }
 
-    /** Returns the string representation of a list of tag */
+    /** Returns the pretty string representation of a tag list. */
     public static String stringifyTagList(List<Tag> list) {
         StringBuilder sb = new StringBuilder();
         for (Tag t : list) {
