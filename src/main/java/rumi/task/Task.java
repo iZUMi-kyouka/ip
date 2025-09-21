@@ -11,7 +11,13 @@ import rumi.utils.Assert;
 
 /** Represents a task in the task list. */
 public class Task {
-    protected ArrayList<Tag> tags = new ArrayList<>();
+    private static final String TASK_TAG_SEPARATOR_REGEX = "^(.+?)(?:\\s+@#@\\s+TAGS:(.+))?$";
+    private static final String TASK_REGEX =
+            "^(?:.+?)\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+.+)?";
+    private static final Pattern TASK_TAG_PATTERN = Pattern.compile(TASK_TAG_SEPARATOR_REGEX);
+    private static final Pattern TASK_PATTERN = Pattern.compile(TASK_REGEX);
+
+    protected final ArrayList<Tag> tags = new ArrayList<>();
     private final String title;
     private boolean isDone;
 
@@ -35,7 +41,7 @@ public class Task {
     protected Task(Task t) {
         this.title = t.title;
         this.isDone = t.isDone;
-        this.tags = t.tags;
+        this.tags.addAll(t.tags);
     }
 
     /** Constructs a task with the given title and tag(s) */
@@ -49,10 +55,12 @@ public class Task {
         }
     }
 
+    /** Marks the task as done. */
     public void markAsDone() {
         this.isDone = true;
     }
 
+    /** Unmark a done task, reverting it back to pending state. */
     public void unmarkAsDone() {
         this.isDone = false;
     }
@@ -92,15 +100,13 @@ public class Task {
         return Objects.hash(this.title, this.isDone);
     }
 
-    /** Constructs a generic task from a serialised string representing of any task. */
-    public static Task fromString(String s) throws IllegalArgumentException {
-        Pattern pattern = Pattern.compile("^(.+?)(?:\\s+@#@\\s+TAGS:(.+))?$");
-        Matcher matcher = pattern.matcher(s);
+    private static ArrayList<Tag> parseTagsFromSerialisedTask(String s)
+            throws IllegalArgumentException {
+        Matcher matcher = TASK_TAG_PATTERN.matcher(s);
         if (!matcher.matches()) {
             throw new IllegalArgumentException();
         }
 
-        String taskPart = matcher.group(1);
         String tagsPart = matcher.group(2);
         ArrayList<Tag> tags = new ArrayList<>();
 
@@ -110,8 +116,17 @@ public class Task {
             }
         }
 
-        pattern = Pattern.compile("^(?:.+?)\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+.+)?");
-        matcher = pattern.matcher(taskPart);
+        return tags;
+    }
+
+    private static Task parseTaskFromSerialisedTask(String s) {
+        Matcher matcher = TASK_TAG_PATTERN.matcher(s);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException();
+        }
+
+        String taskPart = matcher.group(1);
+        matcher = TASK_PATTERN.matcher(taskPart);
         if (!matcher.matches()) {
             throw new IllegalArgumentException();
         }
@@ -120,8 +135,15 @@ public class Task {
         String title = matcher.group(2);
         Assert.notNull(status, title);
 
-        Task t = new Task(title, status.equals("D"));
-        t.tags = tags;
-        return t;
+        return new Task(title, status.equals("D"));
+    }
+
+    /** Constructs a generic task from a serialised string representation of any task. */
+    public static Task fromString(String s) throws IllegalArgumentException {
+        ArrayList<Tag> tags = Task.parseTagsFromSerialisedTask(s);
+        Task task = Task.parseTaskFromSerialisedTask(s);
+        task.tags.addAll(tags);
+
+        return task;
     }
 }
