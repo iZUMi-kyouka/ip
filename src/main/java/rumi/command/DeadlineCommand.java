@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import rumi.exception.RumiException;
 import rumi.tag.Tag;
 import rumi.task.Deadline;
+import rumi.task.InvalidTaskDateTimeException;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
@@ -44,8 +45,10 @@ public class DeadlineCommand extends TaskCommand {
             Deadline deadline = new Deadline(title, dueDate, tags);
             TaskList.TaskListAddOutcome outcome = this.tasks.addTask(deadline);
             this.showOutcome(outcome, deadline);
+        } catch (InvalidTaskDateTimeException e) {
+            throw RumiException.INVALID_DATETIME_IN_THE_PAST_EXCEPTION;
         } catch (DateTimeException e) {
-            throw RumiException.INVALID_DATE_EXCEPTION;
+            throw RumiException.INVALID_DATE_FORMAT_EXCEPTION;
         }
     }
 

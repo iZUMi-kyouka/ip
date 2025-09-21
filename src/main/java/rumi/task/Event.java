@@ -27,6 +27,7 @@ public class Event extends Task {
 
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
+        this.validateEndDateTime();
     }
 
     Event(String title, String from, String to, boolean isDone, ArrayList<Tag> tags)
@@ -36,6 +37,8 @@ public class Event extends Task {
 
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
+
+        this.validateEndDateTime();
 
         if (isDone) {
             this.markAsDone();
@@ -49,6 +52,13 @@ public class Event extends Task {
             throws DateTimeException {
         this(title, from, to, false, tags);
     }
+
+    private void validateEndDateTime() {
+        if (this.to.isInThePast()) {
+            throw new InvalidTaskDateTimeException();
+        }
+    }
+
 
     @Override
     public String toString() {

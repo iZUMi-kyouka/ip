@@ -21,6 +21,7 @@ public class Deadline extends Task {
 
         Assert.nonEmptyString(title);
         this.deadline = RumiDate.fromString(deadline);
+        validateDeadline();
     }
 
     /**
@@ -35,8 +36,12 @@ public class Deadline extends Task {
 
         Assert.nonEmptyString(deadline);
         this.deadline = RumiDate.fromString(deadline);
-        if (t.getStatus()) {
-            this.markAsDone();
+        validateDeadline();
+    }
+
+    private void validateDeadline() throws InvalidTaskDateTimeException {
+        if (this.deadline.isInThePast()) {
+            throw new InvalidTaskDateTimeException();
         }
     }
 
@@ -47,7 +52,7 @@ public class Deadline extends Task {
     }
 
     /** Constructs a deadline from a serialised string representing of a deadline. */
-    public static Deadline fromString(String s) throws DeadlineStringParseException {
+    public static Deadline fromString(String s) throws IllegalArgumentException {
         Task task = Task.fromString(s);
         Pattern pattern = Pattern.compile(
                 "D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+TAGS:(.*))?");

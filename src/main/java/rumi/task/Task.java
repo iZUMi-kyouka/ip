@@ -9,7 +9,9 @@ import java.util.regex.Pattern;
 import rumi.tag.Tag;
 import rumi.utils.Assert;
 
-/** Represents a task in the task list. */
+/**
+ * Represents a task added by the user.
+ */
 public class Task {
     private static final String TASK_TAG_SEPARATOR_REGEX = "^(.+?)(?:\\s+@#@\\s+TAGS:(.+))?$";
     private static final String TASK_REGEX =
@@ -21,29 +23,39 @@ public class Task {
     private final String title;
     private boolean isDone;
 
-    /** Constructs a pending task with the given title */
+    /**
+     * Constructs a pending task with the given title
+     */
     public Task(String title) {
         this(title, false);
     }
 
-    /** Constructs a task with the given title and status */
+    /**
+     * Constructs a task with the given title and status
+     */
     private Task(String title, boolean isDone) {
         this(title, isDone, (Tag[]) null);
     }
 
-    /** Constructs a task with the same attributes as the given task */
+    /**
+     * Constructs a task with the same attributes as the given task
+     */
     protected Task(Task t) {
         this.title = t.title;
         this.isDone = t.isDone;
         this.tags.addAll(t.tags);
     }
 
-    /** Cnstructs a pending task with the given title and tags. */
+    /**
+     * Cnstructs a pending task with the given title and tags.
+     */
     public Task(String title, Tag... tags) {
         this(title, false, tags);
     }
 
-    /** Constructs a task with the given title, status, and tag(s) */
+    /**
+     * Constructs a task with the given title, status, and tag(s)
+     */
     public Task(String title, boolean isDone, Tag... tags) {
         Assert.nonEmptyString(title);
 
@@ -54,12 +66,16 @@ public class Task {
         }
     }
 
-    /** Marks the task as done. */
+    /**
+     * Marks the task as done.
+     */
     public void markAsDone() {
         this.isDone = true;
     }
 
-    /** Unmark a done task, reverting it back to pending state. */
+    /**
+     * Unmark a done task, reverting it back to pending state.
+     */
     public void unmarkAsDone() {
         this.isDone = false;
     }
@@ -77,7 +93,9 @@ public class Task {
         return String.format("[%s] %s", this.isDone ? 'X' : ' ', this.title);
     }
 
-    /** Serialises this task as a string. */
+    /**
+     * Serialises this task as a string.
+     */
     public String toSerialisedString() {
         return String.format("! @#@ %s @#@ %s", this.title, this.isDone ? 'D' : 'P');
     }
@@ -137,7 +155,9 @@ public class Task {
         return new Task(title, status.equals("D"));
     }
 
-    /** Constructs a generic task from a serialised string representation of any task. */
+    /**
+     * Constructs a generic task from a serialised string representation of any task.
+     */
     public static Task fromString(String s) throws IllegalArgumentException {
         ArrayList<Tag> tags = Task.parseTagsFromSerialisedTask(s);
         Task task = Task.parseTaskFromSerialisedTask(s);

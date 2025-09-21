@@ -114,7 +114,7 @@ public class Rumi {
             } catch (UnknownUserCommandException e) {
                 Optional<String> suggestion = this.parser.suggestErrorMessage(command);
                 if (!suggestion.isEmpty()) {
-                    this.ui.printResponsef("%s\n\n%s", RESPONSE_UNKNOWN_COMMAND, suggestion);
+                    this.ui.printResponsef("%s\n\n%s", RESPONSE_UNKNOWN_COMMAND, suggestion.get());
                     continue;
                 }
 

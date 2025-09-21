@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import rumi.exception.RumiException;
 import rumi.tag.Tag;
 import rumi.task.Event;
+import rumi.task.InvalidTaskDateTimeException;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
@@ -45,8 +46,10 @@ public class EventCommand extends TaskCommand {
             Event event = new Event(title, from, to, tags);
             TaskList.TaskListAddOutcome outcome = this.tasks.addTask(event);
             this.showOutcome(outcome, event);
+        } catch (InvalidTaskDateTimeException e) {
+            throw RumiException.INVALID_DATETIME_IN_THE_PAST_EXCEPTION;
         } catch (DateTimeException e) {
-            throw RumiException.INVALID_DATE_EXCEPTION;
+            throw RumiException.INVALID_DATE_FORMAT_EXCEPTION;
         }
     }
 
