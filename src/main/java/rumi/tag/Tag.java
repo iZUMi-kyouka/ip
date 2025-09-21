@@ -51,4 +51,14 @@ public class Tag {
 
         return sb.toString().trim();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Tag)) {
+            return false;
+        }
+
+        Tag t = (Tag) o;
+        return this.tagName.equals(t.tagName);
+    }
 }

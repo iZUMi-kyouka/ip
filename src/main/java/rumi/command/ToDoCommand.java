@@ -41,16 +41,6 @@ public class ToDoCommand extends TaskCommand {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof ToDoCommand)) {
-            return false;
-        }
-
-        ToDoCommand command = (ToDoCommand) o;
-        return command.title.equals(command.title);
-    }
-
-    @Override
     protected String getSuccessMessage() {
         return "Right away, Master! I've added this to your to-do list";
     }

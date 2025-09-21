@@ -105,7 +105,8 @@ public class Task {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Task task)) {
+
+        if (!(obj instanceof Task task) || obj == null) {
             return false;
         }
 

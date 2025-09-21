@@ -10,6 +10,7 @@ import rumi.task.InvalidTaskDateTimeException;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
+import rumi.utils.Comparator;
 
 /**
  * Represents a command to create an event.
@@ -64,9 +65,9 @@ public class EventCommand extends TaskCommand {
             return false;
         }
 
-        EventCommand command = (EventCommand) o;
-        return command.title.equals(this.title) && command.from.equals(this.from)
-                && command.to.equals(this.to);
+        EventCommand cmd = (EventCommand) o;
+        return super.equals(o) && Comparator.allEqual(new Object[] {this.from, this.to},
+                new Object[] {cmd.from, cmd.to});
     }
 
     @Override

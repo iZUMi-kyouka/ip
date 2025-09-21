@@ -64,7 +64,7 @@ public class DeadlineCommand extends TaskCommand {
         }
 
         DeadlineCommand command = (DeadlineCommand) o;
-        return command.title.equals(this.title) && command.dueDate.equals(this.dueDate);
+        return super.equals(o) && this.dueDate.equals(command.dueDate);
     }
 
     @Override

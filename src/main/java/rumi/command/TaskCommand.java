@@ -6,6 +6,7 @@ import rumi.tag.Tag;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
+import rumi.utils.Comparator;
 import rumi.utils.Utils;
 
 /**
@@ -84,5 +85,16 @@ abstract class TaskCommand extends Command {
         }
 
         this.ui.printResponsef(formatStr, task, this.tasks.size());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof TaskCommand) || o == null) {
+            return false;
+        }
+
+        TaskCommand t = (TaskCommand) o;
+        return Comparator.allEqual(new Object[] {this.tags, this.title},
+                new Object[] {t.tags, t.title});
     }
 }

@@ -1,5 +1,6 @@
 package rumi;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,6 +14,7 @@ import rumi.command.EventCommand;
 import rumi.command.ToDoCommand;
 import rumi.command.UnknownUserCommandException;
 import rumi.parser.Parser;
+import rumi.tag.Tag;
 import rumi.task.TaskList;
 import rumi.task.ToDo;
 import rumi.ui.Ui;
@@ -35,6 +37,28 @@ public class ParserTest {
 
         ToDo parsedToDo = (ToDo) tasks.get(1);
         ToDo expectedToDo = new ToDo("laundry", null);
+        assertEquals(parsedToDo, expectedToDo);
+    }
+
+    @Test
+    public void parseTodoCommand_validInputWithTag_expectedBehaviour() throws Exception {
+        String commandString = "todo laundry /tags testTag1,testTag2";
+
+        TaskList tasks = new TaskList();
+        Parser p = new Parser(tasks, ui);
+
+        ArrayList<Tag> expectedTags = new ArrayList<>();
+        expectedTags.add(new Tag("testTag1"));
+        expectedTags.add(new Tag("testTag2"));
+
+        Command parsedCommand = p.parse(commandString);
+        Command expectedCommand = new ToDoCommand(tasks, ui, "laundry", expectedTags);
+        assertEquals(parsedCommand, expectedCommand);
+
+        parsedCommand.run();
+
+        ToDo parsedToDo = (ToDo) tasks.get(1);
+        ToDo expectedToDo = new ToDo("laundry", expectedTags);
         assertEquals(parsedToDo, expectedToDo);
     }
 
