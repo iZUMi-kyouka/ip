@@ -6,6 +6,7 @@ This file lists all utilisations of AI in this project.
 - Used for help with creating the correct regex for flexible datetime parsing
 - Used to come up with hot pink color palette that is used in the FXML CSS
 - Used to generate JavaDoc comments
+- Used for assistance in dealing with the asynchronous nature in linking the GUI and bot loop
 
 # Perplexity
 - Used to write the getLavenshteinDistance method in Parser class for enhanced error handling
