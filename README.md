@@ -6,39 +6,46 @@
 Rumi is a your ~~typical~~ _**cute**_ :heart: personal assistant that will keep track of your daily to-dos! :calendar:. Most importantly, Rumi would happily live in <ins>under 100MB</ins> of space in any of your computer!
 
 **Features**
-- [x] Managing todos
-- [x] Managing deadlines
-- [x] Managing events
-- [ ] Google Calendar synchronisation (coming soon)
+- [x]  Managing todos
+- [x]  Managing deadlines
+- [x]  Managing events
+- [ ]  Google Calendar synchronisation (coming soon)
 
 > Time is what we want most but what we use worst. -- William Penn
 
 ## Adding todos
 Todos are the most basic type of task. It is simply the task name and its status.
 
-Example: `todo clean bedroom`
+Example: `todo clean bedroom /tags not_urgent`
 
 Adds a todo 'clean bedroom' whose status is pending.
 
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     Right away, Master! I've added this to your to-do list:
-        [T][ ] clean bedroom
+        [T][ ] clean bedroom [#not_urgent]
     You now have 5 task(s) awaiting your attention~
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
+## Date and Time Input
+Rumi is a smart chatbot! She understands various natural datetime input format such as:
+- `1326 823pm` (Mar 1, 2026 @ 08:23PM)
+- `1-03-2025 09:13AM` (Mar 1, 2025 @ 09:13AM)
+- `01-02-2026 2114` (Feb 1, 2026 @ 21:14),
+so you can focus more on zipping through tasks than being tied to lame input format!
+
 ## Adding deadlines
 Deadlines are a type of task that must be done by a certain time. Deadlines must contain both the task name and the deadline by which it must be done.
 
-Example: `deadline submit CS2103T iP /by 19/9/2025 4pm`
+Example: `deadline submit CS2103T iP /by 19/9/2025 4pm /tags urgent,need_help`
 
 Adds a deadline 'submit CS2103T iP' which is set to be due on 19 September 2025, 4pm.
 
 ```
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     Right away, Master! I've added this to your to-do list:
-        [D][ ] submit CS2103T iP (by: 19-09-2025 04:00pm)
+        [D][ ] submit CS2103T iP (by: 19-09-2025 04:00pm) [#urgent] [#need_help]
     You now have 4 task(s) awaiting your attention~
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -128,7 +135,7 @@ Marks the task with the index 1 as done.
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## Unmarking a task marked as done
+## Unmarking a task marked as done (reverting it to pending)
 Unmarking a done task changes its state from done back to pending.
 
 Assuming the state of the task list is as shown below,
@@ -169,4 +176,5 @@ Exits the Rumi chatbot.
 ## Credits
 **Image Sources**
 - [Rumi's profile picture](https://avatars.alphacoders.com/avatars/view/304708)
-- [User's profile picture (Mai Sakurajima)](https://in.pinterest.com/pin/835417799657072728/)
+- [User's profile picture (Character: Mai Sakurajima from the anime Bunny Girl Senpai)](https://in.pinterest.com/pin/835417799657072728/)
+- The beautiful [Iosevka font](https://github.com/be5invis/Iosevka)
