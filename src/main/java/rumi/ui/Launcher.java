@@ -1,3 +1,5 @@
+package rumi.ui;
+
 import javafx.application.Application;
 
 /**

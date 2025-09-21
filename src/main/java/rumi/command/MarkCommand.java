@@ -29,7 +29,7 @@ public class MarkCommand extends Command {
     @Override
     public void run() {
         if (taskNo > tasks.size() || taskNo <= 0) {
-            this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
+            this.ui.printResponse(Rumi.RESPONSE_UNKNOWN_TASK);
             return;
         }
         Task task = tasks.get(taskNo);

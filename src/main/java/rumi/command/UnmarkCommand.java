@@ -14,7 +14,7 @@ public class UnmarkCommand extends Command {
     private final int taskNo;
 
     /**
-     * Creates a UnmarkCommand with given a TaskList and a task number.
+     * Creates a UnmarkCommand with given a TaskList, Ui, and the task number string.
      */
     public UnmarkCommand(TaskList tasks, Ui ui, String taskNoStr) {
         Assert.notNull(tasks, ui, taskNoStr);
@@ -27,7 +27,7 @@ public class UnmarkCommand extends Command {
     @Override
     public void run() {
         if (taskNo > tasks.size() || taskNo <= 0) {
-            this.ui.printResponse(Rumi.UNKNOWN_TASK_RESPONSE);
+            this.ui.printResponse(Rumi.RESPONSE_UNKNOWN_TASK);
             return;
         }
 

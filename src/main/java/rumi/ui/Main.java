@@ -1,3 +1,5 @@
+package rumi.ui;
+
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -9,7 +11,7 @@ import javafx.stage.Stage;
 import rumi.Rumi;
 
 /**
- * A GUI for Rui using FXML
+ * A GUI for Rumi using FXML
  */
 public class Main extends Application {
 
@@ -34,6 +36,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
+
             System.out.printf("[ERROR] Failed to initialise GUI: %s\n", e.getMessage());
         }
     }

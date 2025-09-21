@@ -1,6 +1,8 @@
-package rumi;
+package rumi.exception;
 
-/** A custom exception used for Rumi-specific exceptions. */
+/**
+ * A custom exception used for Rumi-specific exceptions.
+ */
 public class RumiException extends Exception {
     public static final RumiException INVALID_DATE_EXCEPTION = new RumiException(
             "The date you entered is invalid.\nPlease enter date in the following format: "
@@ -10,5 +12,9 @@ public class RumiException extends Exception {
 
     public RumiException(String message) {
         super(message);
+    }
+
+    public RumiException(String format, Object... o) {
+        super(String.format(format, o));
     }
 }

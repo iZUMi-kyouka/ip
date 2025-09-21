@@ -3,7 +3,7 @@ package rumi.command;
 import java.time.DateTimeException;
 import java.util.ArrayList;
 
-import rumi.RumiException;
+import rumi.exception.RumiException;
 import rumi.tag.Tag;
 import rumi.task.Deadline;
 import rumi.task.TaskList;

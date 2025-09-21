@@ -7,6 +7,7 @@ import java.util.concurrent.BlockingQueue;
 import rumi.command.Command;
 import rumi.command.CommandType;
 import rumi.command.UnknownUserCommandException;
+import rumi.exception.RumiException;
 import rumi.parser.Parser;
 import rumi.storage.Storage;
 import rumi.task.TaskList;
@@ -49,9 +50,15 @@ public class Rumi {
                     + "⣿⠀⠤⠄⠀⢀⣀⣠⣨⣉⣉⣉⣉⣛⣛⡛⣛⢛⡛⠛⠛⠛⠛⠻⠿⠿⠿⠿⠿⠿⠿⠿⠜⡆⠈⠉⠀⠀⠙⠋⠠⠤⠐⠛⠀⠀⠀⠀⠀⠈⠳⠀⠀⠀⠀⠀⠀⠀⠛⠛⠛⠛⠛⠛⠻\n"
                     + "⣿⣶⣦⣤⣤⣤⣤⣤⣄⣀⣀⣀⣈⣉⣉⡉⠉⠉⠉⠉⠛⠛⠛⠛⠛⠚⠓⠒⠒⠶⠖⠲⠦⠰⠶⠰⠂⠉⠉⠉⠛⠛⠓⠛⠛⠁⠀⣉⣁⣀⣀⣀⣀⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣼\n"
                     + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣶⣶⣶⣶⣶⣤⣤⣤⣤⣤⣤⣴⣶⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
-    public static final String UNKNOWN_TASK_RESPONSE =
+    public static final String RESPONSE_GOODBYE =
+            "Thank you for allowing me to serve you today, Master. "
+                    + "I shall await your return with great anticipation~";
+    public static final String RESPONSE_UNKNOWN_TASK =
             "Forgive me, Master, but I cannot find such a task... Are you certain it exists?";
-    private static final String UNKNOWN_COMMAND_RESPONSE =
+    private static final String RESPONSE_WELCOME = String.format(
+            "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?",
+            CHATBOT_NAME);
+    private static final String RESPONSE_UNKNOWN_COMMAND =
             "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)";
 
 
@@ -77,19 +84,16 @@ public class Rumi {
     /** Shows the intro message to the UI. */
     private void showIntroMessage() {
         System.out.println(TERMINAL_STARTUP_LOGO);
-        this.ui.printResponsef(
-                "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?",
-                CHATBOT_NAME);
+        this.ui.printResponsef(RESPONSE_WELCOME);
     }
 
     /** Shows the goodbye message to the UI. */
     private void showGoodbyeMessage() {
-        this.ui.printResponse("Thank you for allowing me to serve you today, Master. "
-                + "I shall await your return with great anticipation~");
+        this.ui.printResponse(RESPONSE_GOODBYE);
     }
 
     /**
-     * Runs the main chatbot loop.
+     * Runs the main chatbot loop of awaiting user commands and responding to them.
      */
     public void run() {
         assert this.ui != null;
@@ -97,10 +101,10 @@ public class Rumi {
 
         this.showIntroMessage();
 
-        String command;
+        String command = "";
         while (true) {
-            command = this.ui.readCommand();
             try {
+                command = this.ui.readCommand();
                 Command parsedCommand = this.parser.parse(command);
                 if (parsedCommand.getType() == CommandType.EXIT) {
                     break;
@@ -110,12 +114,12 @@ public class Rumi {
             } catch (UnknownUserCommandException e) {
                 Optional<String> suggestion = this.parser.suggestErrorMessage(command);
                 if (!suggestion.isEmpty()) {
-                    this.ui.printResponsef("%s\n\n%s", UNKNOWN_COMMAND_RESPONSE, suggestion);
+                    this.ui.printResponsef("%s\n\n%s", RESPONSE_UNKNOWN_COMMAND, suggestion);
                     continue;
                 }
 
                 this.ui.printResponsef("%s\n\nCould you please try again?",
-                        UNKNOWN_COMMAND_RESPONSE);
+                        RESPONSE_UNKNOWN_COMMAND);
             } catch (RumiException e) {
                 this.ui.printResponsef(
                         "My apology master, I encountered the following issue (´•︵•`)\n\n%s",

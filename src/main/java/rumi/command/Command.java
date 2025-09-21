@@ -1,6 +1,6 @@
 package rumi.command;
 
-import rumi.RumiException;
+import rumi.exception.RumiException;
 
 /**
  * Handles parsing of user commands, and executing the logic of the particular command.

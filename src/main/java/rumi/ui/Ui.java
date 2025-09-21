@@ -3,6 +3,7 @@ package rumi.ui;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
+import rumi.exception.RumiException;
 import rumi.utils.Utils;
 
 /**
@@ -49,13 +50,13 @@ public class Ui {
      *
      * @return the next command string
      */
-    public String readCommand() {
-        String command = ""; // to fix later
+    public String readCommand() throws RumiException {
+        String command = "";
         if (this.reader != null) {
             try {
                 command = this.reader.take();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new RumiException("Failed to read user command: %s", e.getMessage());
             }
 
             return command;
@@ -64,22 +65,35 @@ public class Ui {
         return this.scanner.nextLine();
     }
 
-    /**
-     * Displays an error message with [ERROR] prefix.
-     *
-     * @param error the error message
-     */
-    public void showWarning(String error) {
-        printfln("[ERROR] %s", error);
+    private void showOutput(String s) {
+        System.out.print(s);
+        showInGui(s);
+    }
+
+    private void showInGui(String s) {
+        if (this.writer != null) {
+            this.writer.offer(s);
+        }
     }
 
     /**
-     * Displays a warning message with [WARNING] prefix.
+     * Displays an warning message with [WARNING] prefix to the terminal.
      *
-     * @param warning the warning message
+     * @param warning the error message
      */
-    public void showError(String warning) {
-        printfln("[WARNING] %s", warning);
+    public void showWarning(String warning) {
+        String w = String.format("[WARNING] %s", warning);
+        showOutput(w);
+    }
+
+    /**
+     * Displays an error message with [ERROR] prefix to the terminal.
+     *
+     * @param error the warning message
+     */
+    public void showError(String error) {
+        String e = String.format("[ERROR] %s", error);
+        showOutput(e);
     }
 
     /**
@@ -90,9 +104,7 @@ public class Ui {
      */
     public String printResponse(String s) {
         Utils.printIndent(Utils.boxText(s));
-        if (this.writer != null) {
-            this.writer.offer(s);
-        }
+        showInGui(s);
         return s;
     }
 

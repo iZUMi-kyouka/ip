@@ -34,7 +34,7 @@ test {
 }
 
 application {
-    mainClass.set("Launcher")
+    mainClass.set("rumi.ui.Launcher")
 }
 
 shadowJar {

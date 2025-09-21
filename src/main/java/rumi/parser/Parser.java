@@ -25,6 +25,7 @@ import rumi.utils.Assert;
  * Handles parsing of user command and returning the correct command type.
  */
 public class Parser {
+    /** Regexes to handle the parsing of user command. */
     private static final String CMD_REGEX_EXIT = "bye";
     private static final String CMD_REGEX_LIST = "list";
     private static final String CMD_REGEX_MARK = "mark\\s+(-?\\d+)";
@@ -38,6 +39,7 @@ public class Parser {
             "event\\s+(.+?)\\s+/from\\s+(.+?)\\s+/to\\s+(.+?)(?:\\s+/tags\\s+(.+))?";
     private static final String REGEX_TAGS = "(?:todo|deadline|event)(?:.+?)/tags\\s+(.+)";
 
+    /** Patterns compiled from the regex for each command. */
     private static final Pattern CMD_PATTERN_UNMARK = Pattern.compile(CMD_REGEX_UNMARK);
     private static final Pattern CMD_PATTERN_MARK = Pattern.compile(CMD_REGEX_MARK);
     private static final Pattern CMD_PATTERN_DELETE = Pattern.compile(CMD_REGEX_DELETE);
@@ -47,6 +49,10 @@ public class Parser {
     private static final Pattern CMD_PATTERN_EVENT = Pattern.compile(CMD_REGEX_EVENT);
     private static final Pattern PATTERN_TAGS = Pattern.compile(REGEX_TAGS);
 
+    /**
+     * Unknown command error messages that suggests the closest valid command based on the invalid
+     * command.
+     */
     private static final String ERROR_MSG_BYE =
             "Did you mean 'bye'? To exit Rumi, simply type 'bye' without any additional characters.";
     private static final String ERROR_MSG_LIST =
@@ -104,7 +110,7 @@ public class Parser {
     }
 
     /**
-     * Parses a command and passes any arguments to the command handler.
+     * Parses a user command string, and constructs the correct command, using the parsed arguments.
      */
     public Command parse(String command) throws UnknownUserCommandException {
         assert command != null;

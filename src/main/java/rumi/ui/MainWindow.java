@@ -1,9 +1,10 @@
+package rumi.ui;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -11,11 +12,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import rumi.Rumi;
+import rumi.ui.components.DialogBox;
 
-/** Main JavaFX entry point */
+/**
+ * Main JavaFX entry point
+ */
 public class MainWindow extends AnchorPane {
-
-    private Scene scene;
 
     @FXML
     private ScrollPane scrollPane;
@@ -27,9 +29,9 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private Image userProfilePicture =
-            new Image(this.getClass().getResourceAsStream("./images/user.jpeg"));
+            new Image(this.getClass().getResourceAsStream("/images/user.jpeg"));
     private Image rumiProfilePicture =
-            new Image(this.getClass().getResourceAsStream("./images/rumi.png"));
+            new Image(this.getClass().getResourceAsStream("/images/rumi.png"));
 
     private BlockingQueue<String> commandQueue;
     private BlockingQueue<String> responseQueue;
@@ -47,13 +49,13 @@ public class MainWindow extends AnchorPane {
 
         // Handle Rumi's response asynchronously
         CompletableFuture.runAsync(() -> {
+            String rumiResponse;
             while (true) {
-                String rumiResponse = "An error has occured :( Please restart Rumi.";
                 try {
                     rumiResponse = responseQueue.take();
                 } catch (InterruptedException e) {
                     rumiResponse =
-                            "Rumi failed to receive your message for an unknown reason. Please resend your message!";
+                            "Rumi failed to receive your message for an unknown reason :(\nPlease resend your message!";
                 }
                 final String response = rumiResponse;
                 javafx.application.Platform.runLater(() -> {
