@@ -1,5 +1,6 @@
 package rumi;
 
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 
@@ -105,7 +106,7 @@ public class Rumi {
 
                 parsedCommand.run();
             } catch (UnknownUserCommandException e) {
-                String suggestion = this.parser.suggestErrorMessage(command);
+                Optional<String> suggestion = this.parser.suggestErrorMessage(command);
                 if (!suggestion.isEmpty()) {
                     this.ui.printResponsef("%s\n\n%s", UNKNOWN_COMMAND_RESPONSE, suggestion);
                     continue;

@@ -1,6 +1,7 @@
 package rumi.parser;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,6 +61,8 @@ public class Parser {
     }
 
     private ArrayList<Tag> parseTags(String command) {
+        assert command != null;
+
         Matcher matcher = TAGS_PATTERN.matcher(command);
         ArrayList<Tag> tags = new ArrayList<>();
 
@@ -79,6 +82,8 @@ public class Parser {
      * Parses a command and passes any arguments to the command handler.
      */
     public Command parse(String command) throws UnknownUserCommandException {
+        assert command != null;
+
         ArrayList<Tag> tags = parseTags(command);
 
         if (command.equals(EXIT_CMD_REGEX)) {
@@ -135,7 +140,7 @@ public class Parser {
         throw new UnknownUserCommandException();
     }
 
-    /** Helper method to compute Levenshtein distance between two strings */
+    /** Computes the Levenshtein distance between two strings. */
     private int computeLevenshteinDistance(String s1, String s2) {
         int len1 = s1.length();
         int len2 = s2.length();
@@ -180,8 +185,8 @@ public class Parser {
             }
         }
 
-        // You can add a threshold to avoid unrelated suggestions
-        if (minDistance <= 4) { // max 2 edits difference
+        // Edit distance threshold
+        if (minDistance <= 4) {
             return closest;
         }
 
@@ -192,10 +197,10 @@ public class Parser {
      * Suggests the most related command that the user might intend on entering including a guide on
      * how to use the command based on the given command
      */
-    public String suggestErrorMessage(String command) {
+    public Optional<String> suggestErrorMessage(String command) {
         String closestCommand = getClosestCommand(command);
         if (closestCommand.isEmpty()) {
-            return ""; // no close match found
+            return Optional.empty();
         }
 
         String msg = new String();
@@ -225,6 +230,6 @@ public class Parser {
         }
         }
 
-        return msg;
+        return Optional.of(msg);
     }
 }
