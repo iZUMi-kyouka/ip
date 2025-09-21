@@ -6,7 +6,7 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents an `unmark` command. */
+/** Represents a command to unmark a done task, reverting its status to pending. */
 public class UnmarkCommand extends Command {
 
     private final TaskList tasks;

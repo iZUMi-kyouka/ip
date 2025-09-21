@@ -16,4 +16,13 @@ public class Assert {
             assert num.doubleValue() > 0;
         }
     }
+
+    /** Asserta that all strings given are non null and non-empty. */
+    public static void nonEmptyString(String... strings) {
+        Assert.notNull((Object[]) strings);
+
+        for (String s : strings) {
+            assert !s.isEmpty();
+        }
+    }
 }

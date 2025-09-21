@@ -6,7 +6,7 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents a `mark` command. */
+/** Represents a command to mark a task as done. */
 public class MarkCommand extends Command {
 
     private final TaskList tasks;

@@ -5,7 +5,7 @@ import rumi.ui.Ui;
 import rumi.utils.Assert;
 import rumi.utils.Utils;
 
-/** Represents a `list` command. */
+/** Represents a command to list all takss. */
 public class ListCommand extends Command {
 
     private final Ui ui;

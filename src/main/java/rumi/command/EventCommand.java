@@ -11,7 +11,7 @@ import rumi.ui.Ui;
 import rumi.utils.Assert;
 
 /**
- * Represents an `event` command.
+ * Represents a command to create an event.
  */
 public class EventCommand extends TaskCommand {
 

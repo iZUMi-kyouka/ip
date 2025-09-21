@@ -18,7 +18,7 @@ import rumi.ui.Ui;
 public class Rumi {
 
     public static final String CHATBOT_NAME = "Rumi";
-    public static final String LOGO =
+    public static final String TERMINAL_STARTUP_LOGO =
             "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠛⠛⠛⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
                     + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⣉⠄⣢⣴⣟⣫⣤⣾⢿⣿⣷⡶⢦⣬⣉⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
                     + "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣡⡴⠋⢑⣬⣴⣿⣿⡻⣿⣿⣶⣝⠻⣿⣷⣾⣿⢿⣦⡉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -74,13 +74,15 @@ public class Rumi {
         this.parser = new Parser(this.tasks, this.ui);
     }
 
+    /** Shows the intro message to the UI. */
     private void showIntroMessage() {
-        System.out.println(LOGO);
+        System.out.println(TERMINAL_STARTUP_LOGO);
         this.ui.printResponsef(
                 "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?",
                 CHATBOT_NAME);
     }
 
+    /** Shows the goodbye message to the UI. */
     private void showGoodbyeMessage() {
         this.ui.printResponse("Thank you for allowing me to serve you today, Master. "
                 + "I shall await your return with great anticipation~");
@@ -94,8 +96,8 @@ public class Rumi {
         assert this.parser != null;
 
         this.showIntroMessage();
-        String command;
 
+        String command;
         while (true) {
             command = this.ui.readCommand();
             try {
@@ -116,10 +118,11 @@ public class Rumi {
                         UNKNOWN_COMMAND_RESPONSE);
             } catch (RumiException e) {
                 this.ui.printResponsef(
-                        "Sorry master, I encountered the following issue (´•︵•`)\n\n%s",
+                        "My apology master, I encountered the following issue (´•︵•`)\n\n%s",
                         e.getMessage());
             }
 
+            // Persist tasks on every modification
             Storage.saveTasks(tasks);
         }
 

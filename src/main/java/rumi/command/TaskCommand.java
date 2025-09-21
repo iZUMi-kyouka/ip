@@ -8,7 +8,7 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Utils;
 
-/** Represents commands to add tasks */
+/** Represents a class of command that creates tasks. */
 abstract class TaskCommand extends Command {
     protected final TaskList tasks;
     protected final Ui ui;

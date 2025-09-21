@@ -3,6 +3,7 @@ package rumi.task;
 import java.util.ArrayList;
 
 import rumi.tag.Tag;
+import rumi.utils.Assert;
 
 /** Represents a general to-do item. */
 public class ToDo extends Task {
@@ -13,9 +14,9 @@ public class ToDo extends Task {
 
     /** Constructs a ToDo with the given title, status, and tags. */
     public ToDo(String title, boolean isDone, ArrayList<Tag> tags) {
-        super(title, tags.toArray(new Tag[0]));
+        super(title, tags == null ? null : tags.toArray(new Tag[0]));
 
-        assert !title.isEmpty();
+        Assert.nonEmptyString(title);
         if (isDone) {
             this.markAsDone();
         }

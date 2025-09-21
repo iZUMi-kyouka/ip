@@ -9,7 +9,7 @@ import rumi.ui.Ui;
 import rumi.utils.Assert;
 
 /**
- * Represents a `todo` command.
+ * Represents a command to create todo.
  */
 public class ToDoCommand extends TaskCommand {
 

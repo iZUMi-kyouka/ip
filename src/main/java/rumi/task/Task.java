@@ -21,20 +21,14 @@ public class Task {
     private final String title;
     private boolean isDone;
 
-    /** Constructs a task with the given title */
+    /** Constructs a pending task with the given title */
     public Task(String title) {
-        assert title != null;
-
-        this.title = title;
-        this.isDone = false;
+        this(title, false);
     }
 
     /** Constructs a task with the given title and status */
     private Task(String title, boolean isDone) {
-        assert title != null;
-
-        this.title = title;
-        this.isDone = isDone;
+        this(title, isDone, (Tag[]) null);
     }
 
     /** Constructs a task with the same attributes as the given task */
@@ -44,9 +38,14 @@ public class Task {
         this.tags.addAll(t.tags);
     }
 
-    /** Constructs a task with the given title and tag(s) */
+    /** Cnstructs a pending task with the given title and tags. */
     public Task(String title, Tag... tags) {
-        assert title != null;
+        this(title, false, tags);
+    }
+
+    /** Constructs a task with the given title, status, and tag(s) */
+    public Task(String title, boolean isDone, Tag... tags) {
+        Assert.nonEmptyString(title);
 
         this.title = title;
         this.isDone = false;

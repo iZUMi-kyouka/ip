@@ -142,6 +142,8 @@ public class Parser {
 
     /** Computes the Levenshtein distance between two strings. */
     private int computeLevenshteinDistance(String s1, String s2) {
+        Assert.notNull(s1, s2);
+
         int len1 = s1.length();
         int len2 = s2.length();
 
@@ -166,8 +168,9 @@ public class Parser {
 
     /** Returns the closest matching command given an invalid command. */
     private String getClosestCommand(String inputCommand) {
-        String[] knownCommands =
-                {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
+        assert inputCommand != null;
+
+        String[] knownCommands = {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
         String[] tokens = inputCommand.split(" ");
         if (tokens.length == 0) {
             return "";

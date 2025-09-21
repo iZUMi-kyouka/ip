@@ -20,20 +20,21 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
 
+            // Set window metadata
             stage.setTitle(Rumi.CHATBOT_NAME);
             stage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/icon.png")));
 
-            stage.setScene(scene);
-
+            // Set default window size and minimum size
             stage.setResizable(true);
             stage.setHeight(800);
             stage.setWidth(800);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
 
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.printf("[ERROR] Failed to initialise GUI: %s\n", e.getMessage());
         }
     }
 }

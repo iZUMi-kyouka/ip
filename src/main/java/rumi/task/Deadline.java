@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import rumi.tag.Tag;
+import rumi.utils.Assert;
 import rumi.utils.RumiDate;
 
 /** Represents a task of subtype deadline */
@@ -16,9 +17,9 @@ public class Deadline extends Task {
      * Constructs a task of subtype deadline with the given title, deadline, and tags.
      */
     public Deadline(String title, String deadline, ArrayList<Tag> tags) throws DateTimeException {
-        super(title, tags.toArray(new Tag[0]));
+        super(title, tags == null ? null : tags.toArray(new Tag[0]));
 
-        assert !deadline.isEmpty();
+        Assert.nonEmptyString(title);
         this.deadline = RumiDate.fromString(deadline);
     }
 
@@ -26,14 +27,13 @@ public class Deadline extends Task {
      * Constructs a task of subtype deadline with the given title and deadline.
      */
     public Deadline(String title, String deadline) throws DateTimeException {
-        super(title);
-
-        assert !deadline.isEmpty();
-        this.deadline = RumiDate.fromString(deadline);
+        this(title, deadline, null);
     }
 
     Deadline(Task t, String deadline) throws DateTimeException {
         super(t);
+
+        Assert.nonEmptyString(deadline);
         this.deadline = RumiDate.fromString(deadline);
         if (t.getStatus()) {
             this.markAsDone();
@@ -49,8 +49,8 @@ public class Deadline extends Task {
     /** Constructs a deadline from a serialised string representing of a deadline. */
     public static Deadline fromString(String s) throws DeadlineStringParseException {
         Task task = Task.fromString(s);
-        Pattern pattern =
-                Pattern.compile("D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+TAGS:(.*))?");
+        Pattern pattern = Pattern.compile(
+                "D\\s+@#@\\s+([DP])\\s+@#@\\s+(.+?)\\s+@#@\\s+(.+?)(?:\\s+@#@\\s+TAGS:(.*))?");
         Matcher matcher = pattern.matcher(s);
 
         if (!matcher.matches()) {

@@ -11,7 +11,7 @@ import rumi.ui.Ui;
 import rumi.utils.Assert;
 
 /**
- * Represents a `deadline` command.
+ * Represents a command to create a deadline.
  */
 public class DeadlineCommand extends TaskCommand {
 

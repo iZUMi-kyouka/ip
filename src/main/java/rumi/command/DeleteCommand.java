@@ -6,7 +6,7 @@ import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
 
-/** Represents a `delete` command. */
+/** Represents a command to delete a task. */
 public class DeleteCommand extends Command {
 
     private final TaskList tasks;
