@@ -2,6 +2,7 @@ package rumi.tag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /** Represents a tag used to add additional information to a task. */
 public class Tag {
@@ -50,6 +51,11 @@ public class Tag {
         }
 
         return sb.toString().trim();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.tagName);
     }
 
     @Override

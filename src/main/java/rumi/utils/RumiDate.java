@@ -160,6 +160,8 @@ public class RumiDate {
             if (!this.parsedDate.equals(r.parsedDate)) {
                 return false;
             }
+
+            return true;
         }
 
         return r.stringDate.equals(this.stringDate);

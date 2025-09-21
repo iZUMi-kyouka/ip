@@ -80,7 +80,6 @@ public class Deadline extends Task {
         }
 
         Deadline d = (Deadline) o;
-        return Comparator.allEqual(new Object[] {this, this.deadline, this.tags},
-                new Object[] {d, d.deadline, d.tags});
+        return super.equals(o) && this.deadline.equals(d.deadline);
     }
 }
