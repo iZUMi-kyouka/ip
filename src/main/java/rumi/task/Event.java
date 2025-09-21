@@ -18,11 +18,7 @@ public class Event extends Task {
      * Constructs a task of subtype event with the given title, from, and to date
      */
     public Event(String title, String from, String to) throws DateTimeException {
-        super(title);
-        Assert.notNull(title, from, to);
-
-        this.from = RumiDate.fromString(from);
-        this.to = RumiDate.fromString(to);
+        this(title, from, to, false, null);
     }
 
     Event(Task t, String from, String to) throws DateTimeException {
@@ -35,7 +31,7 @@ public class Event extends Task {
 
     Event(String title, String from, String to, boolean isDone, ArrayList<Tag> tags)
             throws DateTimeException {
-        super(title, tags.toArray(new Tag[0]));
+        super(title, tags == null ? null : tags.toArray(new Tag[0]));
         Assert.notNull(title, from, to);
 
         this.from = RumiDate.fromString(from);
@@ -46,14 +42,13 @@ public class Event extends Task {
         }
     }
 
-    Event(String title, String from, String to, boolean isDone) throws DateTimeException {
-        this(title, from, to, isDone, null);
-    }
-
-    public Event(String title, String from, String to, ArrayList<Tag> tags) throws DateTimeException {
+    /**
+     * Constructs a task of subtype event with the given title, from and to date, and tags
+     */
+    public Event(String title, String from, String to, ArrayList<Tag> tags)
+            throws DateTimeException {
         this(title, from, to, false, tags);
     }
-
 
     @Override
     public String toString() {

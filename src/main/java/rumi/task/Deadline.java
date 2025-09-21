@@ -13,7 +13,7 @@ public class Deadline extends Task {
     private final RumiDate deadline;
 
     /**
-     * Constructs a task of subtype deadline with the given title and deadline
+     * Constructs a task of subtype deadline with the given title, deadline, and tags.
      */
     public Deadline(String title, String deadline, ArrayList<Tag> tags) throws DateTimeException {
         super(title, tags.toArray(new Tag[0]));
@@ -23,7 +23,7 @@ public class Deadline extends Task {
     }
 
     /**
-     * Constructs a task of subtype deadline with the given title and deadline
+     * Constructs a task of subtype deadline with the given title and deadline.
      */
     public Deadline(String title, String deadline) throws DateTimeException {
         super(title);
@@ -46,7 +46,7 @@ public class Deadline extends Task {
                 Tag.stringifyTagList(this.tags));
     }
 
-    /** Creates a deadline from a serialised string representing deadline. */
+    /** Constructs a deadline from a serialised string representing of a deadline. */
     public static Deadline fromString(String s) throws DeadlineStringParseException {
         Task task = Task.fromString(s);
         Pattern pattern =

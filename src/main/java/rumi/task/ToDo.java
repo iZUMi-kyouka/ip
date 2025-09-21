@@ -6,16 +6,12 @@ import rumi.tag.Tag;
 
 /** Represents a general to-do item. */
 public class ToDo extends Task {
-    public ToDo(String title) {
-        super(title);
-        assert !title.isEmpty();
-
-    }
-
+    /** Constructs a pending ToDo with the given title and tags. */
     public ToDo(String title, ArrayList<Tag> tags) {
         this(title, false, tags);
     }
 
+    /** Constructs a ToDo with the given title, status, and tags. */
     public ToDo(String title, boolean isDone, ArrayList<Tag> tags) {
         super(title, tags.toArray(new Tag[0]));
 
@@ -23,10 +19,6 @@ public class ToDo extends Task {
         if (isDone) {
             this.markAsDone();
         }
-    }
-
-    ToDo(String title, boolean isDone) {
-        this(title, isDone, null);
     }
 
     ToDo(Task t) {
@@ -41,7 +33,14 @@ public class ToDo extends Task {
 
     /** Creates a to-do from a serialised string representing a to-do. */
     public static ToDo fromString(String s) throws ToDoStringParseException {
-        Task t = Task.fromString(s);
+        Task t;
+
+        try {
+            t = Task.fromString(s);
+        } catch (IllegalArgumentException e) {
+            throw new ToDoStringParseException();
+        }
+
         return new ToDo(t);
     }
 
