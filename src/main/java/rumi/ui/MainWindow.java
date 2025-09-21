@@ -4,8 +4,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -25,24 +25,22 @@ public class MainWindow extends AnchorPane {
     private VBox dialogContainer;
     @FXML
     private TextField userInput;
-    @FXML
-    private Button sendButton;
 
-    private Image userProfilePicture =
+    private final Image userProfilePicture =
             new Image(this.getClass().getResourceAsStream("/images/user.jpeg"));
-    private Image rumiProfilePicture =
+    private final Image rumiProfilePicture =
             new Image(this.getClass().getResourceAsStream("/images/rumi.png"));
 
-    private BlockingQueue<String> commandQueue;
-    private BlockingQueue<String> responseQueue;
-    private Rumi rumi;
+    private final BlockingQueue<String> commandQueue = new LinkedBlockingQueue<>();
+    private final BlockingQueue<String> responseQueue = new LinkedBlockingQueue<>();
+    private final Rumi rumi = new Rumi(commandQueue, responseQueue);
 
-    /** Initialises the main window with the Rumi instance, and command and response queue */
+    /**
+     * Initialise the main application by running Rumi and handler for Rumi's response in two
+     * different threads.
+     */
     @FXML
     public void initialize() {
-        commandQueue = new LinkedBlockingQueue<>();
-        responseQueue = new LinkedBlockingQueue<>();
-        rumi = new Rumi(commandQueue, responseQueue);
 
         // Run rumi asynchronously
         CompletableFuture.runAsync(() -> rumi.run());
@@ -57,15 +55,43 @@ public class MainWindow extends AnchorPane {
                     rumiResponse =
                             "Rumi failed to receive your message for an unknown reason :(\nPlease resend your message!";
                 }
+
                 final String response = rumiResponse;
-                javafx.application.Platform.runLater(() -> {
-                    dialogContainer.getChildren()
-                            .addAll(DialogBox.makeRumiDialog(response, rumiProfilePicture));
-                });
+                if (rumiResponse.equals(Rumi.RESPONSE_GOODBYE)) {
+                    terminateGui();
+                }
+
+                replyUser(response);
             }
         });
 
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+    }
+
+    /**
+     * Creates and add a new DialogBox containing the given response.
+     */
+    private void replyUser(String response) {
+        Platform.runLater(() -> {
+            dialogContainer.getChildren()
+                    .addAll(DialogBox.makeRumiDialog(response, rumiProfilePicture));
+        });
+    }
+
+    private void terminateGui() {
+        CompletableFuture.runAsync(() -> {
+            try {
+                // Give time for user to read Rumi's goodbye message before terminating the GUI
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
+            Platform.runLater(() -> {
+                Platform.exit();
+                System.exit(0);
+            });
+        });
     }
 
     /**
