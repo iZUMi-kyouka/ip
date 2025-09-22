@@ -1,10 +1,9 @@
 package rumi;
 
-import java.util.ArrayList;
-import java.util.Scanner;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.Scanner;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,6 @@ import rumi.command.Command;
 import rumi.command.DeadlineCommand;
 import rumi.command.UnknownUserCommandException;
 import rumi.parser.Parser;
-import rumi.tag.Tag;
 import rumi.tag.TagList;
 import rumi.task.Deadline;
 import rumi.task.TaskList;

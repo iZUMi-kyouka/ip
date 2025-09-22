@@ -1,10 +1,8 @@
 package rumi.command;
 
 import java.time.DateTimeException;
-import java.util.ArrayList;
 
 import rumi.exception.RumiException;
-import rumi.tag.Tag;
 import rumi.tag.TagList;
 import rumi.task.Event;
 import rumi.task.InvalidTaskDateTimeException;

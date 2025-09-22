@@ -1,8 +1,5 @@
 package rumi.command;
 
-import java.util.ArrayList;
-
-import rumi.tag.Tag;
 import rumi.tag.TagList;
 import rumi.task.Task;
 import rumi.task.TaskList;

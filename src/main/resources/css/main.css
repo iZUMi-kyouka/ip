@@ -42,7 +42,7 @@
 
 .scroll-bar {
     -fx-font-size: 10px;
-    -fx-background-color: rgb(255, 0, 123); /* main hot pink */
+    -fx-background-color: rgb(41, 19, 63);
 }
 
 .scroll-bar .thumb {
