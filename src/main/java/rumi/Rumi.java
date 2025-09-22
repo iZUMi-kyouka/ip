@@ -6,6 +6,7 @@ import java.util.concurrent.BlockingQueue;
 
 import rumi.command.Command;
 import rumi.command.CommandType;
+import rumi.command.ListCommand;
 import rumi.command.UnknownUserCommandException;
 import rumi.exception.RumiException;
 import rumi.parser.Parser;
@@ -56,7 +57,10 @@ public class Rumi {
     public static final String RESPONSE_UNKNOWN_TASK =
             "Forgive me, Master, but I cannot find such a task... Are you certain it exists?";
     private static final String RESPONSE_WELCOME = String.format(
-            "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?",
+            "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?"
+                    + "\n\n" + "Example usages: \n• todo laundry /tags chore,not_urgent"
+                    + "\n• deadline CS2103T iP /by 220925 1159pm /tags urgent,university"
+                    + "\n• event YOASOBI concert /from 12-12-2025 1900 /to 12-12-2025 2145 /tags fun,music",
             CHATBOT_NAME);
     private static final String RESPONSE_UNKNOWN_COMMAND =
             "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)";
@@ -85,6 +89,10 @@ public class Rumi {
     private void showIntroMessage() {
         System.out.println(TERMINAL_STARTUP_LOGO);
         this.ui.printResponsef(RESPONSE_WELCOME);
+
+        if (!this.tasks.isEmpty()) {
+            new ListCommand(this.tasks, this.ui).run();
+        }
     }
 
     /** Shows the goodbye message to the UI. */

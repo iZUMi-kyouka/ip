@@ -60,7 +60,7 @@ public class Task {
         Assert.nonEmptyString(title);
 
         this.title = title;
-        this.isDone = false;
+        this.isDone = isDone;
         if (tags != null) {
             this.tags.addAll(Arrays.asList(tags));
         }

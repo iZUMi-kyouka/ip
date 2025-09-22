@@ -14,7 +14,7 @@ public class Tag {
 
     @Override
     public String toString() {
-        return String.format("[ #%s ]", this.tagName);
+        return String.format("[#%s]", this.tagName);
     }
 
     /** Returns the serialised string representation of a tag list. */
