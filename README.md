@@ -15,7 +15,9 @@ Most importantly, Rumi would happily live in <ins>under 20MB</ins> of space in a
 > Time is what we want most but what we use worst. -- William Penn
 
 ## Adding todos
-Todos are the most basic type of task. It is simply the task name and its status.
+Todos are the most basic type of task. It is simply the task name and its status. 
+
+NOTE: **Task name cannot be empty.**
 
 Example: `todo clean bedroom /tags not_urgent`
 
@@ -36,16 +38,27 @@ Rumi is a smart chatbot! She understands various natural datetime input format s
 - `01-02-2026 2114` (Feb 1, 2026 @ 21:14),
 so you can focus more on zipping through tasks than being tied to lame input format!
 
-
 For more information on all the datetime format that Rumi understands, please refer to the Appendix at the end of this document.
 
 ## Tagging of Tasks
-Rumi remembers many things! You could ask her to associate a certain task of any type with multiple tags! For example,
+Rumi remembers many things! You could ask her to associate a certain task of any type with multiple tags!
+
+NOTE: 
+- Tasks must only be specified at the end of a command!
+- Tags are separated by commas 
+
+For example,
 - `todo laundry /tags chore,not_urgent` creates a task of type todo with the tags "chore" and "not_urgent" 
 - `deadline iP /by 22925 1159pm /tags urgent,graded` creates a task of type deadline with the tags "urgent" and "graded
+- This command will not work: `deadline iP /tags urgent /by today`
+
 
 ## Adding deadlines
 Deadlines are a type of task that must be done by a certain time. Deadlines must contain both the task name and the deadline by which it must be done.
+
+**NOTE:**
+- Task name cannot be empty. 
+- Deadline must be specified after the task name, and cannot be in the past.**
 
 Example: `deadline submit CS2103T iP /by 19/9/2025 4pm /tags urgent,need_help`
 
@@ -61,6 +74,11 @@ Adds a deadline 'submit CS2103T iP' which is set to be due on 19 September 2025,
 
 ## Adding events
 Events are todos that also include the time from when the task takes place, and the time the said task ends. These properties are called 'from' and 'to'.
+
+**NOTE:** 
+- Task name cannot be empty. 
+- Start and end date must be specified, in that order, after the task name. 
+- End date cannot be in the past.
 
 Example: `event Minami concert /from 19/9/2025 8pm /to 19/9/2025 11pm` 
 
