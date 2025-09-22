@@ -18,7 +18,6 @@ import rumi.ui.Ui;
  * Main chatbot class
  */
 public class Rumi {
-
     public static final String CHATBOT_NAME = "Rumi";
     public static final String TERMINAL_STARTUP_LOGO =
             "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠿⠛⠛⠛⠛⠻⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n"
@@ -56,6 +55,7 @@ public class Rumi {
                     + "I shall await your return with great anticipation~";
     public static final String RESPONSE_UNKNOWN_TASK =
             "Forgive me, Master, but I cannot find such a task... Are you certain it exists?";
+
     private static final String RESPONSE_WELCOME = String.format(
             "Welcome home, Master. %s at your service!! (๑˃ᴗ˂)ﻭ!\n" + "How may I assist you?"
                     + "\n\n" + "Example usages: \n• todo laundry /tags chore,not_urgent"
@@ -64,24 +64,27 @@ public class Rumi {
             CHATBOT_NAME);
     private static final String RESPONSE_UNKNOWN_COMMAND =
             "Pardon my clumsiness, Master... I didn’t quite understand that (｡•́︿•̀｡)";
-
+    private static final String SAVE_FILE_NAME = ".rumi_data";
 
     private final TaskList tasks;
     private final Ui ui;
     private final Parser parser;
+    private final Storage storage;
 
     /**
      * Constructs a Rumi instance using the given command and response queue to connect with the GUI
      */
     public Rumi(BlockingQueue<String> commands, BlockingQueue<String> responses) {
         this.ui = new Ui(commands, responses);
-        tasks = Storage.loadTasks();
+        this.storage = new Storage(SAVE_FILE_NAME);
+        this.tasks = this.storage.loadTasks();
         this.parser = new Parser(this.tasks, this.ui);
     }
 
-    Rumi(Scanner scanner) {
+    private Rumi(Scanner scanner) {
+        this.storage = new Storage(SAVE_FILE_NAME);
         this.ui = new Ui(scanner);
-        tasks = Storage.loadTasks();
+        this.tasks = this.storage.loadTasks();
         this.parser = new Parser(this.tasks, this.ui);
     }
 
@@ -135,7 +138,7 @@ public class Rumi {
             }
 
             // Persist tasks on every modification
-            Storage.saveTasks(tasks);
+            this.storage.saveTasks(tasks);
         }
 
         this.showGoodbyeMessage();

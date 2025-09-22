@@ -3,6 +3,7 @@ package rumi.command;
 import java.util.ArrayList;
 
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.task.TaskList;
 import rumi.task.ToDo;
 import rumi.ui.Ui;
@@ -23,7 +24,7 @@ public class ToDoCommand extends TaskCommand {
     /**
      * Creates a ToDo command with given a TaskList and a task number.
      */
-    public ToDoCommand(TaskList tasks, Ui ui, String title, ArrayList<Tag> tags) {
+    public ToDoCommand(TaskList tasks, Ui ui, String title, TagList tags) {
         super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title);
     }

@@ -1,6 +1,5 @@
 package rumi.tag;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,25 +31,8 @@ public class Tag {
         return sb.toString().substring(0, sb.length() - 1);
     }
 
-    /** Returns an ArrayList of Tag from a serialised string representation of a tag list. */
-    public static ArrayList<Tag> tagListFromString(String s) {
-        ArrayList<Tag> tags = new ArrayList<>();
-        for (String tag : s.split(",")) {
-            tags.add(new Tag(tag.trim()));
-        }
-
-        return tags;
-    }
-
-    /** Returns the pretty string representation of a tag list. */
-    public static String stringifyTagList(List<Tag> list) {
-        StringBuilder sb = new StringBuilder();
-        for (Tag t : list) {
-            sb.append(t.toString());
-            sb.append(' ');
-        }
-
-        return sb.toString().trim();
+    public String getTagName() {
+        return this.tagName;
     }
 
     @Override

@@ -1,0 +1,71 @@
+package rumi;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
+
+import rumi.command.Command;
+import rumi.command.ToDoCommand;
+import rumi.command.UnknownUserCommandException;
+import rumi.parser.Parser;
+import rumi.tag.Tag;
+import rumi.tag.TagList;
+import rumi.task.TaskList;
+import rumi.task.ToDo;
+import rumi.ui.Ui;
+
+public class ToDoParserTest extends ParserTest {
+    private static final Ui ui = new Ui(new Scanner(System.in));
+
+    @Test
+    public void parseTodoCommand_validInputNoTag_expectedBehaviour() throws Exception {
+        String commandString = "todo laundry";
+
+        TaskList tasks = new TaskList();
+        Parser p = new Parser(tasks, ui);
+
+        Command parsedCommand = p.parse(commandString);
+        Command expectedCommand = new ToDoCommand(tasks, ui, "laundry");
+        assertEquals(parsedCommand, expectedCommand);
+
+        parsedCommand.run();
+
+        ToDo parsedToDo = (ToDo) tasks.get(1);
+        ToDo expectedToDo = new ToDo("laundry", null);
+        assertEquals(parsedToDo, expectedToDo);
+    }
+
+    @Test
+    public void parseTodoCommand_validInputWithTag_expectedBehaviour() throws Exception {
+        String commandString = "todo laundry /tags testTag1,testTag2";
+
+        TaskList tasks = new TaskList();
+        Parser p = new Parser(tasks, ui);
+
+        TagList expectedTags = makeTagList("testTag1", "testTag2");
+
+        Command parsedCommand = p.parse(commandString);
+        Command expectedCommand = new ToDoCommand(tasks, ui, "laundry", expectedTags);
+        assertEquals(parsedCommand, expectedCommand);
+
+        parsedCommand.run();
+
+        ToDo parsedToDo = (ToDo) tasks.get(1);
+        ToDo expectedToDo = new ToDo("laundry", expectedTags);
+        assertEquals(parsedToDo, expectedToDo);
+    }
+
+    @Test
+    public void parseTodoCommand_invalidInput_exceptionThrown() throws Exception {
+        String commandString = "todo ";
+
+        TaskList tasks = new TaskList();
+        Parser p = new Parser(tasks, ui);
+
+        assertThrows(UnknownUserCommandException.class, () -> p.parse(commandString));
+    }
+}

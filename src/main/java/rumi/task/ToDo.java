@@ -1,19 +1,18 @@
 package rumi.task;
 
-import java.util.ArrayList;
-
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.utils.Assert;
 
 /** Represents a general to-do item. */
 public class ToDo extends Task {
     /** Constructs a pending ToDo with the given title and tags. */
-    public ToDo(String title, ArrayList<Tag> tags) {
+    public ToDo(String title, TagList tags) {
         this(title, false, tags);
     }
 
     /** Constructs a ToDo with the given title, status, and tags. */
-    public ToDo(String title, boolean isDone, ArrayList<Tag> tags) {
+    public ToDo(String title, boolean isDone, TagList tags) {
         super(title, tags == null ? null : tags.toArray(new Tag[0]));
 
         Assert.nonEmptyString(title);
@@ -29,7 +28,7 @@ public class ToDo extends Task {
     @Override
     public String toString() {
         System.out.println(this.tags);
-        return String.format("[T]%s %s", super.toString(), Tag.stringifyTagList(this.tags));
+        return String.format("[T]%s %s", super.toString(), this.tags);
     }
 
     /** Creates a to-do from a serialised string representing a to-do. */
@@ -48,7 +47,7 @@ public class ToDo extends Task {
     @Override
     public String toSerialisedString() {
         return String.format("T @#@ %s @#@ %s @#@ TAGS:%s", this.getStatus() ? 'D' : 'P',
-                this.getTitle(), Tag.serialiseTagList(this.tags));
+                this.getTitle(), this.tags.toSerialisedString());
     }
 
     public boolean equals(ToDo t) {

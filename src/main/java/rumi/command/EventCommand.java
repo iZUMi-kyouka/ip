@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import rumi.exception.RumiException;
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.task.Event;
 import rumi.task.InvalidTaskDateTimeException;
 import rumi.task.TaskList;
@@ -33,7 +34,7 @@ public class EventCommand extends TaskCommand {
      * and a tag list.
      */
     public EventCommand(TaskList tasks, Ui ui, String title, String from, String to,
-            ArrayList<Tag> tags) {
+            TagList tags) {
         super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title, from, to);
 

@@ -17,6 +17,7 @@ import rumi.command.ToDoCommand;
 import rumi.command.UnknownUserCommandException;
 import rumi.command.UnmarkCommand;
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
 import rumi.utils.Assert;
@@ -91,11 +92,11 @@ public class Parser {
         this.ui = ui;
     }
 
-    private ArrayList<Tag> parseTags(String command) {
+    private TagList parseTags(String command) {
         assert command != null;
 
         Matcher matcher = PATTERN_TAGS.matcher(command);
-        ArrayList<Tag> tags = new ArrayList<>();
+        TagList tags = new TagList();
 
         if (!matcher.matches() || matcher.group(1) == null) {
             return tags;
@@ -115,7 +116,7 @@ public class Parser {
     public Command parse(String command) throws UnknownUserCommandException {
         assert command != null;
 
-        ArrayList<Tag> tags = parseTags(command);
+        TagList tags = parseTags(command);
 
         if (command.equals(CMD_REGEX_EXIT)) {
             return new ExitCommand();

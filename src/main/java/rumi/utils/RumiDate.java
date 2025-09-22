@@ -27,7 +27,7 @@ public class RumiDate {
      */
     public static RumiDate fromString(String s) {
         final RumiDate parsedDate = new RumiDate(s);
-        String validDateTimePattern = "^([12][0-9]|3[01]|0?[1-9])" // day - reordered
+        String validDateTimePattern = "^([12][0-9]|3[01]|0?[1-9])" // day
                 + "(?:([-./ ])(0?[1-9]|1[0-2])\\2(\\d{4}|\\d{2})" // with separator, 4-digit year
                 + "|" // OR
                 + "(0?[1-9]|1[0-2])(\\d{4}|\\d{2}))" // no separator, 4-digit year first
@@ -132,8 +132,8 @@ public class RumiDate {
     }
 
     /**
-     * Returns a boolean indicating whether this instance represents a datetime in the past. If
-     * the datetime is internally represented as a string, this method always returns false.
+     * Returns a boolean indicating whether this instance represents a datetime in the past. If the
+     * datetime is internally represented as a string, this method always returns false.
      */
     public boolean isInThePast() {
         return this.parsedDate == null ? false : this.parsedDate.isBefore(LocalDateTime.now());

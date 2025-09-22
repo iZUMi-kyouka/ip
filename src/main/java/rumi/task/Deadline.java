@@ -1,13 +1,12 @@
 package rumi.task;
 
 import java.time.DateTimeException;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.utils.Assert;
-import rumi.utils.Comparator;
 import rumi.utils.RumiDate;
 
 /** Represents a task of subtype deadline */
@@ -17,7 +16,7 @@ public class Deadline extends Task {
     /**
      * Constructs a task of subtype deadline with the given title, deadline, and tags.
      */
-    public Deadline(String title, String deadline, ArrayList<Tag> tags) throws DateTimeException {
+    public Deadline(String title, String deadline, TagList tags) throws DateTimeException {
         super(title, tags == null ? null : tags.toArray(new Tag[0]));
 
         Assert.nonEmptyString(title);
@@ -32,7 +31,10 @@ public class Deadline extends Task {
         this(title, deadline, null);
     }
 
-    Deadline(Task t, String deadline) throws DateTimeException {
+    /**
+     * Constructs a task of subtype deadline from the given Task object and deadline string.
+     */
+    public Deadline(Task t, String deadline) throws DateTimeException {
         super(t);
 
         Assert.nonEmptyString(deadline);
@@ -48,8 +50,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return String.format("[D]%s (by: %s) %s", super.toString(), this.deadline,
-                Tag.stringifyTagList(this.tags));
+        return String.format("[D]%s (by: %s) %s", super.toString(), this.deadline, this.tags);
     }
 
     /** Constructs a deadline from a serialised string representing of a deadline. */
@@ -70,7 +71,8 @@ public class Deadline extends Task {
     @Override
     public String toSerialisedString() {
         return String.format("D @#@ %s @#@ %s @#@ %s @#@ TAGS:%s", this.getStatus() ? 'D' : 'P',
-                this.getTitle(), this.deadline, Tag.serialiseTagList(this.tags));
+                this.getTitle(), this.deadline.toSerialisedString(),
+                this.tags.toSerialisedString());
     }
 
     @Override

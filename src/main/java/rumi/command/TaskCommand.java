@@ -3,6 +3,7 @@ package rumi.command;
 import java.util.ArrayList;
 
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.task.Task;
 import rumi.task.TaskList;
 import rumi.ui.Ui;
@@ -22,7 +23,7 @@ abstract class TaskCommand extends Command {
     protected final TaskList tasks;
     protected final Ui ui;
     protected final String title;
-    protected final ArrayList<Tag> tags = new ArrayList<>();
+    protected final TagList tags = new TagList();
 
     /**
      * Creates a TaskCommand with the specified TaskList, Ui, and title.
@@ -40,7 +41,7 @@ abstract class TaskCommand extends Command {
      *
      * @param tags The list of tags to associate with the task, or null if no tags.
      */
-    protected TaskCommand(TaskList tasks, Ui ui, String title, ArrayList<Tag> tags) {
+    protected TaskCommand(TaskList tasks, Ui ui, String title, TagList tags) {
         this.tasks = tasks;
         this.ui = ui;
         this.title = title;

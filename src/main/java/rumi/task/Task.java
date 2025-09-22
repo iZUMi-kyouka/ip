@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.utils.Assert;
 
 /**
@@ -19,7 +20,7 @@ public class Task {
     private static final Pattern TASK_TAG_PATTERN = Pattern.compile(TASK_TAG_SEPARATOR_REGEX);
     private static final Pattern TASK_PATTERN = Pattern.compile(TASK_REGEX);
 
-    protected final ArrayList<Tag> tags = new ArrayList<>();
+    protected final TagList tags = new TagList();
     private final String title;
     private boolean isDone;
 
@@ -118,7 +119,7 @@ public class Task {
         return Objects.hash(this.title, this.isDone);
     }
 
-    private static ArrayList<Tag> parseTagsFromSerialisedTask(String s)
+    private static TagList parseTagsFromSerialisedTask(String s)
             throws IllegalArgumentException {
         Matcher matcher = TASK_TAG_PATTERN.matcher(s);
         if (!matcher.matches()) {
@@ -126,7 +127,7 @@ public class Task {
         }
 
         String tagsPart = matcher.group(2);
-        ArrayList<Tag> tags = new ArrayList<>();
+        TagList tags = new TagList();
 
         if (tagsPart != null) {
             for (String tagName : tagsPart.split(",")) {
@@ -160,7 +161,7 @@ public class Task {
      * Constructs a generic task from a serialised string representation of any task.
      */
     public static Task fromString(String s) throws IllegalArgumentException {
-        ArrayList<Tag> tags = Task.parseTagsFromSerialisedTask(s);
+        TagList tags = Task.parseTagsFromSerialisedTask(s);
         Task task = Task.parseTaskFromSerialisedTask(s);
         task.tags.addAll(tags);
 

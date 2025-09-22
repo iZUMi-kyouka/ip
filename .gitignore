@@ -18,6 +18,9 @@ bin/
 
 # Save data
 .rumi_data
+.rumi_data_SAVEFILE_TEST_INPUT
+.rumi_data_SAVEFILE_TEST_OUTPUT
+.rumi_data_SAVEFILE_TEST_OUTPUT_EXPECTED
 
 # TUI Test program output
 /tui-test/ACTUAL.txt

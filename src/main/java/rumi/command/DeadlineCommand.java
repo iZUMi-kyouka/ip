@@ -1,10 +1,9 @@
 package rumi.command;
 
 import java.time.DateTimeException;
-import java.util.ArrayList;
 
 import rumi.exception.RumiException;
-import rumi.tag.Tag;
+import rumi.tag.TagList;
 import rumi.task.Deadline;
 import rumi.task.InvalidTaskDateTimeException;
 import rumi.task.TaskList;
@@ -23,7 +22,7 @@ public class DeadlineCommand extends TaskCommand {
      * will create a new deadline task when executed.
      */
     public DeadlineCommand(TaskList tasks, Ui ui, String title, String dueDate,
-            ArrayList<Tag> tags) {
+            TagList tags) {
         super(tasks, ui, title, tags);
         Assert.notNull(tasks, ui, title, dueDate);
 
