@@ -35,6 +35,14 @@ Rumi is a smart chatbot! She understands various natural datetime input format s
 - `01-02-2026 2114` (Feb 1, 2026 @ 21:14),
 so you can focus more on zipping through tasks than being tied to lame input format!
 
+
+For more information on all the datetime format that Rumi understands, please refer to the Appendix at the end of this document.
+
+## Tagging of Tasks
+Rumi remembers many things! You could ask her to associate a certain task of any type with multiple tags! For example,
+- `todo laundry /tags chore,not_urgent` creates a task of type todo with the tags "chore" and "not_urgent" 
+- `deadline iP /by 22925 1159pm /tags urgent,graded` creates a task of type deadline with the tags "urgent" and "graded
+
 ## Adding deadlines
 Deadlines are a type of task that must be done by a certain time. Deadlines must contain both the task name and the deadline by which it must be done.
 
@@ -173,7 +181,71 @@ Exits the Rumi chatbot.
     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-## Credits
+# Appendix: Supported Datetime Format
+
+You can enter dates and times in a variety of flexible formats.  
+Separators (such as `-`, `/`, `.`, or space) are optional.  
+If you include a time, there must be a space between the date and the time.
+
+
+Note that if you do not need task due date, or starting and ending time to be regarded as a valid datetime,
+you may write in any format or even as simply as 'today'. 
+In future, Rumi will be upgraded to include reminders, snooze and many other features
+that only work with valid datetime!
+
+- Leading zeros are **optional** for **day**, **month**, and **hour**.  
+- Leading zeros are **required** for **minutes** and **seconds**.  
+
+## 📅 Date
+
+- Format: **day → month → year**  
+- Day and month may be written with or without a leading zero.  
+- Year may be 2 digits or 4 digits.  
+  - Two-digit years are understood as 20YY.  
+
+### Examples
+- `23-09-2025`  
+- `23/9/25`  
+- `23.09.2025`  
+- `23092025`  
+- `1 1 24`  
+- `03-09-25`  
+
+## ⏰ Time (optional)
+
+Time can follow the date after a space.  
+Both 24-hour and 12-hour styles are supported.  
+- Hours: may be 1 or 2 digits (e.g., `9`, `09`, `14`).  
+- Minutes/seconds: must always be 2 digits (`05`, `45`).  
+- AM/PM: optional, case-insensitive.  
+
+### Examples
+- `14:30`  
+- `1430`  
+- `14:30:45`  
+- `143045`  
+- `9:05 AM`  
+- `09:05`  
+- `815pm`  
+- `08:15 PM`  
+
+## Combined Examples
+
+- `23-09-2025`  
+- `23/09/25 1430`  
+- `1 1 24 12:15am`  
+- `23092025 815pm`  
+- `03-9-25 09:05`  
+
+## Not Accepted
+
+- `2025-09-23` (year cannot come first)  
+- `99/99/2025` (invalid day/month)  
+- `9:5 PM` (minute must be `05`)  
+- `123456` (ambiguous, not a valid date)  
+
+
+# Credits
 **Image Sources**
 - [Rumi's profile picture](https://avatars.alphacoders.com/avatars/view/304708)
 - [User's profile picture (Character: Mai Sakurajima from the anime Bunny Girl Senpai)](https://in.pinterest.com/pin/835417799657072728/)

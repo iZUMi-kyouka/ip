@@ -96,14 +96,14 @@ public class ParserTest {
         parsedCommand.run();
 
         Deadline parsedDeadline = (Deadline) tasks.get(1);
-        Deadline expectedDeadline = new Deadline("CS2103T peer review", "10-09-2030 1030pm");
+        Deadline expectedDeadline = new Deadline("CS2103T peer review", "10930 2230");
         assertEquals(parsedDeadline, expectedDeadline);
     }
 
     @Test
     public void parseDeadlineCommand_validInputWithTag_expectedBehaviour() throws Exception {
         String commandString =
-                "deadline CS2103T peer review /by 10092030 1030pm /tags urgent,need_help,school";
+                "deadline CS2103T peer review /by 10/09/2030 10:30pm /tags urgent,need_help,school";
 
         TaskList tasks = new TaskList();
         Parser p = new Parser(tasks, ui);
@@ -111,14 +111,14 @@ public class ParserTest {
 
         Command parsedCommand = p.parse(commandString);
         Command expectedCommand = new DeadlineCommand(tasks, ui, "CS2103T peer review",
-                "10092030 1030pm", expectedTags);
+                "10/09/2030 10:30pm", expectedTags);
         assertEquals(parsedCommand, expectedCommand);
 
         parsedCommand.run();
 
         Deadline parsedDeadline = (Deadline) tasks.get(1);
         Deadline expectedDeadline =
-                new Deadline("CS2103T peer review", "10092030 2230", expectedTags);
+                new Deadline("CS2103T peer review", "10-9-2030 1030pm", expectedTags);
         assertEquals(parsedDeadline, expectedDeadline);
     }
 
