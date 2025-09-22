@@ -75,8 +75,8 @@ public class Parser {
                     + "To add a new event from FROM to TO with name NAME, "
                     + "simply type 'event NAME /from FROM /to TO' without any additional characters.";
 
-    private static final String[] VALID_COMMANDS =
-            {"bye", "list", "mark", "unmark", "delete", "todo", "deadline", "event"};
+    private static final String[] VALID_COMMANDS = {"bye", "list", "mark", "unmark", "delete",
+        "todo", "deadline", "event"};
 
     private final TaskList tasks;
     private final Ui ui;
@@ -237,15 +237,15 @@ public class Parser {
         }
 
         String msg = switch (closestCommand) {
-        case "bye" -> ERROR_MSG_BYE;
-        case "list" -> ERROR_MSG_LIST;
-        case "mark" -> ERROR_MSG_MARK;
-        case "unmark" -> ERROR_MSG_UNMARK;
-        case "delete" -> ERROR_MSG_DELETE;
-        case "todo" -> ERROR_MSG_TODO;
-        case "deadline" -> ERROR_MSG_DEADLINE;
-        case "event" -> ERROR_MSG_EVENT;
-        default -> "";
+            case "bye" -> ERROR_MSG_BYE;
+            case "list" -> ERROR_MSG_LIST;
+            case "mark" -> ERROR_MSG_MARK;
+            case "unmark" -> ERROR_MSG_UNMARK;
+            case "delete" -> ERROR_MSG_DELETE;
+            case "todo" -> ERROR_MSG_TODO;
+            case "deadline" -> ERROR_MSG_DEADLINE;
+            case "event" -> ERROR_MSG_EVENT;
+            default -> "";
         };
 
         return msg.isEmpty() ? Optional.empty() : Optional.of(msg);

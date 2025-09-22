@@ -44,10 +44,10 @@ public class Storage {
 
                 try {
                     switch (task.charAt(0)) {
-                    case 'E' -> tasks.add(Event.fromString(task));
-                    case 'D' -> tasks.add(Deadline.fromString(task));
-                    case 'T' -> tasks.add(ToDo.fromString(task));
-                    default -> System.out.println("[WARN] Encountered unknown task format.");
+                        case 'E' -> tasks.add(Event.fromString(task));
+                        case 'D' -> tasks.add(Deadline.fromString(task));
+                        case 'T' -> tasks.add(ToDo.fromString(task));
+                        default -> System.out.println("[WARN] Encountered unknown task format.");
                     }
                 } catch (IllegalArgumentException e) {
                     System.out.printf("[WARN] %s\n", e);
