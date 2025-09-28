@@ -39,7 +39,6 @@ public class Deadline extends Task {
 
         Assert.nonEmptyString(deadline);
         this.deadline = RumiDate.fromString(deadline);
-        validateDeadline();
     }
 
     private void validateDeadline() throws InvalidTaskDateTimeException {

@@ -36,7 +36,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
-
+            e.printStackTrace();
             System.out.printf("[ERROR] Failed to initialise GUI: %s\n", e.getMessage());
         }
     }

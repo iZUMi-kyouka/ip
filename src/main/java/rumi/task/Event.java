@@ -31,7 +31,6 @@ public class Event extends Task {
 
         this.from = RumiDate.fromString(from);
         this.to = RumiDate.fromString(to);
-        this.validateEndDateTime();
     }
 
     Event(String title, String from, String to, boolean isDone, TagList tags)
