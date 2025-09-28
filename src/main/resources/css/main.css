@@ -1,28 +1,23 @@
-@font-face {
-    font-family: 'Iosevka';
-    src: url('../fonts/Iosevka-Medium.ttc');
-}
-
 .root {
     main-color: rgb(255, 0, 123); /* Main hot pink */
     -fx-background-color: main-color;
     -fx-background-image: url("../images/chat_background.jpeg"); /* Set image */
     -fx-background-size: cover;
-    -fx-font-family: 'Roboto';
+    -fx-font-family: 'Roboto Regular';
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 }
 
 .text-field {
     -fx-background-color: rgba(255, 192, 218, 0.9); /* lighter pink tint */
-    -fx-font: 16px "Iosevka";
+    -fx-font: 16px 'Iosevka Medium';
     -fx-text-fill: #660033; /* darker pink/purple for readability */
     -fx-background-radius: 0em;
 }
 
 .button {
     -fx-background-color: rgb(255, 51, 153); /* hot pink shade */
-    -fx-font: italic bold 16px "Roboto";
+    -fx-font: italic bold 16px 'Roboto Regular';
     -fx-text-fill: #fff; /* white text for contrast */
     -fx-background-radius: 0em;
 }
